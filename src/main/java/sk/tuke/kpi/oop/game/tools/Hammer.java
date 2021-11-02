@@ -10,7 +10,7 @@ public class Hammer extends BreakableTool {
 
     public Hammer(int numerosity) {
         super(2);
-
+//        reactor.repair();
         hammerAnimation = new Animation("sprites/hammer.png", 16, 16);
         setAnimation(hammerAnimation);
     }

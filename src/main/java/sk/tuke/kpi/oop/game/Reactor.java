@@ -19,6 +19,7 @@ public class Reactor extends AbstractActor implements Switchable, Repairable {
     private Set<EnergyConsumer> devices;
 
     private Animation normalAnimation;
+    private Animation fastNormal;
     private Animation hotAnimation;
     private Animation brokeAnimation;
     private Animation offAnimation;
@@ -31,13 +32,11 @@ public class Reactor extends AbstractActor implements Switchable, Repairable {
 
         offAnimation = new Animation("sprites/reactor.png");
         normalAnimation = new Animation("sprites/reactor_on.png", 80, 80, 0.4f, Animation.PlayMode.LOOP_REVERSED);
-        normalAnimation = new Animation("sprites/reactor_on.png", 80, 80, 0.1f, Animation.PlayMode.LOOP_REVERSED);
+        fastNormal = new Animation("sprites/reactor_on.png", 80, 80, 0.1f, Animation.PlayMode.LOOP_REVERSED);
         hotAnimation = new Animation("sprites/reactor_hot.png", 80, 80, 0.1f, Animation.PlayMode.LOOP_REVERSED);
         brokeAnimation = new Animation("sprites/reactor_broken.png", 80, 80, 0.1f, Animation.PlayMode.LOOP_PINGPONG);
-        normalAnimation = new Animation("sprites/reactor_on.png", 80, 80, 0.4f, Animation.PlayMode.LOOP_REVERSED);
         extinguished = new Animation("sprites/reactor_extinguished.png", 80, 80);
-
-        turnOff();
+        setAnimation(offAnimation);
     }
 
     @Override
@@ -90,7 +89,7 @@ public class Reactor extends AbstractActor implements Switchable, Repairable {
             setAnimation(normalAnimation);
         }
         if (damage >= 33.0) {
-            setAnimation(normalAnimation);
+            setAnimation(fastNormal);
         }
         if (damage >= 66.0) {
             setAnimation(hotAnimation);
