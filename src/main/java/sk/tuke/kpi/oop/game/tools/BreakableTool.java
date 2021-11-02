@@ -8,27 +8,12 @@ public class BreakableTool extends AbstractActor implements Usable {
 
     public BreakableTool(int numerosity) {
         this.remainingUses = numerosity;
-    }
-
-    public void returned(Hammer hammer) {
-        if (luck) hammer.useWith(hammer);
-        if (!luck) hammer.useWith(null);
-    }
-
-    public void runed(Wrench wrench) {
-        if (luck) wrench.useWith(wrench);
-        if (!luck) wrench.useWith(null);
-    }
-
-    public void turned(FireExtinguisher fireExtinguisher) {
-        if (luck) fireExtinguisher.useWith(fireExtinguisher);
-        if (!luck) fireExtinguisher.useWith(null);
+        this.luck = false;
     }
 
     @Override
     public void useWith(Actor actor) {
         this.remainingUses--;
-
         if (this.remainingUses == 0) {
             this.getScene().removeActor(this);
         }

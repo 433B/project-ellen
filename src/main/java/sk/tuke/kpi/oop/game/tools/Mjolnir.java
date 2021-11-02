@@ -6,12 +6,9 @@ public class Mjolnir extends Hammer {
     private Animation mjolnerAnimation;
 
     public Mjolnir(int numerosity) {
-        super(numerosity);
+        super(4);
 
         mjolnerAnimation = new Animation("sprites/hammer.png", 16, 16);
         setAnimation(mjolnerAnimation);
-    }
-    Mjolnir() {
-        super(4);
     }
 }

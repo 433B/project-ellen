@@ -15,7 +15,6 @@ public class Reactor extends AbstractActor implements Switchable, Repairable {
     private double temperature;
     private double damage;
     private boolean isRunning = false;
-    private Light light;
     private EnergyConsumer device;
     private Set<EnergyConsumer> devices;
 
@@ -161,18 +160,8 @@ public class Reactor extends AbstractActor implements Switchable, Repairable {
         }
     }
 
-    public void updateLight() {
-        if (isRunning&& damage == 0) {
-            this.light.setElectricityFlow(true);
-        } else if (!isRunning) {
-            this.light.setElectricityFlow(false);
-        } else {
-            this.light.setElectricityFlow(false);
-        }
-    }
-
     @Override
-    public boolean repair() {
+    public boolean repair(AbstractTool tool) {
         return false;
     }
 }

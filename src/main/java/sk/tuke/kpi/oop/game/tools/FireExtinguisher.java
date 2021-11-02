@@ -7,14 +7,9 @@ public class FireExtinguisher extends BreakableTool {
     private Animation extinguisherAnimation;
 
     public FireExtinguisher(int numerosity) {
-        super(numerosity);
+        super(1);
 
         extinguisherAnimation = new Animation("sprites/extinguisher.png", 16, 16);
         setAnimation(extinguisherAnimation);
     }
-
-    FireExtinguisher() {
-        super(1);
-    }
-
 }

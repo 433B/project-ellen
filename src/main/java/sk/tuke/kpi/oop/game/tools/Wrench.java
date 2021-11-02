@@ -9,7 +9,7 @@ public class Wrench extends BreakableTool {
     private Wrench wrench;
 
     public Wrench(int numerosity) {
-        super(numerosity);
+        super(2);
 
         wrenchAnimation = new Animation("sprites/wrench.png", 16, 16);
         setAnimation(wrenchAnimation);
@@ -20,9 +20,5 @@ public class Wrench extends BreakableTool {
             this.useWith(wrench);
             defectiveLight.turnOn();
         }
-    }
-
-    Wrench() {
-        super(2);
     }
 }
