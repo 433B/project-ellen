@@ -1,7 +1,6 @@
 plugins {
     java
     application
-    pmd
 }
 
 group = "sk.tuke.kpi.oop"
@@ -34,14 +33,4 @@ tasks {
     withType<JavaCompile> {
         options.compilerArgs.plusAssign("-parameters")
     }
-    pmdMain {
-        classpath = sourceSets.main.get().runtimeClasspath
-    }
-}
-
-configure<PmdExtension> {
-    toolVersion = "6.18.0"
-    isConsoleOutput = true
-    ruleSets = emptyList()
-    ruleSetFiles = files("src/main/resources/pmd-ruleset.xml")
 }
