@@ -8,7 +8,8 @@ import sk.tuke.kpi.gamelib.graphics.Animation;
 
 public class DefectiveLight extends Light implements Repairable {
     private int number;
-
+ 
+ 
     private Animation lightOn;
     private Animation lightOff;
 
