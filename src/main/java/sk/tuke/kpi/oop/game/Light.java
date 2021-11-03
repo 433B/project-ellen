@@ -5,8 +5,8 @@ import sk.tuke.kpi.gamelib.graphics.Animation;
 
 public class Light extends AbstractActor implements Switchable,EnergyConsumer {
 
-    public Animation lightOn;
-    public Animation lightOff;
+    private Animation lightOn;
+    private Animation lightOff;
 
     private boolean isOn;
     private boolean isPowered;
