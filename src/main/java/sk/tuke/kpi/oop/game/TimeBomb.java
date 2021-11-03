@@ -4,7 +4,7 @@ import sk.tuke.kpi.gamelib.framework.AbstractActor;
 import sk.tuke.kpi.gamelib.graphics.Animation;
 
 public class TimeBomb extends AbstractActor {
-    public Animation bombAnimation;
+    private Animation bombAnimation;
     private Animation fireBombAnimation;
     private Animation boomAnimation;
 
