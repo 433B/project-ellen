@@ -7,7 +7,7 @@ public class Computer extends AbstractActor implements EnergyConsumer {
     private Animation computerOn;
     private Animation computerOff;
 
-    boolean electroFlow;
+    private boolean electroFlow;
 
     public Computer() {
         this.electroFlow = false;
