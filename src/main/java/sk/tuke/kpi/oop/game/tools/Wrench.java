@@ -17,7 +17,7 @@ public class Wrench extends BreakableTool {
 
     public void stormLight(DefectiveLight defectiveLight) {
         if (defectiveLight != null) {
-            this.useWith(wrench);
+            this.use();
             defectiveLight.turnOn();
         }
     }
