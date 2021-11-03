@@ -4,12 +4,11 @@ import sk.tuke.kpi.gamelib.framework.AbstractActor;
 import sk.tuke.kpi.gamelib.graphics.Animation;
 
 public class TimeBomb extends AbstractActor {
-    private Animation bombAnimation;
+    public Animation bombAnimation;
     private Animation fireBombAnimation;
     private Animation boomAnimation;
 
     private float timer;
-    private int removeactor;
 
     public TimeBomb() {
         this.timer = 15;

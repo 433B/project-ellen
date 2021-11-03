@@ -31,7 +31,7 @@ public class Gameplay extends Scenario {
             new Invoke<>(cooler::turnOff)
         ).scheduleFor(cooler);
 
-        Hammer hammer = new Hammer(2);
+        Hammer hammer = new Hammer();
         scene.addActor(hammer, 80, 80);
         new When<>(
             () -> reactor.getTemperature() >= 3000,
