@@ -6,7 +6,7 @@ import sk.tuke.kpi.gamelib.actions.Invoke;
 import sk.tuke.kpi.gamelib.framework.actions.Loop;
 
 public class DefectiveLight extends Light implements Repairable {
-    public int number;
+    private int number;
 
     public DefectiveLight() {
         super();
