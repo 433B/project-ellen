@@ -10,10 +10,6 @@ public abstract class BreakableTool <A extends Actor> extends AbstractActor impl
         this.remainingUses = numerosity;
     }
 
-    public int getRemainingUses() {
-        return remainingUses;
-    }
-
     @Override
     public void useWith(A actor) {
         this.remainingUses--;
@@ -21,5 +17,9 @@ public abstract class BreakableTool <A extends Actor> extends AbstractActor impl
         if (this.remainingUses == 0 && getScene() != null) {
             this.getScene().removeActor(this);
         }
+    }
+
+    public int getRemainingUses() {
+        return remainingUses;
     }
 }

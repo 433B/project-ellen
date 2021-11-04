@@ -1,7 +1,13 @@
 package sk.tuke.kpi.oop.game;
 
+import org.jetbrains.annotations.NotNull;
+import sk.tuke.kpi.gamelib.Scene;
+import sk.tuke.kpi.gamelib.actions.Invoke;
+import sk.tuke.kpi.gamelib.actions.Wait;
 import sk.tuke.kpi.gamelib.framework.AbstractActor;
+import sk.tuke.kpi.gamelib.framework.actions.Loop;
 import sk.tuke.kpi.gamelib.graphics.Animation;
+import sk.tuke.kpi.gamelib.actions.ActionSequence;
 
 public class TimeBomb extends AbstractActor {
     private Animation bombAnimation;
@@ -9,6 +15,7 @@ public class TimeBomb extends AbstractActor {
     private Animation boomAnimation;
 
     private float timer;
+    private boolean isOn;
 
     public TimeBomb() {
         this.timer = 15;
@@ -20,19 +27,27 @@ public class TimeBomb extends AbstractActor {
     }
 
     public void activate() {
-        if (timer > 0) {
-            timer--;
-            if (timer == 7) {
-                setAnimation(fireBombAnimation);
-            }
-            if (timer == 0 && getScene() != null) {
-                setAnimation(boomAnimation);
-                this.getScene().removeActor(this);
+        setAnimation(bombAnimation);
+        this.isOn = true;
+    }
+
+    public boolean isActivated() {
+        setAnimation(fireBombAnimation);
+        return isOn;
+    }
+
+    public void arabHaveDetonator() {
+        if (isActivated()) {
+            if (timer >= -4) {
+                timer--;
+                if (timer == 0) {
+                    setAnimation(boomAnimation);
+                }
+                if (timer == -5 && getScene() != null) {
+                    getScene().removeActor(this);
+                }
             }
         }
     }
 
-    public boolean isActivated() {
-        return timer <= 7;
-    }
 }
