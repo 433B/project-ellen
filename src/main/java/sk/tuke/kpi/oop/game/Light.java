@@ -55,4 +55,9 @@ public class Light extends AbstractActor implements Switchable,EnergyConsumer {
     public boolean isOn() {
         return this.isOn;
     }
+
+    @Override
+    public void setPowered(boolean a) {
+        this.isOn = a;
+    }
 }

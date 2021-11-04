@@ -4,7 +4,7 @@ import sk.tuke.kpi.gamelib.graphics.Animation;
 import sk.tuke.kpi.oop.game.Reactor;
 
 public class Hammer extends BreakableTool<Reactor> {
-    private Animation hammerAnimation;
+    Animation hammerAnimation;
 
     public Hammer() {
         super(1);

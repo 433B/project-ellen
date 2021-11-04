@@ -1,13 +1,7 @@
 package sk.tuke.kpi.oop.game;
 
-import org.jetbrains.annotations.NotNull;
-import sk.tuke.kpi.gamelib.Scene;
-import sk.tuke.kpi.gamelib.actions.Invoke;
-import sk.tuke.kpi.gamelib.actions.Wait;
 import sk.tuke.kpi.gamelib.framework.AbstractActor;
-import sk.tuke.kpi.gamelib.framework.actions.Loop;
 import sk.tuke.kpi.gamelib.graphics.Animation;
-import sk.tuke.kpi.gamelib.actions.ActionSequence;
 
 public class TimeBomb extends AbstractActor {
     private Animation bombAnimation;
@@ -37,8 +31,7 @@ public class TimeBomb extends AbstractActor {
     }
 
     public void arabHaveDetonator() {
-        if (isActivated()) {
-            if (timer >= -4) {
+        if (isActivated() && timer >= -4) {
                 timer--;
                 if (timer == 0) {
                     setAnimation(boomAnimation);
@@ -47,7 +40,6 @@ public class TimeBomb extends AbstractActor {
                     getScene().removeActor(this);
                 }
             }
-        }
     }
 
 }

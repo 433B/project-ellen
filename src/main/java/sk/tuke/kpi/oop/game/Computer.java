@@ -10,19 +10,18 @@ public class Computer extends AbstractActor implements EnergyConsumer {
     private boolean electroFlow;
 
     public Computer() {
-        this.electroFlow = false;
         computerOn = new Animation("sprites/computer.png", 80, 48, 0.4f, Animation.PlayMode.LOOP_PINGPONG);
         computerOff = new Animation("sprites/computer.png", 80, 48, 0.0f, Animation.PlayMode.LOOP_PINGPONG);
         updateAnimation();
     }
 
     @Override
-    public void setElectricityFlow(boolean setElectricityFlow) {
-        this.electroFlow = setElectricityFlow;
+    public void setPowered(boolean a) {
+        this.electroFlow = a;
     }
 
     public void updateAnimation() {
-        if (electroFlow) {
+        if (this.electroFlow) {
             setAnimation(computerOn);
         } else
             setAnimation(computerOff);

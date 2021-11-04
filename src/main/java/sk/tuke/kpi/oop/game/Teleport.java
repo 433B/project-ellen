@@ -6,7 +6,7 @@ import sk.tuke.kpi.gamelib.graphics.Animation;
 
 public class Teleport extends AbstractActor {
 
-    private Animation liftAnimation;
+    Animation liftAnimation;
 
     public Teleport() {
         liftAnimation = new Animation("sprites/lift.png", 48, 48, 0.2f, Animation.PlayMode.LOOP_REVERSED);

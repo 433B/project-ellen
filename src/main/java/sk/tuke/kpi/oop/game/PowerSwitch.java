@@ -5,29 +5,25 @@ import sk.tuke.kpi.gamelib.graphics.Animation;
 import sk.tuke.kpi.gamelib.graphics.Color;
 
 public class PowerSwitch extends AbstractActor {
-    private Animation switchAnimation;
+    Animation switchAnimation;
 
     private Switchable device;
 
     public PowerSwitch(Switchable device) {
-        if (device != null) {
+//        if (device != null) {
             this.device = device;
-        }
+//        }
 
         switchAnimation = new Animation("sprites/switch.png", 16, 16, 0.4f, Animation.PlayMode.LOOP_REVERSED);
         setAnimation(switchAnimation);
     }
 
     public void switchOn() {
-        if (!device.isOn() && device != null) {
-            device.turnOn();
-        }
+        this.device.turnOn();
     }
 
     public void switchOff() {
-        if (device != null) {
-            device.turnOff();
-        }
+        this.device.turnOff();
     }
 
     public void setTint() {
