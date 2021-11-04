@@ -19,13 +19,13 @@ public class PowerSwitch extends AbstractActor {
     }
 
     public void switchOn() {
-        if (!device.isOn()) {
+        if (!device.isOn() && device != null) {
             device.turnOn();
         }
     }
 
     public void switchOff() {
-        if (device.isOn()) {
+        if (device != null) {
             device.turnOff();
         }
     }
