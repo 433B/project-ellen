@@ -4,7 +4,7 @@ import sk.tuke.kpi.gamelib.graphics.Animation;
 import sk.tuke.kpi.oop.game.Reactor;
 
 public class Mjolnir extends BreakableTool<Reactor> {
-    public Animation mjolnerAnimation;
+    private Animation mjolnerAnimation;
 
     public Mjolnir() {
         super(4);

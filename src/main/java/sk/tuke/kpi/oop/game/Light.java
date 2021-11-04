@@ -18,10 +18,8 @@ public class Light extends AbstractActor implements Switchable,EnergyConsumer {
 
     public void toggle() {
         if (isOn) {
-            isOn = false;
             updateAnimation();
         } else {
-            isOn = true;
             updateAnimation();
         }
     }
