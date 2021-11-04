@@ -3,7 +3,7 @@ package sk.tuke.kpi.oop.game.tools;
 import sk.tuke.kpi.gamelib.graphics.Animation;
 import sk.tuke.kpi.oop.game.DefectiveLight;
 
-public class Wrench extends BreakableTool<DefectiveLight>  {
+public class Wrench extends BreakableTool<DefectiveLight> {
     public Animation wrenchAnimation;
 
     public Wrench() {
@@ -22,8 +22,4 @@ public class Wrench extends BreakableTool<DefectiveLight>  {
         super.useWith(actor);
 
     }
-//    public void use(DefectiveLight defectiveLight) {
-//        super.useWith(defectiveLight);
-//        defectiveLight.turnOn();
-//    }
 }

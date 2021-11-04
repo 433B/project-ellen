@@ -24,8 +24,7 @@ public class Computer extends AbstractActor implements EnergyConsumer {
     public void updateAnimation() {
         if (electroFlow) {
             setAnimation(computerOn);
-        }
-        else
+        } else
             setAnimation(computerOff);
     }
 

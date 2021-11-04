@@ -16,8 +16,4 @@ public class PerpetualReactorHeating extends AbstractAction<Reactor> {
             getActor().increaseTemperature(second);
         }
     }
-
-//    public Disposable scheduleFor(Reactor actor) {
-//        return actor.getScene().scheduleAction(this, actor);
-//    }
 }

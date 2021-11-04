@@ -10,7 +10,7 @@ public class PowerSwitch extends AbstractActor {
     private Switchable device;
 
     public PowerSwitch(Switchable device) {
-        if(device != null) {
+        if (device != null) {
             this.device = device;
         }
 
@@ -18,20 +18,16 @@ public class PowerSwitch extends AbstractActor {
         setAnimation(switchAnimation);
     }
 
-    public void switchOn(){
-//        if(device != null) {
+    public void switchOn() {
         if (!device.isOn()) {
             device.turnOn();
         }
-//        }
     }
 
-    public void switchOff(){
-//        if(device != null) {
+    public void switchOff() {
         if (device.isOn()) {
             device.turnOff();
         }
-//        }
     }
 
     public void setTint() {
