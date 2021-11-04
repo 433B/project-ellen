@@ -67,6 +67,7 @@ public class Reactor extends AbstractActor implements Switchable, Repairable {
                 isRunning = false;
             }
         }
+        updateAnimation();
     }
 
     public void decreaseTemperature(int sub) {
@@ -80,6 +81,7 @@ public class Reactor extends AbstractActor implements Switchable, Repairable {
                 temperature = 0;
             }
         }
+        updateAnimation();
     }
 
     public void updateAnimation() {
