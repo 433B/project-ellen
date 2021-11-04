@@ -62,9 +62,11 @@ public class Reactor extends AbstractActor implements Switchable, Repairable {
         }
         if (damage > 100) {
             damage = 100;
+            isRunning = false;
         }
         if (temperature > 6000) {
             temperature = 6000;
+            isRunning = false;
         }
         updateAnimation();
     }
