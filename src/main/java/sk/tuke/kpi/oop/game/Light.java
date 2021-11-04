@@ -17,9 +17,10 @@ public class Light extends AbstractActor implements Switchable,EnergyConsumer {
     }
 
     public void toggle() {
-        if (isOn) {
+        if (isOn() ) {
             updateAnimation();
-        } else {
+        }
+        if (!isOn() ){
             updateAnimation();
         }
     }
@@ -30,7 +31,7 @@ public class Light extends AbstractActor implements Switchable,EnergyConsumer {
     }
 
     public void updateAnimation() {
-        if (this.isOn) {
+        if (isOn() ) {
             setAnimation(lightOn);
         }
         else {
