@@ -5,20 +5,14 @@ import sk.tuke.kpi.gamelib.Scene;
 import sk.tuke.kpi.gamelib.framework.AbstractActor;
 import sk.tuke.kpi.gamelib.graphics.Animation;
 import sk.tuke.kpi.oop.game.actions.PerpetualReactorHeating;
-import sk.tuke.kpi.oop.game.tools.BreakableTool;
 
 import java.util.HashSet;
 import java.util.Set;
-
-
-
-
 
 public class Reactor extends AbstractActor implements Switchable, Repairable {
     private double temperature;
     private double damage;
     private boolean isRunning = false;
-//    private EnergyConsumer device;
     private Set<EnergyConsumer> devices;
 
     private Animation normalAnimation;
@@ -26,11 +20,9 @@ public class Reactor extends AbstractActor implements Switchable, Repairable {
     private Animation hotAnimation;
     private Animation brokeAnimation;
     private Animation offAnimation;
-    private Animation extinguished;
+    private Animation reactor_extinguished;
 
     public Reactor() {
-        this.temperature = 0;
-        this.damage = 0.0;
         devices = new HashSet<>();
 
         offAnimation = new Animation("sprites/reactor.png");
@@ -38,8 +30,9 @@ public class Reactor extends AbstractActor implements Switchable, Repairable {
         fastNormal = new Animation("sprites/reactor_on.png", 80, 80, 0.1f, Animation.PlayMode.LOOP_REVERSED);
         hotAnimation = new Animation("sprites/reactor_hot.png", 80, 80, 0.1f, Animation.PlayMode.LOOP_REVERSED);
         brokeAnimation = new Animation("sprites/reactor_broken.png", 80, 80, 0.1f, Animation.PlayMode.LOOP_PINGPONG);
-        extinguished = new Animation("sprites/reactor_extinguished.png", 80, 80);
+        reactor_extinguished = new Animation("sprites/reactor_extinguished.png", 80, 80, 0.4f, Animation.PlayMode.LOOP_REVERSED);
         setAnimation(offAnimation);
+        updateAnimation();
     }
 
     @Override
@@ -49,11 +42,11 @@ public class Reactor extends AbstractActor implements Switchable, Repairable {
     }
 
     public double getTemperature() {
-        return temperature;
+        return this.temperature;
     }
 
     public double getDamage() {
-        return damage;
+        return this.damage;
     }
 
     public void increaseTemperature(int add) {
@@ -72,21 +65,17 @@ public class Reactor extends AbstractActor implements Switchable, Repairable {
             temperature = 6000;
             isRunning = false;
         }
-        updateAnimation();
     }
 
     public void decreaseTemperature(int sub) {
         if (!this.isRunning && sub > 0) {
             return;
         }
-//        if (sub <= -1) {
-//            sub = 0;
-//        }
+
         this.temperature = temperature - sub;
         if (temperature < 0) {
             temperature = 0;
         }
-        updateAnimation();
     }
 
     public void updateAnimation() {
@@ -99,27 +88,31 @@ public class Reactor extends AbstractActor implements Switchable, Repairable {
         if (damage >= 66.0) {
             setAnimation(hotAnimation);
         }
-        if (damage >= 100.0) {
+        if (damage == 100) {
             setAnimation(brokeAnimation);
         }
     }
 
-    public void repair(BreakableTool breakableTool) {
-        breakableTool.use();
-        if (damage > 0 && damage < 100) {
+    @Override
+    public boolean repair() {
+//        if (damage > 0 && damage < 100) {
             if (damage < 50) {
-                damage = damage - damage;
-            } else
+                damage = 0.0;
+            }
+            else
                 damage = damage - 50;
             this.temperature = this.damage * 6000 / 100;
-        }
+            return true;
+//        }
+//        else {
+//            return false;
+//        }
     }
 
-    public void extinguih(BreakableTool breakableTool) {
-        if (this.damage == 100) {
-            breakableTool.use();
+    public void extinguih() {
+        if (damage == 100) {
             this.temperature = 4000;
-            setAnimation(extinguished);
+            setAnimation(reactor_extinguished);
         }
     }
 
@@ -138,34 +131,20 @@ public class Reactor extends AbstractActor implements Switchable, Repairable {
     }
 
     public boolean isOn() {
-        if (isRunning) {
-            return true;
-        }
-        else
-            return false;
+        return isRunning;
     }
 
     public void addDevice(EnergyConsumer device) {
-        if (device instanceof EnergyConsumer) {
-//            this.device = device;
+        if (device != null) {
             this.devices.add(device);
-            if (isRunning) {
-                ((EnergyConsumer) device).setElectricityFlow(true);
-            } else {
-                ((EnergyConsumer) device).setElectricityFlow(false);
-            }
+            device.setElectricityFlow(isRunning);
         }
     }
 
     public void removeDevice(EnergyConsumer device) {
-        if (device instanceof EnergyConsumer) {
-            ((EnergyConsumer) device).setElectricityFlow(false);
+        if (device != null) {
+            device.setElectricityFlow(false);
             this.devices.remove(device);
         }
-    }
-
-    @Override
-    public boolean repair(AbstractTool tool) {
-        return false;
     }
 }

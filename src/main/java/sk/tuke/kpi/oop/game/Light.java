@@ -9,7 +9,6 @@ public class Light extends AbstractActor implements Switchable,EnergyConsumer {
     private Animation lightOff;
 
     private boolean isOn;
-    private boolean isPowered;
 
     public Light() {
         lightOff = new Animation("sprites/light_off.png", 16, 16);
@@ -28,16 +27,12 @@ public class Light extends AbstractActor implements Switchable,EnergyConsumer {
     }
 
     public void setElectricityFlow(boolean setElectricityFlow) {
-        this.isPowered = setElectricityFlow;
+        this.isOn = setElectricityFlow;
         updateAnimation();
     }
 
     public void updateAnimation() {
-        if (isOn && isPowered) {
-            setAnimation(lightOn);
-        } else {
-            setAnimation(lightOff);
-        }
+        setAnimation(lightOn);
     }
 
     @Override

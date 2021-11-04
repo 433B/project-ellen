@@ -14,7 +14,7 @@ public class Helicopter extends AbstractActor {
 
     public void searchAndDestroy() {
 
-}
+    }
 
 
 }

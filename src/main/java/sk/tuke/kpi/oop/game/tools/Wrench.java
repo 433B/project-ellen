@@ -3,8 +3,8 @@ package sk.tuke.kpi.oop.game.tools;
 import sk.tuke.kpi.gamelib.graphics.Animation;
 import sk.tuke.kpi.oop.game.DefectiveLight;
 
-public class Wrench extends BreakableTool {
-    private Animation wrenchAnimation;
+public class Wrench extends BreakableTool<DefectiveLight>  {
+    public Animation wrenchAnimation;
 
     public Wrench() {
         super(2);
@@ -13,10 +13,17 @@ public class Wrench extends BreakableTool {
         setAnimation(wrenchAnimation);
     }
 
-    public void stormLight(DefectiveLight defectiveLight) {
-        if (defectiveLight != null) {
-            this.use();
-            defectiveLight.turnOn();
+    @Override
+    public void useWith(DefectiveLight actor) {
+        if (actor == null) {
+            return;
         }
+        actor.repair();
+        super.useWith(actor);
+
     }
+//    public void use(DefectiveLight defectiveLight) {
+//        super.useWith(defectiveLight);
+//        defectiveLight.turnOn();
+//    }
 }

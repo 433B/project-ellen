@@ -25,7 +25,7 @@ public class TimeBomb extends AbstractActor {
             if (timer == 7) {
                 setAnimation(fireBombAnimation);
             }
-            if (timer == 0) {
+            if (timer == 0 && getScene() != null) {
                 setAnimation(boomAnimation);
                 this.getScene().removeActor(this);
             }
@@ -33,10 +33,6 @@ public class TimeBomb extends AbstractActor {
     }
 
     public boolean isActivated() {
-        if (timer <= 7) {
-            return true;
-        }
-        else
-        return false;
+        return timer <= 7;
     }
 }

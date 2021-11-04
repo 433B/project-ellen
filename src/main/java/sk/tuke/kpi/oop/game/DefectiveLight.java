@@ -2,14 +2,15 @@ package sk.tuke.kpi.oop.game;
 
 import org.jetbrains.annotations.NotNull;
 import sk.tuke.kpi.gamelib.Scene;
+import sk.tuke.kpi.gamelib.actions.ActionSequence;
 import sk.tuke.kpi.gamelib.actions.Invoke;
+import sk.tuke.kpi.gamelib.actions.Wait;
 import sk.tuke.kpi.gamelib.framework.actions.Loop;
 import sk.tuke.kpi.gamelib.graphics.Animation;
 
 public class DefectiveLight extends Light implements Repairable {
     private int number;
- 
- 
+
     private Animation lightOn;
     private Animation lightOff;
 
@@ -21,13 +22,16 @@ public class DefectiveLight extends Light implements Repairable {
     }
 
     public void randomNumber() {
-        if (isOn() ) {
+        if (isOn()) {
             number = (int) (Math.random() * 20);
             if (number == 5 || number == 10) {
                 setAnimation(lightOn);
-            }
-            else setAnimation(lightOff);
+            } else setAnimation(lightOff);
         }
+    }
+
+    public void setLightOn() {
+        setAnimation(lightOn);
     }
 
     @Override
@@ -37,7 +41,17 @@ public class DefectiveLight extends Light implements Repairable {
     }
 
     @Override
-    public boolean repair(AbstractTool tool) {
-        return false;
+    public boolean repair() {
+        if (!this.isOn()) {
+            return false;
+        } else {
+            new ActionSequence<DefectiveLight>(
+                new Invoke<>(this::turnOff),
+                new Invoke<>(this::setLightOn),
+                new Wait<>(10),
+                new Invoke<>(this::turnOn)
+            ).scheduleFor(this);
+            return true;
+        }
     }
 }
