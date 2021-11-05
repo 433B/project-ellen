@@ -42,13 +42,13 @@ public class Computer extends AbstractActor implements EnergyConsumer {
 
     public float sub(float ok, float bad) {
         float math;
-        math = bad - ok;
+        math = ok - bad;
         return math;
     }
 
     public int sub(int ok, int bad) {
         int math;
-        math = bad - ok;
+        math = ok - bad;
         return math;
     }
 }
