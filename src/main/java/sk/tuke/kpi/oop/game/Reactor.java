@@ -100,7 +100,7 @@ public class Reactor extends AbstractActor implements Switchable, Repairable {
 
     @Override
     public boolean repair() {
-        if (getTemperature() > 0) {
+        if (getTemperature() > 0 && isRunning) {
             if (damage < 50) {
                 damage = 0;
             } else
@@ -112,7 +112,7 @@ public class Reactor extends AbstractActor implements Switchable, Repairable {
     }
 
     public boolean extinguih() {
-        if (damage == 100) {
+        if (damage == 100 && !isRunning) {
             this.temperature = 4000;
             setAnimation(reactor_extinguished);
         }
@@ -120,7 +120,7 @@ public class Reactor extends AbstractActor implements Switchable, Repairable {
     }
 
     public void turnOn() {
-        if (!this.isRunning) {
+        if (!this.isRunning && damage != 100) {
             this.isRunning = true;
             setAnimation(normalAnimation);
         }
@@ -146,7 +146,7 @@ public class Reactor extends AbstractActor implements Switchable, Repairable {
     }
 
     public void removeDevice(EnergyConsumer device) {
-        if (device != null) {
+        if (device != null && !this.isRunning) {
             device.setPowered(false);
             this.devices.remove(device);
         }
