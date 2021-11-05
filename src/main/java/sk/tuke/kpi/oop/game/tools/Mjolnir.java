@@ -5,10 +5,9 @@ import sk.tuke.kpi.oop.game.Reactor;
 
 public class Mjolnir extends Hammer {
     private Animation mjolnerAnimation;
-    private int creative;
 
     public Mjolnir() {
-        this.creative = 4;
+        super(4);
 
         mjolnerAnimation = new Animation("sprites/hammer.png", 16, 16);
         setAnimation(mjolnerAnimation);
@@ -16,17 +15,9 @@ public class Mjolnir extends Hammer {
 
     @Override
     public void useWith(Reactor actor) {
-        if (actor == null) {
-            return;
-        }
-        super.useWith(actor);
-        creative--;
-        if (creative == 0 && getScene() != null) {
-            getScene().removeActor(this);
+        if (actor != null) {
+            super.useWith(actor);
         }
     }
 
-    public int getCreativeUses() {
-        return creative;
-    }
 }
