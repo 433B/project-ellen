@@ -74,7 +74,7 @@ public class Reactor extends AbstractActor implements Switchable, Repairable {
             return;
         }
 
-        if (sub > 0) {
+        if (sub > 0 && isRunning) {
             this.temperature = temperature - sub;
             if (temperature < 0) {
                 temperature = 0;
@@ -125,7 +125,6 @@ public class Reactor extends AbstractActor implements Switchable, Repairable {
             setAnimation(normalAnimation);
         }
     }
-
 
     public void turnOff() {
         if (this.isRunning) {
