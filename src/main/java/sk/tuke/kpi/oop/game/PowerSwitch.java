@@ -17,11 +17,15 @@ public class PowerSwitch extends AbstractActor {
     }
 
     public void switchOn() {
-        this.device.turnOn();
+        if (device != null) {
+            this.device.turnOn();
+        }
     }
 
     public void switchOff() {
-        this.device.turnOff();
+        if (device != null) {
+            this.device.turnOff();
+        }
     }
 
 
