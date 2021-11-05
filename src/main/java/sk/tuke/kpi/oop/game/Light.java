@@ -17,25 +17,24 @@ public class Light extends AbstractActor implements Switchable,EnergyConsumer {
     }
 
     public void toggle() {
-        if (isOn()) {
+        if (isOn) {
             updateAnimation();
-
         }
         else {
             updateAnimation();
         }
     }
 
-//    public void setElectricityFlow(boolean setElectricityFlow) {
-//        this.isOn = setElectricityFlow;
-//        updateAnimation();
-//    }
-
-
-    public boolean setElectricityFlow(boolean setElectricityFlow) {
+    public void setElectricityFlow(boolean setElectricityFlow) {
+        this.isOn = setElectricityFlow;
         updateAnimation();
-        return this.isOn = setElectricityFlow;
     }
+
+
+//    public boolean setElectricityFlow(boolean setElectricityFlow) {
+//        updateAnimation();
+//        return this.isOn = setElectricityFlow;
+//    }
 
     @Override
     public void setPowered(boolean a) {
@@ -44,11 +43,11 @@ public class Light extends AbstractActor implements Switchable,EnergyConsumer {
     }
 
     public void updateAnimation() {
-        if (isOn()) {
+        if (this.isOn) {
             setAnimation(lightOn);
-        } else {
-            setAnimation(lightOff);
         }
+        else
+            setAnimation(lightOff);
     }
 
     @Override
