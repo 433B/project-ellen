@@ -4,7 +4,7 @@ public class ChainBomb extends TimeBomb {
     private float timer;
 
     public ChainBomb() {
-        super();
+        super(10);
         this.timer = 15;
     }
 
