@@ -34,5 +34,4 @@ public class PowerSwitch extends AbstractActor {
     public Switchable getDevice() {
         return this.device;
     }
-
 }
