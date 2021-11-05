@@ -34,6 +34,10 @@ public class DefectiveLight extends Light implements Repairable {
         setAnimation(lightOn);
     }
 
+    public void setLightOff() {
+        setAnimation(lightOff);
+    }
+
     @Override
     public void addedToScene(@NotNull Scene scene) {
         super.addedToScene(scene);
@@ -47,8 +51,10 @@ public class DefectiveLight extends Light implements Repairable {
         } else {
             new ActionSequence<DefectiveLight>(
                 new Invoke<>(this::turnOff),
+                new Invoke<>(this::setLightOff),
                 new Invoke<>(this::setLightOn),
                 new Wait<>(10),
+                new Invoke<>(this::setLightOff),
                 new Invoke<>(this::turnOn)
             ).scheduleFor(this);
             return true;
