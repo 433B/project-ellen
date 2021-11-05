@@ -32,7 +32,6 @@ public class Reactor extends AbstractActor implements Switchable, Repairable {
         brokeAnimation = new Animation("sprites/reactor_broken.png", 80, 80, 0.1f, Animation.PlayMode.LOOP_PINGPONG);
         reactor_extinguished = new Animation("sprites/reactor_extinguished.png", 80, 80, 0.4f, Animation.PlayMode.LOOP_REVERSED);
         setAnimation(offAnimation);
-        updateAnimation();
     }
 
     @Override
@@ -138,8 +137,12 @@ public class Reactor extends AbstractActor implements Switchable, Repairable {
     }
 
     public void addDevice(EnergyConsumer device) {
-        if (device != null) {
-            device.setPowered(isRunning);
+        if (device != null && this.isRunning) {
+            device.setPowered(true);
+            this.devices.add(device);
+        }
+        if (device != null  && !this.isRunning) {
+            device.setPowered(true);
             this.devices.add(device);
         }
     }
