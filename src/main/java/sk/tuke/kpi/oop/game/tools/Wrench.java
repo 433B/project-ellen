@@ -4,7 +4,7 @@ import sk.tuke.kpi.gamelib.graphics.Animation;
 import sk.tuke.kpi.oop.game.DefectiveLight;
 
 public class Wrench extends BreakableTool<DefectiveLight> {
-    Animation wrenchAnimation;
+    private Animation wrenchAnimation;
 
     public Wrench() {
         super(2);
@@ -15,11 +15,13 @@ public class Wrench extends BreakableTool<DefectiveLight> {
 
     @Override
     public void useWith(DefectiveLight actor) {
-        if (actor == null) {
+        if (actor == null && getScene() != null) {
+            getScene().removeActor(this);
             return;
         }
-        actor.repair();
+        if (actor != null) {
+            actor.repair();
+        }
         super.useWith(actor);
-
     }
 }

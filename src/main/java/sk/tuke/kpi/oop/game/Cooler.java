@@ -11,7 +11,7 @@ public class Cooler extends AbstractActor implements Switchable {
     private Animation coolerAnimation;
     private Animation coolerOffAnimetion;
 
-    public Reactor reactor;
+    private Reactor reactor;
     private boolean check;
 
     public Cooler(Reactor reactor) {
@@ -22,7 +22,6 @@ public class Cooler extends AbstractActor implements Switchable {
         coolerOffAnimetion = new Animation("sprites/fan.png", 32, 32, 0.0f, Animation.PlayMode.LOOP_REVERSED);
         setAnimation(coolerOffAnimetion);
     }
-
 
     @Override
     public boolean isOn() {

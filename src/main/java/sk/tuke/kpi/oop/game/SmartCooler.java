@@ -6,17 +6,21 @@ import sk.tuke.kpi.gamelib.actions.Invoke;
 import sk.tuke.kpi.gamelib.framework.actions.Loop;
 
 public class SmartCooler extends Cooler {
+    private Reactor reactor;
 
     public SmartCooler(Reactor reactor) {
         super(reactor);
+        this.reactor = reactor;
     }
 
     public void inteligentCooler() {
-        if (this.reactor.getTemperature() >= 2500) {
-            this.turnOn();
-        }
-        if (this.reactor.getTemperature() <= 1500) {
-            this.turnOff();
+        if (reactor != null ) {
+            if (reactor.getTemperature() >= 2500) {
+                turnOn();
+            }
+            if (reactor.getTemperature() <= 1500) {
+                turnOff();
+            }
         }
     }
 

@@ -4,7 +4,7 @@ import sk.tuke.kpi.gamelib.graphics.Animation;
 import sk.tuke.kpi.oop.game.Reactor;
 
 public class Mjolnir extends Hammer {
-    Animation mjolnerAnimation;
+    private Animation mjolnerAnimation;
     private int creative;
 
     public Mjolnir() {
