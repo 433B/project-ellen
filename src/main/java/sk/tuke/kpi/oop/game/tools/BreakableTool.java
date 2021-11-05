@@ -12,14 +12,14 @@ public abstract class BreakableTool <A extends Actor> extends AbstractActor impl
 
     @Override
     public void useWith(A actor) {
-        this.remainingUses--;
+            this.remainingUses--;
 
         if (this.remainingUses == 0 && getScene() != null) {
             this.getScene().removeActor(this);
         }
     }
 
-    public int getRemainingUses() {
-        return remainingUses;
+    public int getRemainingUses(int using) {
+        return remainingUses = using;
     }
 }
