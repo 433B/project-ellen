@@ -10,8 +10,8 @@ import java.util.HashSet;
 import java.util.Set;
 
 public class Reactor extends AbstractActor implements Switchable, Repairable {
-    private double temperature;
-    private double damage;
+    private int temperature;
+    private int damage;
     private boolean isRunning = false;
     private Set<EnergyConsumer> devices;
 
@@ -40,11 +40,11 @@ public class Reactor extends AbstractActor implements Switchable, Repairable {
         new PerpetualReactorHeating(1).scheduleFor(this);
     }
 
-    public double getTemperature() {
+    public int getTemperature() {
         return this.temperature;
     }
 
-    public double getDamage() {
+    public int getDamage() {
         return this.damage;
     }
 
@@ -102,7 +102,7 @@ public class Reactor extends AbstractActor implements Switchable, Repairable {
     public boolean repair() {
         if (getTemperature() > 0) {
             if (damage < 50) {
-                damage = 0.0;
+                damage = 0;
             } else
                 damage = damage - 50;
             this.temperature = this.damage * 6000 / 100;
@@ -138,10 +138,6 @@ public class Reactor extends AbstractActor implements Switchable, Repairable {
 
     public void addDevice(EnergyConsumer device) {
         if (device != null && this.isRunning) {
-            device.setPowered(true);
-            this.devices.add(device);
-        }
-        if (device != null  && !this.isRunning) {
             device.setPowered(true);
             this.devices.add(device);
         }
