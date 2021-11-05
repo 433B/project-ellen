@@ -18,6 +18,7 @@ public class Computer extends AbstractActor implements EnergyConsumer {
     @Override
     public void setPowered(boolean a) {
         this.electroFlow = a;
+        updateAnimation();
     }
 
     public void updateAnimation() {
