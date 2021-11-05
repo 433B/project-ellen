@@ -17,7 +17,9 @@ public class Hammer extends BreakableTool<Reactor> {
         if (actor == null) {
             return;
         }
-        actor.repair();
-        super.useWith(actor);
+        if (actor.getTemperature() > 0) {
+            actor.repair();
+            super.useWith(actor);
+        }
     }
 }

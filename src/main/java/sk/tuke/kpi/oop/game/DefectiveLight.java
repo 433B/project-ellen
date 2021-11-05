@@ -31,7 +31,6 @@ public class DefectiveLight extends Light implements Repairable {
     }
 
     public void setLightOn() {
-        if(isOn())
         setAnimation(lightOn);
     }
 
