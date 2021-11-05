@@ -10,9 +10,7 @@ public class PowerSwitch extends AbstractActor {
     private Switchable device;
 
     public PowerSwitch(Switchable device) {
-//        if (device != null) {
-            this.device = device;
-//        }
+        this.device = device;
 
         switchAnimation = new Animation("sprites/switch.png", 16, 16, 0.4f, Animation.PlayMode.LOOP_REVERSED);
         setAnimation(switchAnimation);
