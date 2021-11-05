@@ -17,7 +17,7 @@ public class DefectiveLight extends Light implements Repairable {
 
     public DefectiveLight() {
         super();
-        stop = false;
+        this.stop = false;
 
         lightOff = new Animation("sprites/light_off.png", 16, 16);
         lightOn = new Animation("sprites/light_on.png", 16, 16);
@@ -26,7 +26,7 @@ public class DefectiveLight extends Light implements Repairable {
     public void randomNumber() {
         if (isOn()) {
             number = (int) (Math.random() * 20);
-            if (number == 5 || number == 10 && isOn()) {
+            if (number >= 5) {
                 setAnimation(lightOn);
             } else setAnimation(lightOff);
         }
@@ -34,6 +34,7 @@ public class DefectiveLight extends Light implements Repairable {
 
     public void setLightOn() {
         setAnimation(lightOn);
+        stop = false;
     }
 
     @Override
@@ -51,15 +52,10 @@ public class DefectiveLight extends Light implements Repairable {
                 new Invoke<>(this::turnOff),
                 new Invoke<>(this::setLightOn),
                 new Wait<>(10),
-                new Invoke<>(this::stopSec),
                 new Invoke<>(this::turnOn)
             ).scheduleFor(this);
             return true;
         }
         return false;
-    }
-
-    private void stopSec() {
-        stop = false;
     }
 }
