@@ -20,7 +20,6 @@ public class SmartCooler extends Cooler {
         }
     }
 
-
     @Override
     public void addedToScene(@NotNull Scene scene) {
         super.addedToScene(scene);
