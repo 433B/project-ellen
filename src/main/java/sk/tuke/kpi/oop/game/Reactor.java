@@ -126,6 +126,7 @@ public class Reactor extends AbstractActor implements Switchable, Repairable {
         }
     }
 
+
     public void turnOff() {
         if (this.isRunning) {
             this.isRunning = false;
