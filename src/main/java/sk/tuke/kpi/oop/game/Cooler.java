@@ -23,6 +23,7 @@ public class Cooler extends AbstractActor implements Switchable {
         setAnimation(coolerOffAnimetion);
     }
 
+
     @Override
     public boolean isOn() {
         return check;
