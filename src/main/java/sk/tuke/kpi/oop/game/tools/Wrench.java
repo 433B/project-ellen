@@ -12,8 +12,7 @@ public class Wrench extends BreakableTool<DefectiveLight> {
 
     @Override
     public void useWith(DefectiveLight actor) {
-        if (actor != null) {
-            actor.repair();
+        if (actor != null && actor.repair()) {
             super.useWith(actor);
         }
     }
