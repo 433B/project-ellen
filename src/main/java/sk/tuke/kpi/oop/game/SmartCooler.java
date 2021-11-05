@@ -31,3 +31,4 @@ public class SmartCooler extends Cooler {
         new Loop<>(new Invoke<>(this::inteligentCooler)).scheduleFor(this);
     }
 }
+
