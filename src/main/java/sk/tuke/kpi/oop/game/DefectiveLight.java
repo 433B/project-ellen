@@ -10,12 +10,14 @@ import sk.tuke.kpi.gamelib.graphics.Animation;
 
 public class DefectiveLight extends Light implements Repairable {
     private int number;
+    private boolean stop;
 
     private Animation lightOn;
     private Animation lightOff;
 
     public DefectiveLight() {
         super();
+        stop = false;
 
         lightOff = new Animation("sprites/light_off.png", 16, 16);
         lightOn = new Animation("sprites/light_on.png", 16, 16);
@@ -34,10 +36,6 @@ public class DefectiveLight extends Light implements Repairable {
         setAnimation(lightOn);
     }
 
-    public void setLightOff() {
-        setAnimation(lightOff);
-    }
-
     @Override
     public void addedToScene(@NotNull Scene scene) {
         super.addedToScene(scene);
@@ -46,18 +44,22 @@ public class DefectiveLight extends Light implements Repairable {
 
     @Override
     public boolean repair() {
-        if (!this.isOn()) {
-            return false;
-        } else {
-            new ActionSequence<DefectiveLight>(
+        if (isOn() && !stop) {
+            setLightOn();
+            stop = true;
+            new ActionSequence<>(
                 new Invoke<>(this::turnOff),
-                new Invoke<>(this::setLightOff),
                 new Invoke<>(this::setLightOn),
                 new Wait<>(10),
-                new Invoke<>(this::setLightOff),
+                new Invoke<>(this::stopSec),
                 new Invoke<>(this::turnOn)
             ).scheduleFor(this);
             return true;
         }
+        return false;
+    }
+
+    private void stopSec() {
+        stop = false;
     }
 }
