@@ -19,7 +19,7 @@ public abstract class BreakableTool <A extends Actor> extends AbstractActor impl
         }
     }
 
-    public int getRemainingUses(int i) {
-        return remainingUses = i;
+    public int getRemainingUses() {
+        return remainingUses;
     }
 }
