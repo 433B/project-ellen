@@ -8,8 +8,6 @@ public class Computer extends AbstractActor implements EnergyConsumer {
     private Animation computerOff;
 
     private boolean electroFlow;
-    private int math;
-    private float geom;
 
     public Computer() {
         computerOn = new Animation("sprites/computer.png", 80, 48, 0.4f, Animation.PlayMode.LOOP_PINGPONG);
