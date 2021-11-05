@@ -111,7 +111,7 @@ public class Reactor extends AbstractActor implements Switchable, Repairable {
         return  false;
     }
 
-    public boolean extinguih() {
+    public boolean extinguish() {
         if (damage == 100 && !isRunning) {
             this.temperature = 4000;
             setAnimation(reactor_extinguished);
