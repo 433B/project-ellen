@@ -11,7 +11,7 @@ public class Cooler extends AbstractActor implements Switchable {
     private Animation coolerAnimation;
     private Animation coolerOffAnimetion;
 
-    private Reactor reactor;
+    public Reactor reactor;
     private boolean check;
 
     public Cooler(Reactor reactor) {
