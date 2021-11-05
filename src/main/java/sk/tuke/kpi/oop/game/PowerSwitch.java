@@ -29,4 +29,9 @@ public class PowerSwitch extends AbstractActor {
             getAnimation().setTint(Color.GRAY);
         }
     }
+
+    public Switchable getDevice() {
+        return this.device;
+    }
+
 }
