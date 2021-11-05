@@ -10,7 +10,7 @@ public class SmartCooler extends Cooler {
 
     public SmartCooler(Reactor reactor) {
         super(reactor);
-        this.reactor =reactor;
+        this.reactor = reactor;
     }
 
     public void inteligentCooler() {
