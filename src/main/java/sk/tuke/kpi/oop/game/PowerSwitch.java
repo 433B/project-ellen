@@ -24,6 +24,7 @@ public class PowerSwitch extends AbstractActor {
         this.device.turnOff();
     }
 
+
     public void setTint() {
         if (!device.isOn() && device != null) {
             getAnimation().setTint(Color.GRAY);
