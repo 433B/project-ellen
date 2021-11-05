@@ -8,11 +8,11 @@ public class TimeBomb extends AbstractActor {
     private Animation fireBombAnimation;
     private Animation boomAnimation;
 
-    private float timer;
     private boolean isOn;
+    private float time;
 
-    public TimeBomb() {
-        this.timer = 15;
+    public TimeBomb(float time) {
+        this.time = time;
 
         bombAnimation = new Animation("sprites/bomb.png", 16, 16);
         fireBombAnimation = new Animation("sprites/bomb_activated.png", 16, 16, 0.2f, Animation.PlayMode.LOOP_REVERSED);
@@ -21,25 +21,24 @@ public class TimeBomb extends AbstractActor {
     }
 
     public void activate() {
-        setAnimation(bombAnimation);
         this.isOn = true;
+        setAnimation(bombAnimation);
     }
 
     public boolean isActivated() {
         setAnimation(fireBombAnimation);
-        return isOn;
+        return this.isOn;
     }
 
-    public void arabHaveDetonator() {
-        if (isActivated() && timer >= -4) {
-                timer--;
-                if (timer == 0) {
-                    setAnimation(boomAnimation);
-                }
-                if (timer == -5 && getScene() != null) {
-                    getScene().removeActor(this);
-                }
-            }
+    public void akBar() {
+        if (isOn) {
+            this.time--;
+        }
+        if (this.time == 0) {
+            setAnimation(boomAnimation);
+        }
+        if (this.time == -5 && getScene() != null) {
+            getScene().removeActor(this);
+        }
     }
-
 }
