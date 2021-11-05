@@ -4,12 +4,10 @@ import sk.tuke.kpi.gamelib.graphics.Animation;
 import sk.tuke.kpi.oop.game.Reactor;
 
 public class FireExtinguisher extends BreakableTool<Reactor> {
-    private Animation extinguisherAnimation;
 
     public FireExtinguisher() {
         super(1);
-        extinguisherAnimation = new Animation("sprites/extinguisher.png", 16, 16);
-        setAnimation(extinguisherAnimation);
+        setAnimation(new Animation("sprites/extinguisher.png", 16, 16));
     }
 
     @Override
