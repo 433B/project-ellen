@@ -15,7 +15,6 @@ public class Hammer extends BreakableTool<Reactor> {
         if (actor != null) {
             actor.repair();
             super.useWith(actor);
-            super.getRemainingUses(1);
         }
     }
 }
