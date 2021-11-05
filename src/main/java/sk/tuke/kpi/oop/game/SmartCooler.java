@@ -13,10 +13,10 @@ public class SmartCooler extends Cooler {
 
     public void inteligentCooler() {
         if (this.reactor.getTemperature() >= 2500) {
-            turnOn();
+            this.turnOn();
         }
         if (this.reactor.getTemperature() <= 1500) {
-            turnOff();
+            this.turnOff();
         }
     }
 
