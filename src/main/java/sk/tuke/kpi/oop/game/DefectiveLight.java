@@ -29,10 +29,10 @@ public class DefectiveLight extends Light implements Repairable {
             if (number == 10) {
                 setAnimation(lightOn);
             }
-                if (number == 11) {
-                    setAnimation(lightOff);
-                }
+            if (number == 11) {
+                setAnimation(lightOff);
             }
+        }
     }
 
     public void setLightOn() {
