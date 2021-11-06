@@ -20,8 +20,8 @@ public class TimeBomb extends AbstractActor {
     }
 
     public void activate() {
+        setAnimation(fireBombAnimation);
         this.isOn = true;
-        updateAnimation();
     }
 
     public boolean isActivated() {
@@ -32,20 +32,11 @@ public class TimeBomb extends AbstractActor {
         if (isActivated()) {
             this.time--;
             if (this.time == 0) {
-                updateAnimation();
+                setAnimation(boomAnimation);
             }
             if (this.time == -40 && getScene() != null) {
                 getScene().removeActor(this);
             }
-        }
-    }
-
-    public void updateAnimation() {
-        if (isActivated() ) {
-            setAnimation(fireBombAnimation);
-        }
-        if (this.time == 0) {
-            setAnimation(boomAnimation);
         }
     }
 }
