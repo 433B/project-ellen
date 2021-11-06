@@ -130,8 +130,8 @@ public class Reactor extends AbstractActor implements Switchable, Repairable {
                 damage = 0;
             }
             updateAnimation();
+            return true;
         }
-        else return true;
         return false;
     }
 
