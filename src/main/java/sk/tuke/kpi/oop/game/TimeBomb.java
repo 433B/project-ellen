@@ -3,6 +3,8 @@ package sk.tuke.kpi.oop.game;
 import sk.tuke.kpi.gamelib.framework.AbstractActor;
 import sk.tuke.kpi.gamelib.graphics.Animation;
 
+import java.util.Objects;
+
 public class TimeBomb extends AbstractActor {
     private Animation fireBombAnimation;
     private Animation boomAnimation;
@@ -34,8 +36,8 @@ public class TimeBomb extends AbstractActor {
             if (this.time == 0) {
                 setAnimation(boomAnimation);
             }
-            if (this.time == -40 && getScene() != null) {
-                getScene().removeActor(this);
+            if (this.time == -20) {
+                Objects.requireNonNull(getScene()).removeActor(this);
             }
         }
     }
