@@ -140,11 +140,11 @@ public class Reactor extends AbstractActor implements Switchable, Repairable {
     }
 
     public void turnOn() {
-        if (!this.isRunning && damage != 100) {
+        if (!this.isRunning) {
             this.isRunning = true;
             setAnimation(normalAnimation);
         }
-        if (isRunning) {
+        if (this.isOn() && damage != 100) {
             for (EnergyConsumer dev : devices) {
                 dev.setPowered(true);
             }
@@ -156,7 +156,7 @@ public class Reactor extends AbstractActor implements Switchable, Repairable {
             this.isRunning = false;
             setAnimation(offAnimation);
         }
-        if (!this.isRunning) {
+        if (!this.isOn() || getDamage() == 100 || !this.isOn() && getDamage() == 100) {
             for (EnergyConsumer dev : devices) {
                 dev.setPowered(false);
             }
@@ -168,20 +168,24 @@ public class Reactor extends AbstractActor implements Switchable, Repairable {
     }
 
     public void addDevice(EnergyConsumer device) {
-        if (device != null && this.isRunning) {
+        if (isOn() && damage != 100) {
             for (EnergyConsumer dev : devices) {
                 dev.setPowered(true);
             }
+        }
+        if (device != null && this.isRunning) {
             device.setPowered(true);
             this.devices.add(device);
         }
     }
 
     public void removeDevice(EnergyConsumer device) {
-        if (device != null && !this.isRunning) {
+        if (!isOn() || damage == 100 || !isOn() && getDamage() == 100) {
             for (EnergyConsumer dev : devices) {
                 dev.setPowered(false);
             }
+        }
+        if (device != null && !this.isRunning) {
             device.setPowered(false);
             this.devices.remove(device);
         }
