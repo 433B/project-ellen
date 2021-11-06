@@ -26,10 +26,13 @@ public class DefectiveLight extends Light implements Repairable {
     public void randomNumber() {
         if (isOn()) {
             number = (int) (Math.random() * 20);
-            if (number >= 5) {
+            if (number == 10) {
                 setAnimation(lightOn);
-            } else setAnimation(lightOff);
-        }
+            }
+                if (number == 11) {
+                    setAnimation(lightOff);
+                }
+            }
     }
 
     public void setLightOn() {
