@@ -9,7 +9,7 @@ import sk.tuke.kpi.gamelib.framework.actions.Loop;
 import sk.tuke.kpi.gamelib.graphics.Animation;
 
 public class DefectiveLight extends Light implements Repairable {
-    private int number;
+    private double number;
     private boolean stop;
 
     private Animation lightOn;
@@ -25,15 +25,12 @@ public class DefectiveLight extends Light implements Repairable {
 
     public void randomNumber() {
         if (isOn()) {
-            number = (int) (Math.random() * 20);
-            if (number == 10) {
+            number = (int) (Math.random() * Math.nextDown(20));
+            if (number == 1) {
                 setAnimation(lightOn);
             }
-            if (number == 11) {
+            if (number == 2) {
                 setAnimation(lightOff);
-            }
-            if(number == 12 || number == 13) {
-                setAnimation(lightOn);
             }
         }
     }
