@@ -1,6 +1,5 @@
 package sk.tuke.kpi.oop.game;
 
-import sk.tuke.kpi.gamelib.Actor;
 import sk.tuke.kpi.gamelib.actions.ActionSequence;
 import sk.tuke.kpi.gamelib.actions.Invoke;
 import sk.tuke.kpi.gamelib.actions.Wait;
@@ -28,12 +27,12 @@ public class TimeBomb extends AbstractActor {
         if (isOn) {
             this.time--;
             if (this.time == 0) {
-                setAnimation(new Animation("sprites/small_explosion.png", 16, 16, 0.2f, Animation.PlayMode.ONCE));
+                setAnimation(new Animation("sprites/small_explosion.png", 16, 16, 0.25f, Animation.PlayMode.ONCE));
+                new ActionSequence<>(
+                    new Wait<>(2),
+                    new Invoke<>(this::delete)
+                ).scheduleFor(this);
             }
-            new ActionSequence<>(
-                new Wait<>(2),
-                new Invoke<>(this::delete)
-            ).scheduleFor(this);
         }
     }
 
