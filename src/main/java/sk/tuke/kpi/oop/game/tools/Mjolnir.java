@@ -3,6 +3,6 @@ package sk.tuke.kpi.oop.game.tools;
 public class Mjolnir extends Hammer {
 
     public Mjolnir() {
-        super.getRemainingUses(4);
+        super.setRemainingUses(4);
     }
 }
