@@ -8,8 +8,10 @@ import sk.tuke.kpi.gamelib.actions.Wait;
 import sk.tuke.kpi.gamelib.framework.actions.Loop;
 import sk.tuke.kpi.gamelib.graphics.Animation;
 
+import java.util.Random;
+
 public class DefectiveLight extends Light implements Repairable {
-    private double number;
+//    private double number;
     private boolean stop;
 
     private Animation lightOn;
@@ -25,14 +27,23 @@ public class DefectiveLight extends Light implements Repairable {
 
     public void randomNumber() {
         if (isOn()) {
-            number = (int) (Math.random() * Math.nextDown(20));
-            if (number == 1) {
+            Random random = new Random();
+            int rand  = random.nextInt(21);
+            if (rand == 1) {
                 setAnimation(lightOn);
             }
-            else if (number == 2) {
+            else if (rand == 2 ) {
                 setAnimation(lightOff);
             }
         }
+//            number = (int) (Math.random() * Math.nextDown(20));
+//            if (number == 1) {
+//                setAnimation(lightOn);
+//            }
+//            else if (number == 2) {
+//                setAnimation(lightOff);
+//            }
+//        }
     }
 
     public void setLightOn() {
