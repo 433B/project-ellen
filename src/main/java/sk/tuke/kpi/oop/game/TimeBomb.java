@@ -4,7 +4,6 @@ import sk.tuke.kpi.gamelib.framework.AbstractActor;
 import sk.tuke.kpi.gamelib.graphics.Animation;
 
 public class TimeBomb extends AbstractActor {
-    private Animation bombAnimation;
     private Animation fireBombAnimation;
     private Animation boomAnimation;
 
@@ -13,25 +12,24 @@ public class TimeBomb extends AbstractActor {
 
     public TimeBomb(float time) {
         this.time = time;
+        this.isOn = false;
 
-        bombAnimation = new Animation("sprites/bomb.png", 16, 16);
         fireBombAnimation = new Animation("sprites/bomb_activated.png", 16, 16, 0.2f, Animation.PlayMode.LOOP_REVERSED);
         boomAnimation = new Animation("sprites/small_explosion.png", 16, 16, 0.2f, Animation.PlayMode.LOOP_REVERSED);
-        setAnimation(bombAnimation);
+        setAnimation(new Animation("sprites/bomb.png", 16, 16));
     }
 
     public void activate() {
         this.isOn = true;
-        setAnimation(bombAnimation);
+        setAnimation(fireBombAnimation);
     }
 
     public boolean isActivated() {
-        setAnimation(fireBombAnimation);
         return this.isOn;
     }
 
     public void akBar() {
-        if (isOn) {
+        if (isActivated()) {
             this.time--;
         }
         if (this.time == 0) {
