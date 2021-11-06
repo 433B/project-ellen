@@ -32,6 +32,9 @@ public class DefectiveLight extends Light implements Repairable {
             if (number == 11) {
                 setAnimation(lightOff);
             }
+            if(number == 12 || number == 13) {
+                setAnimation(lightOn);
+            }
         }
     }
 
