@@ -54,12 +54,10 @@ public class Reactor extends AbstractActor implements Switchable, Repairable {
         }
         if (add > 0) {
             if (damage >= 33 && damage <= 66) {
-                temperature = (int) Math.round(temperature + (add  * 1.5));
-            }
-            else if (damage > 66) {
+                temperature = (int) Math.round(temperature + (add * 1.5));
+            } else if (damage > 66) {
                 temperature = Math.round(temperature + (add * 2));
-            }
-            else {
+            } else {
                 temperature = temperature + add;
             }
             if (temperature > 2000) {
@@ -79,8 +77,7 @@ public class Reactor extends AbstractActor implements Switchable, Repairable {
         }
 
         if (sub > 0 && isRunning) {
-            if (damage >= 50 && damage < 100)
-            {
+            if (damage >= 50 && damage < 100) {
                 temperature = temperature - sub / 2;
             }
             if (damage < 50) {
@@ -118,11 +115,10 @@ public class Reactor extends AbstractActor implements Switchable, Repairable {
     public boolean repair() {
         if (getDamage() > 0 && getDamage() < 100 && isRunning) {
             int sub = damage - 50;
-            if (sub > 0 ) {
+            if (sub > 0) {
                 temperature = (int) Math.round((sub / 0.025) + 2000);
                 damage -= 50;
-            }
-            else {
+            } else {
                 temperature = 2000;
                 damage = 0;
             }
@@ -144,6 +140,9 @@ public class Reactor extends AbstractActor implements Switchable, Repairable {
     }
 
     public void turnOn() {
+        for (EnergyConsumer dev : devices) {
+            dev.setPowered(true);
+        }
         if (!this.isRunning && damage != 100) {
             this.isRunning = true;
             setAnimation(normalAnimation);
@@ -151,6 +150,9 @@ public class Reactor extends AbstractActor implements Switchable, Repairable {
     }
 
     public void turnOff() {
+        for (EnergyConsumer dev : devices) {
+            dev.setPowered(false);
+        }
         if (this.isRunning) {
             this.isRunning = false;
             setAnimation(offAnimation);
@@ -162,6 +164,9 @@ public class Reactor extends AbstractActor implements Switchable, Repairable {
     }
 
     public void addDevice(EnergyConsumer device) {
+        for (EnergyConsumer dev : devices) {
+            dev.setPowered(true);
+        }
         if (device != null && this.isRunning) {
             device.setPowered(true);
             this.devices.add(device);
@@ -169,6 +174,9 @@ public class Reactor extends AbstractActor implements Switchable, Repairable {
     }
 
     public void removeDevice(EnergyConsumer device) {
+        for (EnergyConsumer dev : devices) {
+            dev.setPowered(false);
+        }
         if (device != null && !this.isRunning) {
             device.setPowered(false);
             this.devices.remove(device);
