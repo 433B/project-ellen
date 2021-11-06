@@ -1,5 +1,8 @@
 package sk.tuke.kpi.oop.game;
 
+import sk.tuke.kpi.gamelib.actions.ActionSequence;
+import sk.tuke.kpi.gamelib.actions.Invoke;
+import sk.tuke.kpi.gamelib.actions.Wait;
 import sk.tuke.kpi.gamelib.framework.AbstractActor;
 import sk.tuke.kpi.gamelib.graphics.Animation;
 
@@ -39,11 +42,16 @@ public class TimeBomb extends AbstractActor {
             if (this.time == 0) {
                 this.boom = true;
                 setAnimation(boomAnimation);
+                new ActionSequence<>(
+                    new Wait<>(2f),
+                    new Invoke<>(this::delete)
+                ).scheduleFor(this);
             } else this.boom = false;
-            if (this.time == -5) {
-                Objects.requireNonNull(getScene()).removeActor(this);
-            }
         }
+    }
+
+    public void delete() {
+        Objects.requireNonNull(getScene()).removeActor(this);
     }
 
     public boolean isBoom() {
