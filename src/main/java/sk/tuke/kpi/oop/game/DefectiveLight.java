@@ -1,21 +1,23 @@
 package sk.tuke.kpi.oop.game;
 
 import org.jetbrains.annotations.NotNull;
+import sk.tuke.kpi.gamelib.Disposable;
 import sk.tuke.kpi.gamelib.Scene;
 import sk.tuke.kpi.gamelib.actions.ActionSequence;
 import sk.tuke.kpi.gamelib.actions.Invoke;
 import sk.tuke.kpi.gamelib.actions.Wait;
 import sk.tuke.kpi.gamelib.framework.actions.Loop;
 import sk.tuke.kpi.gamelib.graphics.Animation;
+import sk.tuke.kpi.oop.game.tools.Wrench;
 
-import java.util.Random;
 
 public class DefectiveLight extends Light implements Repairable {
-//    private double number;
+    private double number;
     private boolean stop;
 
     private Animation lightOn;
     private Animation lightOff;
+    private Disposable disposable;
 
     public DefectiveLight() {
         super();
@@ -27,49 +29,39 @@ public class DefectiveLight extends Light implements Repairable {
 
     public void randomNumber() {
         if (isOn()) {
-            Random random = new Random();
-            int rand  = random.nextInt(21);
-            if (rand == 1) {
+            number = (int) (Math.random() * Math.nextDown(20));
+            if (number == 1) {
                 setAnimation(lightOn);
             }
-            else if (rand == 2 ) {
+            else if (number == 2) {
                 setAnimation(lightOff);
             }
         }
-//            number = (int) (Math.random() * Math.nextDown(20));
-//            if (number == 1) {
-//                setAnimation(lightOn);
-//            }
-//            else if (number == 2) {
-//                setAnimation(lightOff);
-//            }
-//        }
-    }
-
-    public void setLightOn() {
-        setAnimation(lightOn);
-        stop = false;
     }
 
     @Override
     public void addedToScene(@NotNull Scene scene) {
         super.addedToScene(scene);
-        new Loop<>(new Invoke<>(this::randomNumber)).scheduleFor(this);
+//        new Loop<>(new Invoke<>(this::randomNumber)).scheduleFor(this);
+        disposable = new Loop<>(new Invoke<>(this::randomNumber)).scheduleFor(this);
     }
 
     @Override
     public boolean repair() {
-        if (isOn() && !stop) {
-            setLightOn();
+        if(isOn() && !stop){
+            disposable.dispose();
+            setAnimation(lightOn);
             stop = true;
-            new ActionSequence<>(
-                new Invoke<>(this::turnOff),
-                new Invoke<>(this::setLightOn),
-                new Wait<>(10),
-                new Invoke<>(this::turnOn)
-            ).scheduleFor(this);
+            new ActionSequence<>(new Wait<>(10), new Invoke<>(this::refresh)).scheduleFor(this);
             return true;
         }
-        return false;
+        else {
+            return false;
+        }
+    }
+
+    private void refresh() {
+        new Loop<>(new Invoke<>(this::randomNumber)).scheduleFor(this);
+        stop = false;
     }
 }
