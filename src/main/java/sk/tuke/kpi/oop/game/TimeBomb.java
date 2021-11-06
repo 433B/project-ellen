@@ -34,7 +34,7 @@ public class TimeBomb extends AbstractActor {
             if (this.time == 0) {
                 updateAnimation();
             }
-            if (this.time == -60 && getScene() != null) {
+            if (this.time == -40 && getScene() != null) {
                 getScene().removeActor(this);
             }
         }
@@ -44,7 +44,7 @@ public class TimeBomb extends AbstractActor {
         if (isActivated() ) {
             setAnimation(fireBombAnimation);
         }
-        if (time == 0) {
+        if (this.time == 0) {
             setAnimation(boomAnimation);
         }
     }
