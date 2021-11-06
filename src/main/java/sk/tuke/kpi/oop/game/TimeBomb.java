@@ -21,7 +21,7 @@ public class TimeBomb extends AbstractActor {
 
     public void activate() {
         this.isOn = true;
-        setAnimation(fireBombAnimation);
+        updateAnimation();
     }
 
     public boolean isActivated() {
@@ -31,12 +31,21 @@ public class TimeBomb extends AbstractActor {
     public void akBar() {
         if (isActivated()) {
             this.time--;
+            if (this.time == 0) {
+                updateAnimation();
+            }
+            if (this.time == -60 && getScene() != null) {
+                getScene().removeActor(this);
+            }
         }
-        if (this.time == 0) {
+    }
+
+    public void updateAnimation() {
+        if (isActivated() ) {
+            setAnimation(fireBombAnimation);
+        }
+        if (time == 0) {
             setAnimation(boomAnimation);
-        }
-        if (this.time == -5 && getScene() != null) {
-            getScene().removeActor(this);
         }
     }
 }
