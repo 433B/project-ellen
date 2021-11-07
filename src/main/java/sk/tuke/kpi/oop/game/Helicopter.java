@@ -1,28 +1,28 @@
 package sk.tuke.kpi.oop.game;
 
-
-import sk.tuke.kpi.gamelib.Actor;
-import sk.tuke.kpi.gamelib.actions.ActionSequence;
 import sk.tuke.kpi.gamelib.actions.Invoke;
 import sk.tuke.kpi.gamelib.framework.AbstractActor;
 import sk.tuke.kpi.gamelib.framework.Player;
+import sk.tuke.kpi.gamelib.framework.actions.Loop;
 import sk.tuke.kpi.gamelib.graphics.Animation;
 
+import java.util.Objects;
+
 public class Helicopter extends AbstractActor {
-    private boolean isOn;
+    private Player player;
 
     public Helicopter() {
         setAnimation(new Animation("sprites/heli.png", 64, 64, 0.1f, Animation.PlayMode.LOOP_PINGPONG));
     }
 
-    public void startSearchAndDestroy() {
-        this.isOn = true;
+    public void searchAndDestroy() {
+
+        player = Objects.requireNonNull(getScene()).getFirstActorByType((Player.class));
+        new Loop<>(new Invoke<>(this::search)).scheduleFor(this);
     }
 
-    public void searchAndDestroy(Player player) {
-        if (isOn && player != null) {
-            new ActionSequence<>(new Invoke<>(this::startSearchAndDestroy)).scheduleFor(this);
-//            new ActionSequence<Player>(new Invoke<Player>(this::startSearchAndDestroy)).scheduleFor(player);
+    public void search() {
+        if (player != null) {
             if (player.getPosX() == this.getPosX() && player.getPosY() == this.getPosY()) {
                 player.setEnergy(player.getEnergy() - 1);
             }
@@ -40,13 +40,5 @@ public class Helicopter extends AbstractActor {
         }
     }
 
-
-//    @Override
-//    public void addedToScene(@NotNull Scene scene) {
-//        super.addedToScene(scene);
-//        if (player != null) {
-//            new Invoke<>(this::searchAndDestroy).scheduleFor(player);
-//        }
-//    }
 }
 
