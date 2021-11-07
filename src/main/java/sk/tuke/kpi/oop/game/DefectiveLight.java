@@ -18,7 +18,7 @@ public class DefectiveLight extends Light implements Repairable {
         this.isOn = false;
     }
 
-    private void bloom() {
+    private void randomNumber() {
         int i = (int) (Math.random() * Math.nextDown(20));
 
         if (i == 10) {
@@ -34,7 +34,7 @@ public class DefectiveLight extends Light implements Repairable {
             this.turnOn();
             new ActionSequence<>(
                 new Wait<>(10),
-                new Invoke<>(this::refresh)
+                new Invoke<>(this::getLight)
             ).scheduleFor(this);
             return true;
         } else {
@@ -42,14 +42,14 @@ public class DefectiveLight extends Light implements Repairable {
         }
     }
 
-    private void refresh() {
-        disposable = new Loop<>(new Invoke<>(this::bloom)).scheduleFor(this);
+    private void getLight() {
+        disposable = new Loop<>(new Invoke<>(this::randomNumber)).scheduleFor(this);
         isOn = false;
     }
 
     @Override
     public void addedToScene(@NotNull Scene scene) {
         super.addedToScene(scene);
-        disposable = new Loop<>(new Invoke<>(this::bloom)).scheduleFor(this);
+        disposable = new Loop<>(new Invoke<>(this::randomNumber)).scheduleFor(this);
     }
 }
