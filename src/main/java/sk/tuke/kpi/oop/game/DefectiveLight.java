@@ -14,7 +14,7 @@ public class DefectiveLight extends Light implements Repairable {
     private double number;
     private boolean stop;
     private boolean isOn;
-    private boolean isPowered;
+//    private boolean isPowered;
 
     private Animation lightOn;
     private Animation lightOff;
@@ -29,32 +29,13 @@ public class DefectiveLight extends Light implements Repairable {
         setAnimation(lightOff);
     }
 
-    public void toggle() {
-        if (!isOn) {
-            turnOn();
-        }
-        else turnOff();
-    }
-
-    public void setElectricityFlow(boolean setElectricityFlow) {
-        this.isOn = setElectricityFlow;
-        updateAnimation();
-    }
-
-    public void updateAnimation() {
-        if (this.isOn && this.isPowered) {
-            setAnimation(lightOn);
-        }
-        else setAnimation(lightOff);
-    }
-
     @Override
     public void setPowered(boolean a) {
-        this.isPowered = a;
+        this.isOn = a;
     }
 
     public void randomNumber() {
-        if (isOn && isPowered) {
+        if (isOn) {
             number = (int) (Math.random() * Math.nextDown(20));
             if (number == 1) {
                 setAnimation(lightOn);
@@ -64,14 +45,16 @@ public class DefectiveLight extends Light implements Repairable {
         }
     }
 
-
     @Override
     public boolean repair() {
-        if (isPowered && isOn && !stop) {
+        if (isPowered() && !stop) {
             disposable.dispose();
             setAnimation(lightOn);
             stop = true;
-            new ActionSequence<>(new Wait<>(10), new Invoke<>(this::refresh)).scheduleFor(this);
+            new ActionSequence<>(
+                new Wait<>(10),
+                new Invoke<>(this::refresh)
+            ).scheduleFor(this);
             return true;
         }
         return false;
@@ -106,6 +89,6 @@ public class DefectiveLight extends Light implements Repairable {
     }
 
     public boolean isPowered() {
-        return isPowered;
+        return isOn;
     }
 }
