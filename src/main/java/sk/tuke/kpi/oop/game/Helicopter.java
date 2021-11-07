@@ -1,6 +1,9 @@
 package sk.tuke.kpi.oop.game;
 
 
+import sk.tuke.kpi.gamelib.Actor;
+import sk.tuke.kpi.gamelib.actions.ActionSequence;
+import sk.tuke.kpi.gamelib.actions.Invoke;
 import sk.tuke.kpi.gamelib.framework.AbstractActor;
 import sk.tuke.kpi.gamelib.framework.Player;
 import sk.tuke.kpi.gamelib.graphics.Animation;
@@ -18,6 +21,8 @@ public class Helicopter extends AbstractActor {
 
     public void searchAndDestroy(Player player) {
         if (isOn && player != null) {
+            new ActionSequence<>(new Invoke<>(this::startSearchAndDestroy)).scheduleFor(this);
+//            new ActionSequence<Player>(new Invoke<Player>(this::startSearchAndDestroy)).scheduleFor(player);
             if (player.getPosX() == this.getPosX() && player.getPosY() == this.getPosY()) {
                 player.setEnergy(player.getEnergy() - 1);
             }
