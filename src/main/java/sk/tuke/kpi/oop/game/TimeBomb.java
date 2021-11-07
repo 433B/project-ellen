@@ -23,15 +23,19 @@ public class TimeBomb extends AbstractActor {
 
     public void activate() {
         if (!isOn) {
-            this.isOn = true;
+            isOn = true;
+            setAnimation(new Animation("sprites/bomb_activated.png", 16, 16, time / 6, Animation.PlayMode.LOOP_REVERSED));
+        }
+        if (isOn) {
             new ActionSequence<>(new Wait<>(0), new Invoke<>(this::setKAK)).scheduleFor(this);
             new ActionSequence<>(new Wait<>(time), new Invoke<>(this::setAnim), new Invoke<>(this::delete)).scheduleFor(this);
         }
-
     }
 
     public void setKAK() {
-        setAnimation(new Animation("sprites/bomb_activated.png", 16, 16, time / 6, Animation.PlayMode.LOOP_REVERSED));
+        if (isActivated()) {
+            setAnimation(new Animation("sprites/bomb_activated.png", 16, 16, time / 6, Animation.PlayMode.LOOP_REVERSED));
+        }
     }
 
     public void setAnim() {
@@ -46,6 +50,9 @@ public class TimeBomb extends AbstractActor {
     }
 
     public boolean isActivated() {
+        if(isOn) {
+            setAnimation(new Animation("sprites/bomb_activated.png", 16, 16, time / 6, Animation.PlayMode.LOOP_REVERSED));
+        }
         return this.isOn;
     }
 }
