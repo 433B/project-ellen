@@ -7,88 +7,49 @@ import sk.tuke.kpi.gamelib.actions.ActionSequence;
 import sk.tuke.kpi.gamelib.actions.Invoke;
 import sk.tuke.kpi.gamelib.actions.Wait;
 import sk.tuke.kpi.gamelib.framework.actions.Loop;
-import sk.tuke.kpi.gamelib.graphics.Animation;
 
 
 public class DefectiveLight extends Light implements Repairable {
-    private double number;
-    private boolean stop;
-    private boolean isOn;
-//    private boolean isPowered;
-
-    private Animation lightOn;
-    private Animation lightOff;
     private Disposable disposable;
+    private boolean isOn;
 
     public DefectiveLight() {
         super();
-        this.stop = false;
-
-        lightOff = new Animation("sprites/light_off.png", 16, 16);
-        lightOn = new Animation("sprites/light_on.png", 16, 16);
-        setAnimation(lightOff);
+        this.isOn = false;
     }
 
-    @Override
-    public void setPowered(boolean a) {
-        this.isOn = a;
-    }
+    private void bloom() {
+        int i = (int) (Math.random() * Math.nextDown(20));
 
-    public void randomNumber() {
-        if (isOn) {
-            number = (int) (Math.random() * Math.nextDown(20));
-            if (number == 1) {
-                setAnimation(lightOn);
-            } else if (number == 2) {
-                setAnimation(lightOff);
-            }
+        if (i == 10) {
+            toggle();
         }
     }
 
     @Override
     public boolean repair() {
-        if (isPowered() && !stop) {
+        if (!isOn) {
+            isOn = true;
             disposable.dispose();
-            setAnimation(lightOn);
-            stop = true;
+            this.turnOn();
             new ActionSequence<>(
                 new Wait<>(10),
                 new Invoke<>(this::refresh)
             ).scheduleFor(this);
             return true;
+        } else {
+            return false;
         }
-        return false;
     }
 
     private void refresh() {
-        disposable = new Loop<>(new Invoke<>(this::randomNumber)).scheduleFor(this);
-        stop = false;
+        disposable = new Loop<>(new Invoke<>(this::bloom)).scheduleFor(this);
+        isOn = false;
     }
 
     @Override
     public void addedToScene(@NotNull Scene scene) {
         super.addedToScene(scene);
-        disposable = new Loop<>(new Invoke<>(this::randomNumber)).scheduleFor(this);
-    }
-
-    @Override
-    public void turnOn() {
-        isOn = true;
-        updateAnimation();
-    }
-
-    @Override
-    public void turnOff() {
-        isOn = false;
-        updateAnimation();
-    }
-
-    @Override
-    public boolean isOn() {
-        return this.isOn;
-    }
-
-    public boolean isPowered() {
-        return isOn;
+        disposable = new Loop<>(new Invoke<>(this::bloom)).scheduleFor(this);
     }
 }
