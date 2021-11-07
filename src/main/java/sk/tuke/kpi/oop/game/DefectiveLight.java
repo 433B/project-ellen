@@ -13,6 +13,8 @@ import sk.tuke.kpi.gamelib.graphics.Animation;
 public class DefectiveLight extends Light implements Repairable {
     private double number;
     private boolean stop;
+    private boolean isOn;
+    private boolean isPowered;
 
     private Animation lightOn;
     private Animation lightOff;
@@ -24,18 +26,60 @@ public class DefectiveLight extends Light implements Repairable {
 
         lightOff = new Animation("sprites/light_off.png", 16, 16);
         lightOn = new Animation("sprites/light_on.png", 16, 16);
+        setAnimation(lightOff);
+    }
+
+    public void toggle() {
+        if (!isOn) {
+            turnOn();
+        }
+        else turnOff();
+    }
+
+    public void setElectricityFlow(boolean setElectricityFlow) {
+        this.isOn = setElectricityFlow;
+        updateAnimation();
+    }
+
+    public void updateAnimation() {
+        if (this.isOn && this.isPowered) {
+            setAnimation(lightOn);
+        }
+        else setAnimation(lightOff);
+    }
+
+    @Override
+    public void setPowered(boolean a) {
+        this.isPowered = a;
     }
 
     public void randomNumber() {
-        if (isOn()) {
+        if (isOn && isPowered) {
             number = (int) (Math.random() * Math.nextDown(20));
             if (number == 1) {
                 setAnimation(lightOn);
-            }
-            else if (number == 2) {
+            } else if (number == 2) {
                 setAnimation(lightOff);
             }
         }
+    }
+
+
+    @Override
+    public boolean repair() {
+        if (isPowered && isOn && !stop) {
+            disposable.dispose();
+            setAnimation(lightOn);
+            stop = true;
+            new ActionSequence<>(new Wait<>(10), new Invoke<>(this::refresh)).scheduleFor(this);
+            return true;
+        }
+        return false;
+    }
+
+    private void refresh() {
+        disposable = new Loop<>(new Invoke<>(this::randomNumber)).scheduleFor(this);
+        stop = false;
     }
 
     @Override
@@ -45,21 +89,23 @@ public class DefectiveLight extends Light implements Repairable {
     }
 
     @Override
-    public boolean repair() {
-        if(isOn() && !stop){
-            disposable.dispose();
-            setAnimation(lightOn);
-            stop = true;
-            new ActionSequence<>(new Wait<>(10), new Invoke<>(this::refresh)).scheduleFor(this);
-            return true;
-        }
-        else {
-            return false;
-        }
+    public void turnOn() {
+        isOn = true;
+        updateAnimation();
     }
 
-    private void refresh() {
-        disposable = new Loop<>(new Invoke<>(this::randomNumber)).scheduleFor(this);
-        stop = false;
+    @Override
+    public void turnOff() {
+        isOn = false;
+        updateAnimation();
+    }
+
+    @Override
+    public boolean isOn() {
+        return this.isOn;
+    }
+
+    public boolean isPowered() {
+        return isPowered;
     }
 }
