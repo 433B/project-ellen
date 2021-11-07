@@ -26,6 +26,7 @@ public class DefectiveLight extends Light implements Repairable {
         }
     }
 
+
     @Override
     public boolean repair() {
         if (!isOn) {
