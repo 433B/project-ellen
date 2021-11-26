@@ -4,7 +4,7 @@ import sk.tuke.kpi.gamelib.Actor;
 import sk.tuke.kpi.gamelib.Disposable;
 import sk.tuke.kpi.gamelib.Scene;
 import sk.tuke.kpi.gamelib.framework.actions.AbstractAction;
-import sk.tuke.kpi.oop.game.items.*;
+import sk.tuke.kpi.oop.game.items.Usable;
 
 public class Use<A extends  Actor> extends AbstractAction<A> {
     private Usable<A> weapon;
@@ -23,14 +23,13 @@ public class Use<A extends  Actor> extends AbstractAction<A> {
     public Disposable scheduleForIntersectingWith(Actor mediatingActor) {
         Scene scene = mediatingActor.getScene();
         if (scene == null) return null;
-        Class<A> usingActorClass = weapon.getUsingActorClass();  // `usable` je spominana clenska premenna
+        Class<A> usingActorClass = weapon.getUsingActorClass();
 
         for (Actor actor : scene) {
             if (mediatingActor.intersects(actor) && usingActorClass.isInstance(actor)) {
-                return this.scheduleFor(usingActorClass.cast(actor));  // naplanovanie akcie v pripade, ze sa nasiel vhodny akter
+                return this.scheduleFor(usingActorClass.cast(actor));
             }
         }
         return null;
     }
-
 }
