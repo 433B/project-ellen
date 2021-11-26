@@ -24,7 +24,7 @@ public class Ripley extends AbstractActor implements Movable, Keeper, Alive {
         super("Ellen");
         playerRipl = new Animation("sprites/player.png", 32, 32, 0.1f, Animation.PlayMode.LOOP_PINGPONG);
         setAnimation(playerRipl);
-        this.health = new Health(100, 50);
+        this.health = new Health(100, 100);
         ammo = 50;
         speed = 3;
         backpack = new Backpack("Ripley's backpack", 10);
