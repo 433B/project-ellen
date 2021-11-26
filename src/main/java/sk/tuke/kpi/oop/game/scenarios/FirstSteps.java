@@ -41,10 +41,10 @@ public class FirstSteps implements SceneListener {
             new Invoke<>(() -> energy.useWith(ripley))
         ).scheduleFor(ripley);
 
-        new When<> (
-            () -> ripley.intersects(ripley),
-            new Invoke<>(() -> ammo.useWith(ripley))
-        ).scheduleFor(ripley);
+//        new When<> (
+//            () -> ripley.intersects(ripley),
+//            new Invoke<>(() -> ammo.useWith(ripley))
+//        ).scheduleFor(ripley);
 
         ripley.getBackpack().add(fireExtinguisher);
         ripley.getBackpack().add(hammer);

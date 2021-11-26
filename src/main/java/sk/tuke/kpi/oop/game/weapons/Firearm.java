@@ -17,7 +17,7 @@ public abstract class Firearm extends AbstractActor implements Alive, Movable, F
         max = maxPoc;
     }
 
-    int getAmmo() {
+    public int getAmmo() {
         return now;
     }
 

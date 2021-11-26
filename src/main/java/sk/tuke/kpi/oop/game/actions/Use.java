@@ -16,10 +16,8 @@ public class Use<A extends  Actor> extends AbstractAction<A> {
 
     @Override
     public void execute(float deltaTime) {
-        if (!isDone()) {
-            weapon.useWith(getActor());
-            setDone(true);
-        }
+        weapon.useWith(getActor());
+        setDone(true);
     }
 
     public Disposable scheduleForIntersectingWith(Actor mediatingActor) {
