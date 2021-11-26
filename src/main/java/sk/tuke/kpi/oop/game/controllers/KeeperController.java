@@ -34,18 +34,19 @@ public class KeeperController implements KeyboardListener {
             new Shift<>().scheduleFor(keeper);
         }
         if (key == Input.Key.U) {
-            for (Actor item : Objects.requireNonNull(this.keeper.getScene()).getActors()) {
-                if (item instanceof Usable && this.keeper.intersects(item)) {
-                    new Use<>((Usable<?>) item).scheduleForIntersectingWith(this.keeper);
-                }
-            }
-
+            this.pressdU();
         }
-
         if (key == Input.Key.B && keeper.getBackpack().peek() instanceof Usable) {
             Use<?> use = new Use<>((Usable<?>) keeper.getBackpack().peek());
             use.scheduleForIntersectingWith(keeper);
         }
     }
 
+    public void pressdU() {
+        for (Actor item : Objects.requireNonNull(this.keeper.getScene()).getActors()) {
+            if (item instanceof Usable && this.keeper.intersects(item)) {
+                new Use<>((Usable<?>) item).scheduleForIntersectingWith(this.keeper);
+            }
+        }
+    }
 }
