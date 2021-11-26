@@ -40,6 +40,37 @@ public enum Direction {
         return gradusUhol;
     }
 
+    public static Direction fromAngle(float angle) {
+        if (angle == 0) {
+            return Direction.NORTH;
+        }
+        if (angle == 45) {
+            return Direction.NORTHWEST;
+        }
+        else if (angle == 90) {
+            return Direction.WEST;
+        }
+        else if (angle == 135) {
+            return Direction.SOUTHWEST;
+        }
+        else if (angle == 180) {
+            return Direction.SOUTH;
+        }
+        else if (angle == 225) {
+            return Direction.SOUTHEAST;
+        }
+        else if (angle == 270) {
+            return Direction.EAST;
+        }
+        else if (angle == 315) {
+            return Direction.NORTHEAST;
+        }
+        else {
+            return Direction.NONE;
+        }
+    }
+
+
     public Direction combine(Direction other) {
         Direction direction = NONE;
         int moveX, moveY;
