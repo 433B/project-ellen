@@ -4,9 +4,7 @@ import sk.tuke.kpi.gamelib.Actor;
 
 public interface Movable extends Actor {
 
-    default int getSpeed() {
-        return 0;
-    }
+    int getSpeed();
 
     default void startedMoving(Direction direction) {
     }

@@ -9,8 +9,14 @@ public class Gun extends Firearm {
         super(minPoc, maxPoc);
     }
 
+
     @Override
     public Health getHealth() {
         return null;
+    }
+
+    @Override
+    public int getSpeed() {
+        return 0;
     }
 }

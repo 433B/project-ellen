@@ -20,4 +20,9 @@ public class Alien extends AbstractActor implements Movable, Enemy, Alive {
     @Override
     public void addedToScene(@NotNull Scene scene) {
     }
+
+    @Override
+    public int getSpeed() {
+        return 0;
+    }
 }
