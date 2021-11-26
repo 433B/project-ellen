@@ -8,8 +8,6 @@ import sk.tuke.kpi.oop.game.items.Collectible;
 import java.util.Objects;
 
 public class Take<A extends  Keeper> extends AbstractAction<Keeper> {
-
-
     private A ripley;
 
     public Take() {
@@ -21,17 +19,20 @@ public class Take<A extends  Keeper> extends AbstractAction<Keeper> {
 
     @Override
     public void execute(float deltaTime) {
-        try {
-            for (Actor weapon : Objects.requireNonNull(Objects.requireNonNull(getActor()).getScene()).getActors()) {
-                if (weapon instanceof Collectible && weapon != this.ripley && getActor().intersects(weapon)) {
-                    getActor().getBackpack().add((Collectible) weapon);
-                    Objects.requireNonNull(getActor().getScene()).removeActor(weapon);
-                    break;
+        if (getActor() != null || getActor().getScene() != null && !isDone()) {
+            try {
+                for (Actor weapon : Objects.requireNonNull(Objects.requireNonNull(getActor()).getScene()).getActors()) {
+                    if (weapon instanceof Collectible && weapon != this.ripley && getActor().intersects(weapon)) {
+                        getActor().getBackpack().add((Collectible) weapon);
+                        Objects.requireNonNull(getActor().getScene()).removeActor(weapon);
+                        break;
+                    }
                 }
+            } catch (IllegalStateException error) {
+                Objects.requireNonNull(Objects.requireNonNull(getActor()).getScene()).getOverlay().drawText(error.getMessage(), 0, 0).showFor(2);
+            } finally {
+                setDone(true);
             }
-        } catch (IllegalStateException error) {
-            Objects.requireNonNull(Objects.requireNonNull(getActor()).getScene()).getOverlay().drawText(error.getMessage(), 50, 50).showFor(2);
         }
-        setDone(true);
     }
 }
