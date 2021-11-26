@@ -12,7 +12,7 @@ import sk.tuke.kpi.oop.game.items.Usable;
 
 
 public class KeeperController implements KeyboardListener {
-    Keeper keeper;
+    private Keeper keeper;
 
     public KeeperController(Keeper actor) {
         this.keeper = actor;

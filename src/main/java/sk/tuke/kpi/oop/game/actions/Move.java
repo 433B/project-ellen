@@ -8,8 +8,8 @@ import sk.tuke.kpi.oop.game.Movable;
 import java.util.Objects;
 
 public class Move <A extends Movable> implements Action<Movable> {
-    Movable movable;
-    Direction direction;
+    private Movable movable;
+    private Direction direction;
     private float durationSeconds;
     private int firstTime;
     private boolean isRuning;

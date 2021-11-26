@@ -13,8 +13,8 @@ import sk.tuke.kpi.oop.game.items.Energy;
 
 public class EscapeRoom implements SceneListener {
 
-    Ripley ripley = new Ripley();
-    Alien alien = new Alien();
+    private Ripley ripley = new Ripley();
+    private Alien alien = new Alien();
 
     @Override
     public void sceneCreated(@NotNull Scene scene) {

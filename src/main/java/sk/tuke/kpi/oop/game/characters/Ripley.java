@@ -16,10 +16,10 @@ public class Ripley extends AbstractActor implements Movable, Keeper, Alive {
     private Animation playerRipl;
 //    private Animation dieRipl;
 
-    Health health;
+    private Health health;
     private float speed;
     private int ammo;
-    Backpack backpack;
+    private Backpack backpack;
     public static final Topic<Ripley> RIPLEY_DIED = Topic.create("ripley died", Ripley.class);
 
     public Ripley() {

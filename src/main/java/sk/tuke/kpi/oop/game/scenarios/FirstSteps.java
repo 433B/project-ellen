@@ -11,14 +11,14 @@ import sk.tuke.kpi.oop.game.controllers.MovableController;
 import sk.tuke.kpi.oop.game.items.*;
 
 public class FirstSteps implements SceneListener {
-    Energy energy;
-    Ammo ammo;
+    private Energy energy;
+    private Ammo ammo;
 
-    FireExtinguisher fireExtinguisher = new FireExtinguisher();
-    Ripley ripley;
-    Hammer hammer = new Hammer();
-    Mjolnir mjolnir = new Mjolnir();
-    Wrench wrench = new Wrench();
+    private FireExtinguisher fireExtinguisher = new FireExtinguisher();
+    private Ripley ripley;
+    private Hammer hammer = new Hammer();
+    private Mjolnir mjolnir = new Mjolnir();
+    private Wrench wrench = new Wrench();
 
     public FirstSteps() {
     }

@@ -6,13 +6,11 @@ import sk.tuke.kpi.oop.game.characters.Alive;
 import sk.tuke.kpi.oop.game.characters.Ripley;
 
 public class Energy extends AbstractActor implements Usable<Alive> {
-    public Animation energyAnimation;
 
-    Ripley ripley;
+    private Ripley ripley;
 
     public Energy() {
-        energyAnimation = new Animation("sprites/energy.png", 16,16);
-        setAnimation(energyAnimation);
+        setAnimation(new Animation("sprites/energy.png", 16,16));
     }
 
     @Override

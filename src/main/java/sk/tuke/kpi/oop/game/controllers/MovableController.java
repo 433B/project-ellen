@@ -13,9 +13,9 @@ import java.util.Map;
 import java.util.Set;
 
 public class MovableController implements KeyboardListener {
-    Movable movable;
-    Move <Movable> move;
-    Disposable disposable;
+    private Movable movable;
+    private Move <Movable> move;
+    private Disposable disposable;
     private Set<Input.Key> keyboard;
 
 

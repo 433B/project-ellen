@@ -7,7 +7,7 @@ import sk.tuke.kpi.gamelib.framework.actions.AbstractAction;
 import sk.tuke.kpi.oop.game.items.*;
 
 public class Use<A extends  Actor> extends AbstractAction<A> {
-    Usable<A> weapon;
+    private Usable<A> weapon;
 
     public Use(Usable<A> weapon) {
         this.weapon = weapon;
