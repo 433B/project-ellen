@@ -20,13 +20,13 @@ public class Bullet extends AbstractActor implements Movable {
         if (Direction.NORTH == direction) {
             bulletAnimation.setRotation(0);
             bulletAnimation.play();
-        } else if (Direction.NORHWEST == direction) {
+        } else if (Direction.NORTHWEST == direction) {
             bulletAnimation.setRotation(45);
             bulletAnimation.play();
         } else if (Direction.WEST == direction) {
             bulletAnimation.setRotation(90);
             bulletAnimation.play();
-        } else if (Direction.WESTSOUTH == direction) {
+        } else if (Direction.SOUTHWEST == direction) {
             bulletAnimation.setRotation(135);
             bulletAnimation.play();
         } else if (Direction.SOUTH == direction) {
@@ -38,7 +38,7 @@ public class Bullet extends AbstractActor implements Movable {
         } else if (Direction.EAST == direction) {
             bulletAnimation.setRotation(270);
             bulletAnimation.play();
-        } else if (Direction.EASTNORTH == direction) {
+        } else if (Direction.NORTHEAST == direction) {
             bulletAnimation.setRotation(315);
             bulletAnimation.play();
         }

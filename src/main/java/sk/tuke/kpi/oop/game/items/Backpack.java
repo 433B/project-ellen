@@ -9,12 +9,12 @@ import java.util.*;
 public class Backpack implements ActorContainer<Collectible> {
     private int capacity;
     private String containerName;
-    private List<Collectible> backpackItems = new ArrayList<>();
-//    private Collectible[] backpack;
+    private List<Collectible> backpackItems;
 
     public Backpack(String name, int capacity) {
         this.containerName = name;
         this.capacity = capacity;
+        backpackItems = new ArrayList<>();
     }
 
     @Override
@@ -50,9 +50,7 @@ public class Backpack implements ActorContainer<Collectible> {
 
     @Override
     public void remove(@NotNull Collectible actor) {
-        if (backpackItems != null) {
-            backpackItems.remove(actor);
-        }
+        backpackItems.remove(actor);
     }
 
     @Override

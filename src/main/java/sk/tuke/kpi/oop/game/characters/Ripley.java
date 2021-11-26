@@ -54,13 +54,13 @@ public class Ripley extends AbstractActor implements Movable, Keeper, Alive {
         if (Direction.NORTH == direction) {
             playerRipl.setRotation(0);
             playerRipl.play();
-        } else if (Direction.NORHWEST == direction) {
+        } else if (Direction.NORTHWEST == direction) {
             playerRipl.setRotation(45);
             playerRipl.play();
         } else if (Direction.WEST == direction) {
             playerRipl.setRotation(90);
             playerRipl.play();
-        } else if (Direction.WESTSOUTH == direction) {
+        } else if (Direction.SOUTHWEST == direction) {
             playerRipl.setRotation(135);
             playerRipl.play();
         } else if (Direction.SOUTH == direction) {
@@ -72,7 +72,7 @@ public class Ripley extends AbstractActor implements Movable, Keeper, Alive {
         } else if (Direction.EAST == direction) {
             playerRipl.setRotation(270);
             playerRipl.play();
-        } else if (Direction.EASTNORTH == direction) {
+        } else if (Direction.NORTHEAST == direction) {
             playerRipl.setRotation(315);
             playerRipl.play();
         }
