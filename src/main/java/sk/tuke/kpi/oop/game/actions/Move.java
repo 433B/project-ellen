@@ -72,9 +72,11 @@ public class Move <A extends Movable> implements Action<Movable> {
 
     @Override
     public void reset() {
-        isRuning = false;
-        firstTime = 0;
-        durationSeconds = 0;
-        movable.stoppedMoving();
+        if (movable != null) {
+            isRuning = false;
+            firstTime = 0;
+            durationSeconds = 0;
+            movable.stoppedMoving();
+        }
     }
 }
