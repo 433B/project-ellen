@@ -1,5 +1,20 @@
 package sk.tuke.kpi.oop.game.controllers;
 
-public class ShooterController
-{
+import org.jetbrains.annotations.NotNull;
+import sk.tuke.kpi.gamelib.Input;
+import sk.tuke.kpi.gamelib.KeyboardListener;
+import sk.tuke.kpi.oop.game.characters.Armed;
+
+public class ShooterController implements KeyboardListener {
+    private Armed armed;
+
+    public ShooterController(Armed shooterActor) {
+        this.armed = shooterActor;
+    }
+
+    @Override
+    public void keyPressed(@NotNull Input.Key key) {
+
+    }
+
 }

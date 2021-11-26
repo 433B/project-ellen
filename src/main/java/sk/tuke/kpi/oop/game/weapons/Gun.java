@@ -9,6 +9,14 @@ public class Gun extends Firearm {
         super(minPoc, maxPoc);
     }
 
+    public Gun(int minPoc) {
+        super(minPoc);
+    }
+
+    @Override
+    protected Fireable createBullet() {
+        return new Bullet();
+    }
 
     @Override
     public Health getHealth() {

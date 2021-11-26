@@ -1,16 +1,25 @@
 package sk.tuke.kpi.oop.game.weapons;
 
+import org.jetbrains.annotations.NotNull;
+import sk.tuke.kpi.gamelib.Actor;
+import sk.tuke.kpi.gamelib.Scene;
+import sk.tuke.kpi.gamelib.actions.Invoke;
 import sk.tuke.kpi.gamelib.framework.AbstractActor;
+import sk.tuke.kpi.gamelib.framework.actions.Loop;
 import sk.tuke.kpi.gamelib.graphics.Animation;
 import sk.tuke.kpi.oop.game.Direction;
-import sk.tuke.kpi.oop.game.Movable;
+import sk.tuke.kpi.oop.game.characters.Alive;
 
-public class Bullet extends AbstractActor implements Movable {
+import java.util.Objects;
+
+public class Bullet extends AbstractActor implements Fireable {
     private Animation bulletAnimation;
     private float speed;
+    private int gunDamage;
 
     public Bullet() {
         speed = 4;
+        gunDamage = 30;
         bulletAnimation = new Animation("sprites/bullet.png", 16, 16);
         setAnimation(bulletAnimation);
     }
@@ -46,7 +55,7 @@ public class Bullet extends AbstractActor implements Movable {
 
     @Override
     public void collidedWithWall() {
-        getScene().removeActor(this);
+        Objects.requireNonNull(getScene()).removeActor(this);
     }
 
     @Override
@@ -54,4 +63,21 @@ public class Bullet extends AbstractActor implements Movable {
         return (int) this.speed;
     }
 
+    @Override
+    public void addedToScene(@NotNull Scene scene) {
+        super.addedToScene(scene);
+        new Loop<>(
+            new Invoke<>(this::shooting)
+        ).scheduleFor(this);
+
+    }
+
+    private void shooting() {
+        for (Actor actor : Objects.requireNonNull(getScene()).getActors()) {
+            if (this.intersects(actor) && (actor instanceof Alive)) {
+                ((Alive) actor).getHealth().drain(gunDamage);
+                collidedWithWall();
+            }
+        }
+    }
 }

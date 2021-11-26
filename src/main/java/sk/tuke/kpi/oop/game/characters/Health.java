@@ -44,7 +44,7 @@ public class Health {
         this.now = this.max;
     }
 
-    void drain(int amount) {
+    public void drain(int amount) {
         if (amount < now) {
             now -= amount;
         }
