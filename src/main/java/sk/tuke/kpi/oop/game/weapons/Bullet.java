@@ -46,7 +46,7 @@ public class Bullet extends AbstractActor implements Movable {
 
     @Override
     public void collidedWithWall() {
-
+        getScene().removeActor(this);
     }
 
     @Override
