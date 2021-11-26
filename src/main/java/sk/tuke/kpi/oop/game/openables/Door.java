@@ -1,9 +1,10 @@
 package sk.tuke.kpi.oop.game.openables;
 
+import org.jetbrains.annotations.NotNull;
 import sk.tuke.kpi.gamelib.Actor;
+import sk.tuke.kpi.gamelib.Scene;
 import sk.tuke.kpi.gamelib.framework.AbstractActor;
 import sk.tuke.kpi.gamelib.graphics.Animation;
-import sk.tuke.kpi.gamelib.map.MapTile;
 import sk.tuke.kpi.gamelib.messages.Topic;
 import sk.tuke.kpi.oop.game.items.Usable;
 
@@ -43,7 +44,6 @@ public class Door extends AbstractActor implements Usable<Actor>, Openable {
             isOpen = true;
             setAnimation(openDoorAnimation);
             Objects.requireNonNull(getScene()).getMessageBus().publish(DOOR_OPENED, this);
-            getScene().getMap().getTile(0, 0).setType(MapTile.Type.CLEAR);
             openDoorAnimation.play();
             openDoorAnimation.stop();
         }
@@ -55,12 +55,16 @@ public class Door extends AbstractActor implements Usable<Actor>, Openable {
             isOpen = false;
             setAnimation(closeDoorAnimation);
             Objects.requireNonNull(getScene()).getMessageBus().publish(DOOR_CLOSED, this);
-            getScene().getMap().getTile(0, 0).setType(MapTile.Type.WALL);
-            getScene().getMap().getTile(0, 0).isWall();
             closeDoorAnimation.play();
             closeDoorAnimation.stop();
         }
     }
+
+    @Override
+    public void addedToScene(@NotNull Scene scene) {
+        super.addedToScene(scene);
+    }
+
 
     @Override
     public Class<Actor> getUsingActorClass() {

@@ -10,6 +10,7 @@ import sk.tuke.kpi.oop.game.controllers.KeeperController;
 import sk.tuke.kpi.oop.game.controllers.MovableController;
 import sk.tuke.kpi.oop.game.items.Ammo;
 import sk.tuke.kpi.oop.game.items.Energy;
+import sk.tuke.kpi.oop.game.openables.Door;
 
 public class EscapeRoom implements SceneListener {
 
@@ -26,6 +27,9 @@ public class EscapeRoom implements SceneListener {
         ripley = scene.getFirstActorByType(Ripley.class);
         assert ripley != null;
         scene.follow(ripley);
+
+        Door door = new Door();
+        scene.addActor(door, 200, 250);
 
         MovableController movableController = new MovableController(ripley);
         scene.getInput().registerListener(movableController);
