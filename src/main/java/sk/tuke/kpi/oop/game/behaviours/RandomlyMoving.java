@@ -9,10 +9,6 @@ import sk.tuke.kpi.oop.game.Movable;
 import sk.tuke.kpi.oop.game.actions.Move;
 
 public class RandomlyMoving implements Behaviour<Movable> {
-    private int positionX;
-    private int positionY;
-    private Direction direction;
-
     public RandomlyMoving() {
     }
 
@@ -28,13 +24,13 @@ public class RandomlyMoving implements Behaviour<Movable> {
     }
 
     public void randomMove(Movable actor) {
-        this.positionX = (int) (Math.random() * (3)) - 1;
-        this.positionY = (int) (Math.random() * (3)) - 1;
-        this.direction = null;
+        int positionX = (int) (Math.random() * (3)) - 1;
+        int positionY = (int) (Math.random() * (3)) - 1;
+        Direction direction = null;
 
         for (Direction directions : Direction.values()) {
             if (positionY == directions.getDy() && positionX == directions.getDx()) {
-                this.direction = directions;
+                direction = directions;
             }
         }
         assert direction != null;
