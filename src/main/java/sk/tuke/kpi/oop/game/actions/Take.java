@@ -22,11 +22,6 @@ public class Take<A extends Keeper> extends AbstractAction<A> {
 
     @Override
     public void execute(float deltaTime) {
-//        if (getActor() == null || getActor().getScene() == null) {
-//            setDone(true);
-//            return;
-//        }
-
         if (!isDone() && getActor() != null || !isDone() && Objects.requireNonNull(getActor()).getScene() != null) {
             takeList = Objects.requireNonNull(getActor().getScene()).getActors();
             for (Actor actor : takeList) {
