@@ -32,8 +32,6 @@ public class Door extends AbstractActor implements Usable<Actor>, Openable {
     public Door() {
         this.isOpen = false;
         this.listTiles = null;
-
-        openDoorAnimation = new Animation("sprites/vdoor.png", 16, 32, 0.1f, Animation.PlayMode.ONCE);
         closeDoorAnimation = new Animation("sprites/vdoor.png", 16, 32, 0.1f, Animation.PlayMode.ONCE_REVERSED);
         setAnimation(closeDoorAnimation);
     }
@@ -42,15 +40,15 @@ public class Door extends AbstractActor implements Usable<Actor>, Openable {
         super(name);
         this.isOpen = false;
         this.listTiles = null;
+        openDoorAnimation = new Animation("sprites/vdoor.png", 16, 32, 0.1f, Animation.PlayMode.ONCE);
+        closeDoorAnimation = new Animation("sprites/vdoor.png", 16, 32, 0.1f, Animation.PlayMode.ONCE_REVERSED);
 
         if (orientation == Orientation.VERTICAL) {
-            openDoorAnimation = new Animation("sprites/vdoor.png", 16, 32, 0.1f, Animation.PlayMode.ONCE);
-            closeDoorAnimation = new Animation("sprites/vdoor.png", 16, 32, 0.1f, Animation.PlayMode.ONCE_REVERSED);
-            setAnimation(new Animation("sprites/vdoor.png", 16, 32, 0.1f, Animation.PlayMode.ONCE_REVERSED));
+            setAnimation(openDoorAnimation);
+            setAnimation(closeDoorAnimation);
         } else {
             openDoorAnimation = new Animation("sprites/hdoor.png", 16, 32, 0.1f, Animation.PlayMode.ONCE);
             closeDoorAnimation = new Animation("sprites/hdoor.png", 16, 32, 0.1f, Animation.PlayMode.ONCE_REVERSED);
-            setAnimation(new Animation("sprites/hdoor.png", 16, 32, 0.1f, Animation.PlayMode.ONCE_REVERSED));
         }
     }
 
