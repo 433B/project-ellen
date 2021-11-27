@@ -10,14 +10,17 @@ import sk.tuke.kpi.oop.game.Direction;
 import sk.tuke.kpi.oop.game.Keeper;
 import sk.tuke.kpi.oop.game.Movable;
 import sk.tuke.kpi.oop.game.items.Backpack;
+import sk.tuke.kpi.oop.game.weapons.Firearm;
+import sk.tuke.kpi.oop.game.weapons.Gun;
 
-public class Ripley extends AbstractActor implements Movable, Keeper, Alive {
+public class Ripley extends AbstractActor implements Movable, Keeper, Alive, Armed {
     private Animation playerRipl;
     private Animation dieRipl;
 
     private Health health;
     private float speed;
     private int ammo;
+    private Firearm gun;
     private Backpack backpack;
     public static final Topic<Ripley> RIPLEY_DIED = Topic.create("ripley died", Ripley.class);
 
@@ -25,9 +28,10 @@ public class Ripley extends AbstractActor implements Movable, Keeper, Alive {
         super("Ellen");
         playerRipl = new Animation("sprites/player.png", 32, 32, 0.1f, Animation.PlayMode.LOOP_PINGPONG);
         setAnimation(playerRipl);
-        this.health = new Health(100, 100);
         this.ammo = 50;
         this.speed = 3;
+        this.health = new Health(100, 100);
+        this.gun = new Gun(100);
         backpack = new Backpack("Ripley's backpack", 10);
         playerRipl.stop();
         dieRipl = new Animation("sprites/player.png", 32, 32, 0.1f, Animation.PlayMode.ONCE);
@@ -76,20 +80,13 @@ public class Ripley extends AbstractActor implements Movable, Keeper, Alive {
         int windowHeight = scene.getGame().getWindowSetup().getHeight();
         int yTextPos = windowHeight - GameApplication.STATUS_LINE_OFFSET;
         scene.getGame().getOverlay().drawText("Energy: " + health.getValue(), 120, yTextPos);
-        scene.getGame().getOverlay().drawText("Ammo: " + 50, 260, yTextPos);
-    }
-
-    public int getAmmo() {
-        return this.ammo;
-    }
-
-    public void setAmmo(int a) {
-        this.ammo = a;
+        scene.getGame().getOverlay().drawText("Ammo: " + this.getFirearm().getAmmo(), 260, yTextPos);
     }
 
     @Override
-    public void stoppedMoving() {
-        playerRipl.pause();
+    public void addedToScene(@NotNull Scene scene) {
+        super.addedToScene(scene);
+        this.health.onExhaustion(this::ellenDied);
     }
 
     @Override
@@ -107,9 +104,26 @@ public class Ripley extends AbstractActor implements Movable, Keeper, Alive {
         return backpack;
     }
 
+    public int getAmmo() {
+        return this.ammo;
+    }
+
+    public void setAmmo(int a) {
+        this.ammo = a;
+    }
+
     @Override
-    public void addedToScene(@NotNull Scene scene) {
-        super.addedToScene(scene);
-        this.health.onExhaustion(this::ellenDied);
+    public void stoppedMoving() {
+        playerRipl.pause();
+    }
+
+    @Override
+    public Firearm getFirearm() {
+        return gun;
+    }
+
+    @Override
+    public void setFirearm(Firearm weapon) {
+        this.gun = weapon;
     }
 }

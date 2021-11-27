@@ -28,7 +28,7 @@ public class EscapeRoom implements SceneListener {
         assert ripley != null;
         scene.follow(ripley);
 
-        Door door = new Door("door", Door.Orientation.VERTICAL);
+        Door door = new Door();
         scene.addActor(door, 200, 250);
 
         MovableController movableController = new MovableController(ripley);
