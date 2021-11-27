@@ -7,80 +7,80 @@ import sk.tuke.kpi.oop.game.Movable;
 
 import java.util.Objects;
 
-public class Move <A extends Movable> implements Action<Movable> {
-    private Movable movable;
-    private Direction direction;
-    private float durationSeconds;
-    private int firstTime;
+public class Move<K extends Movable> implements Action<K> {
+
+    private K move;
+    private Direction moveDirection;
     private boolean isRuning;
+    private float timeDuration;
+    private int timeExpand;
 
 
     public Move(Direction direction, float duration) {
-        this.direction = direction;
-        this.durationSeconds = duration;
-        isRuning = false;
-        firstTime = 0;
+        this.isRuning = false;
+        this.timeExpand = 0;
+        this.moveDirection = direction;
+        this.timeDuration = duration;
     }
 
-    public Move(Direction direction) {
-        this.direction = direction;
-        isRuning = false;
-        firstTime = 0;
-    }
-
-
-    @Nullable
-    @Override
-    public Movable getActor() {
-        return movable;
-    }
-
-    @Override
-    public void setActor(@Nullable Movable movable) {
-        this.movable = movable;
-    }
-
-    @Override
-    public boolean isDone() {
-        return isRuning;
-    }
-
-    public void stop() {
-        if (movable != null) {
-            isRuning = true;
-            movable.stoppedMoving();
-        }
+    private Move(Direction direction) {
+        this.isRuning = false;
+        this.timeExpand = 0;
+        this.moveDirection = direction;
     }
 
     @Override
     public void execute(float deltaTime) {
-        durationSeconds = durationSeconds - deltaTime;
+        timeDuration -= deltaTime;
 
-        if (!isDone() && getActor() != null) {
-            if (durationSeconds > 0) {
-                movable.setPosition(movable.getPosX() + direction.getDx() * movable.getSpeed(), movable.getPosY() + direction.getDy() * movable.getSpeed());
-                if ((Objects.requireNonNull(getActor().getScene())).getMap().intersectsWithWall(movable)) {
-                    movable.setPosition(movable.getPosX() - direction.getDx() * movable.getSpeed(), movable.getPosY() - direction.getDy() * movable.getSpeed());
+        if (getActor() != null && !isDone()) {
+            Objects.requireNonNull(getActor().getScene()).getMap();
+            if (timeDuration > 0) {
+                move.setPosition(move.getPosX() + moveDirection.getDx() * move.getSpeed(),
+                    move.getPosY() + moveDirection.getDy() * move.getSpeed());
+                if ((getActor().getScene()).getMap().intersectsWithWall(move)) {
+                    move.setPosition(move.getPosX() - moveDirection.getDx() * move.getSpeed(),
+                        move.getPosY() - moveDirection.getDy() * move.getSpeed());
+                    move.collidedWithWall();
                 }
-            }
-            if (durationSeconds > 0) {
-                movable.setPosition(movable.getPosX() + direction.getDx() * movable.getSpeed(),
-                    movable.getPosY() + direction.getDy() * movable.getSpeed());
-                if ((getActor().getScene()).getMap().intersectsWithWall(movable)) {
-                    movable.setPosition(movable.getPosX() - direction.getDx() * movable.getSpeed(),
-                        movable.getPosY() - direction.getDy() * movable.getSpeed());
-                    movable.collidedWithWall();
-                }
-            } else
+            } else {
                 stop();
+            }
+
+            if (timeExpand == 0) {
+                move.startedMoving(moveDirection);
+                timeExpand++;
+            }
+        }
+    }
+
+    public void stop() {
+        if (move != null) {
+            isRuning = true;
+            move.stoppedMoving();
         }
     }
 
     @Override
     public void reset() {
-            isRuning = false;
-            firstTime = 0;
-            durationSeconds = 0;
-            movable.stoppedMoving();
+        this.timeExpand = 0;
+        this.timeDuration = 0;
+        this.isRuning = false;
+    }
+
+    @Nullable
+    @Override
+    public K getActor() {
+        return move;
+    }
+
+    @Override
+    public void setActor(@Nullable K movable) {
+        this.move = movable;
+    }
+
+    @Override
+    public boolean isDone() {
+        return isRuning;
     }
 }

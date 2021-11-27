@@ -56,7 +56,7 @@ public class Health {
     void exhaust() {
         if (now > 0) {
             now = 1;
-            drain(1);
+//            drain(1);
         }
     }
 
