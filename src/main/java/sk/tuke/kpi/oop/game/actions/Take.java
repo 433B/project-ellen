@@ -22,10 +22,12 @@ public class Take<A extends Keeper> extends AbstractAction<A> {
 
     @Override
     public void execute(float deltaTime) {
-        if (!isDone()) {
-            if (getActor() == null) {
-                Objects.requireNonNull(getActor()).getScene();
-            }
+//        if (getActor() == null || getActor().getScene() == null) {
+//            setDone(true);
+//            return;
+//        }
+
+        if (!isDone() && getActor() != null || !isDone() && Objects.requireNonNull(getActor()).getScene() != null) {
             takeList = Objects.requireNonNull(getActor().getScene()).getActors();
             for (Actor actor : takeList) {
                 if (actor instanceof Collectible && actor.intersects(getActor()) && this.takeActor != actor) {
@@ -35,7 +37,8 @@ public class Take<A extends Keeper> extends AbstractAction<A> {
                         break;
                     } catch (IllegalStateException exception) {
                         getActor().getScene().getOverlay().drawText(exception.getMessage(), 0, 0).showFor(2);
-                    } catch (Exception e) {
+                    }
+                    catch (Exception e) {
                         e.printStackTrace();
                     }
                 }
