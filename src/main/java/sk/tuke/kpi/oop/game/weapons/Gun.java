@@ -19,12 +19,12 @@ public class Gun extends Firearm {
     }
 
     @Override
-    public Health getHealth() {
-        return null;
+    public int getSpeed() {
+        return 0;
     }
 
     @Override
-    public int getSpeed() {
-        return 0;
+    public Health getHealth() {
+        return null;
     }
 }

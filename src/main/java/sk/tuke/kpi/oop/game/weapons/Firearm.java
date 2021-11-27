@@ -17,24 +17,28 @@ public abstract class Firearm extends AbstractActor implements Alive, Movable, F
         max = maxPoc;
     }
 
+    protected abstract Fireable createBullet();
+
     public int getAmmo() {
         return now;
     }
 
     public void reload(int newAmmo) {
-        this.now += newAmmo;
-        if (this.now > this.max) {
-            this.now = this.max;
+        if ((getAmmo() + newAmmo) < max) {
+            now = now + newAmmo;
         }
+        else {
+            now = max;
+        }
+
     }
 
-    protected abstract Fireable createBullet();
-
     public Fireable fire() {
-        if (this.now >= 1) {
-            this.now -= 1;
+        if (now != 0) {
+            now--;
             return createBullet();
-        } else {
+        }
+        else {
             return null;
         }
     }
