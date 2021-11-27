@@ -33,7 +33,7 @@ public class Health {
         return now;
     }
 
-    void refill(int amount) {
+    public void refill(int amount) {
         if (amount + now <= max) {
             now = now + amount;
         }

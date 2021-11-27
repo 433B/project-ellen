@@ -4,6 +4,8 @@ import sk.tuke.kpi.gamelib.framework.AbstractActor;
 import sk.tuke.kpi.gamelib.graphics.Animation;
 import sk.tuke.kpi.oop.game.characters.Alive;
 
+import java.util.Objects;
+
 public class Energy extends AbstractActor implements Usable<Alive> {
 
     public Energy() {
@@ -12,9 +14,11 @@ public class Energy extends AbstractActor implements Usable<Alive> {
 
     @Override
     public void useWith(Alive actor) {
-        if (actor != null && actor.getHealth().getValue() < 100 && actor.getScene() != null) {
-            actor.getHealth().restore();
-            actor.getScene().removeActor(this);
+        try {
+            actor.getHealth().refill(50);
+            Objects.requireNonNull(getScene()).removeActor(this);
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 
