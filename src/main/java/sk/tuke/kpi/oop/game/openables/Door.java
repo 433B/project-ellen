@@ -22,7 +22,7 @@ public class Door extends AbstractActor implements Usable<Actor>, Openable {
     public static final Topic<Door> DOOR_OPENED = Topic.create("door opened", Door.class);
     public static final Topic<Door> DOOR_CLOSED = Topic.create("door closed", Door.class);
     private List<MapTile> listTiles;
-    MapTile.Type mapTile;
+    private MapTile.Type mapTile;
 
     public enum Orientation {
         VERTICAL,

@@ -9,6 +9,7 @@ import sk.tuke.kpi.gamelib.framework.actions.Loop;
 import sk.tuke.kpi.gamelib.graphics.Animation;
 import sk.tuke.kpi.oop.game.Movable;
 import sk.tuke.kpi.oop.game.behaviours.Behaviour;
+import sk.tuke.kpi.oop.game.behaviours.RandomlyMoving;
 
 import java.util.Objects;
 
@@ -16,14 +17,13 @@ public class Alien extends AbstractActor implements Movable, Enemy, Alive {
     private Health health;
     private Behaviour<? super Alien> alienBehaviour;
 
-    public Alien() {
+    public Alien(int i, RandomlyMoving randomlyMoving) {
         health = new Health(100, 100);
         health.onExhaustion(() -> Objects.requireNonNull(getScene()).removeActor(this));
         setAnimation(new Animation("sprites/alien.png", 32, 32, 0.1f, Animation.PlayMode.LOOP));
     }
 
-    public Alien(String name, int healthValue, Behaviour<? super Alien> behaviour) {
-        super(name);
+    public Alien(int healthValue, Behaviour<? super Alien> behaviour) {
         setAnimation(new Animation("sprites/alien.png", 32, 32, 0.1f, Animation.PlayMode.LOOP));
         health = new Health(healthValue, 100);
         alienBehaviour = behaviour;
