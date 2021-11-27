@@ -4,17 +4,16 @@ public class LockedDoor extends Door {
     private boolean lock;
 
     public LockedDoor() {
-//        this.lock = true;
+        super("locked door", Orientation.VERTICAL);
+        this.lock = true;
     }
 
-//    private void lock() {
-//        lock = true;
-//    }
+    private void lock() {
+        lock = true;
+    }
 
     public void unlock() {
-        if (isLocked()) {
-            lock = false;
-        }
+        lock = false;
     }
 
     private boolean isLocked() {
