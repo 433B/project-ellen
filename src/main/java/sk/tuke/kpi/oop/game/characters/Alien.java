@@ -17,31 +17,17 @@ public class Alien extends AbstractActor implements Movable, Enemy, Alive {
     private Health health;
     private Behaviour<? super Alien> alienBehaviour;
 
-    public Alien(int i, RandomlyMoving randomlyMoving) {
-        health = new Health(100, 100);
-        health.onExhaustion(() -> Objects.requireNonNull(getScene()).removeActor(this));
+    public Alien(int health, RandomlyMoving randomlyMoving) {
+        this.health = new Health(100, 100);
+        this.health.onExhaustion(() -> Objects.requireNonNull(getScene()).removeActor(this));
         setAnimation(new Animation("sprites/alien.png", 32, 32, 0.1f, Animation.PlayMode.LOOP));
     }
 
-    public Alien(int healthValue, Behaviour<? super Alien> behaviour) {
+    public Alien(int health, Behaviour<? super Alien> behaviour) {
         setAnimation(new Animation("sprites/alien.png", 32, 32, 0.1f, Animation.PlayMode.LOOP));
-        health = new Health(healthValue, 100);
+        this.health = new Health(health, 100);
         alienBehaviour = behaviour;
-        health.onExhaustion(() -> Objects.requireNonNull(getScene()).removeActor(this));
-    }
-
-    @Override
-    public Health getHealth() {
-        return health;
-    }
-
-    @Override
-    public int getSpeed() {
-        return 2;
-    }
-
-    public void ellenDied() {
-        Objects.requireNonNull(getScene()).removeActor(this);
+        this.health.onExhaustion(() -> Objects.requireNonNull(getScene()).removeActor(this));
     }
 
     @Override
@@ -65,5 +51,19 @@ public class Alien extends AbstractActor implements Movable, Enemy, Alive {
                 }
             }
         );
+    }
+
+    @Override
+    public Health getHealth() {
+        return health;
+    }
+
+    @Override
+    public int getSpeed() {
+        return 2;
+    }
+
+    public void ellenDied() {
+        Objects.requireNonNull(getScene()).removeActor(this);
     }
 }
