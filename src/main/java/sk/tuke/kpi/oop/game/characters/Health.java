@@ -13,13 +13,9 @@ public class Health {
         void apply();
     }
 
-    public Health() {
-        effectExh = new ArrayList<>();
-    }
-
     public Health(int nowMaxHealth) {
-        now = nowMaxHealth;
-        max = now;
+        this.now = nowMaxHealth;
+        this.max = nowMaxHealth;
         effectExh = new ArrayList<>();
     }
 
@@ -30,10 +26,10 @@ public class Health {
     }
 
     public void refill(int amount) {
-        if (amount + now <= max) {
-            now = now + amount;
+        this.now = this.now + amount;
+        if (this.now > this.max) {
+            this.now = this.max;
         }
-        else restore();
     }
 
     public void restore() {
