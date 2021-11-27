@@ -7,7 +7,6 @@ import sk.tuke.kpi.gamelib.actions.When;
 import sk.tuke.kpi.gamelib.framework.AbstractActor;
 import sk.tuke.kpi.gamelib.framework.actions.Loop;
 import sk.tuke.kpi.gamelib.graphics.Animation;
-import sk.tuke.kpi.oop.game.Direction;
 import sk.tuke.kpi.oop.game.Movable;
 import sk.tuke.kpi.oop.game.behaviours.Behaviour;
 
@@ -20,7 +19,15 @@ public class Alien extends AbstractActor implements Movable, Enemy, Alive {
     public Alien() {
         health = new Health(100, 100);
         health.onExhaustion(() -> Objects.requireNonNull(getScene()).removeActor(this));
-        setAnimation( new Animation("sprites/alien.png", 32, 32, 0.1f, Animation.PlayMode.LOOP_REVERSED));
+        setAnimation(new Animation("sprites/alien.png", 32, 32, 0.1f, Animation.PlayMode.LOOP));
+    }
+
+    public Alien(String name, int healthValue, Behaviour<? super Alien> behaviour) {
+        super(name);
+        setAnimation(new Animation("sprites/alien.png", 32, 32, 0.1f, Animation.PlayMode.LOOP));
+        health = new Health(healthValue, 100);
+        alienBehaviour = behaviour;
+        health.onExhaustion(() -> Objects.requireNonNull(getScene()).removeActor(this));
     }
 
     @Override
@@ -30,7 +37,7 @@ public class Alien extends AbstractActor implements Movable, Enemy, Alive {
 
     @Override
     public int getSpeed() {
-        return 1;
+        return 2;
     }
 
     public void ellenDied() {
@@ -59,16 +66,4 @@ public class Alien extends AbstractActor implements Movable, Enemy, Alive {
             }
         );
     }
-
-    @Override
-    public void startedMoving (Direction direction) {
-        this.getAnimation().play();
-        this.getAnimation().setRotation(direction.getAngle());
-    }
-
-    @Override
-    public void stoppedMoving () {
-        this.getAnimation().pause();
-    }
-
 }
