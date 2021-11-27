@@ -10,7 +10,7 @@ import java.util.Objects;
 
 public class Take<A extends Keeper> extends AbstractAction<A> {
     private A takeActor;
-    List<Actor> takeList;
+    private  List<Actor> takeList;
 
     public Take() {
 
