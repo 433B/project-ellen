@@ -36,6 +36,9 @@ public class EscapeRoom implements SceneListener {
 
         KeeperController keeperController = new KeeperController(ripley);
         scene.getInput().registerListener(keeperController);
+
+        scene.getGame().pushActorContainer(ripley.getBackpack());
+        ripley.getBackpack().shift();
     }
 
     @Override
