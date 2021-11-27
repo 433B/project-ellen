@@ -4,6 +4,8 @@ import sk.tuke.kpi.gamelib.framework.AbstractActor;
 import sk.tuke.kpi.gamelib.graphics.Animation;
 import sk.tuke.kpi.oop.game.characters.Armed;
 
+import java.util.Objects;
+
 public class Ammo extends AbstractActor implements Usable<Armed>, Collectible {
 
     public Ammo() {
@@ -12,8 +14,10 @@ public class Ammo extends AbstractActor implements Usable<Armed>, Collectible {
 
     @Override
     public void useWith(Armed actor) {
-        if (actor.getScene() != null) {
-            actor.getScene().removeActor(this);
+        if (actor.getScene() != null && actor.getFirearm().getAmmo() < 500 ) {
+            actor.getFirearm().reload(50);
+            Objects.requireNonNull(getScene()).removeActor(this);
+
         }
     }
 

@@ -21,7 +21,7 @@ public abstract class Firearm extends AbstractActor implements Alive, Movable, F
         return now;
     }
 
-    void reload(int newAmmo) {
+    public void reload(int newAmmo) {
         this.now += newAmmo;
         if (this.now > this.max) {
             this.now = this.max;
