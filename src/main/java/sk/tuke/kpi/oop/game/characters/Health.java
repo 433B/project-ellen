@@ -1,12 +1,12 @@
 package sk.tuke.kpi.oop.game.characters;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Health {
     private int max;
     private int now;
-    private Set<ExhaustionEffect> effectExh;
+    private List<ExhaustionEffect> effectExh;
 
     @FunctionalInterface
     public interface ExhaustionEffect {
@@ -14,23 +14,19 @@ public class Health {
     }
 
     public Health() {
-        effectExh = new HashSet<>();
+        effectExh = new ArrayList<>();
     }
 
     public Health(int nowMaxHealth) {
         now = nowMaxHealth;
-        max = nowMaxHealth;
-        effectExh = new HashSet<>();
+        max = now;
+        effectExh = new ArrayList<>();
     }
 
     public Health(int maxHealth, int minHealth) {
         this.max = maxHealth;
         this.now = minHealth;
-        effectExh = new HashSet<>();
-    }
-
-    public int getValue() {
-        return now;
+        effectExh = new ArrayList<>();
     }
 
     public void refill(int amount) {
@@ -45,22 +41,28 @@ public class Health {
     }
 
     public void drain(int amount) {
-        if (amount < now) {
-            now -= amount;
-        }
-        else
+        if (now != 0 && now > amount) {
+            now = now - amount;
+        } else {
             exhaust();
-        onExhaustion(this::exhaust);
+        }
     }
 
     void exhaust() {
-        if (now > 0) {
-            now = 1;
-//            drain(1);
+        if (now != 0) {
+            now = 0;
+
+            if (effectExh != null) {
+                effectExh.forEach(ExhaustionEffect::apply);
+            }
         }
     }
 
     public void onExhaustion(ExhaustionEffect effect) {
         effectExh.add(effect);
+    }
+
+    public int getValue() {
+        return now;
     }
 }
