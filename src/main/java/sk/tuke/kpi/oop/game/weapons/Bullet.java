@@ -18,8 +18,8 @@ public class Bullet extends AbstractActor implements Fireable {
     private int gunDamage;
 
     public Bullet() {
-        speed = 4;
-        gunDamage = 30;
+        this.speed = 4;
+        this.gunDamage = 30;
         bulletAnimation = new Animation("sprites/bullet.png", 16, 16);
         setAnimation(bulletAnimation);
     }
@@ -69,7 +69,6 @@ public class Bullet extends AbstractActor implements Fireable {
         new Loop<>(
             new Invoke<>(this::shooting)
         ).scheduleFor(this);
-
     }
 
     private void shooting() {

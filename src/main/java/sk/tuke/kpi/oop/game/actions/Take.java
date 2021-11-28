@@ -8,7 +8,6 @@ import sk.tuke.kpi.oop.game.items.Collectible;
 import java.util.List;
 
 public class Take<A extends Keeper> extends AbstractAction<A> {
-    private List<Actor> takeList;
     public Take() {
 
     }
@@ -20,7 +19,7 @@ public class Take<A extends Keeper> extends AbstractAction<A> {
             return;
         }
 
-        takeList = getActor().getScene().getActors();
+        List<Actor> takeList = getActor().getScene().getActors();
 
         for (Actor actor: takeList) {
             if (actor instanceof Collectible && actor.intersects(getActor())) {
@@ -34,5 +33,6 @@ public class Take<A extends Keeper> extends AbstractAction<A> {
                 }
             }
         }
+        setDone(true);
     }
 }
