@@ -29,8 +29,8 @@ public class Take<A extends Keeper> extends AbstractAction<A> {
                     getActor().getScene().removeActor(actor);
                     break;
                 }
-                catch (Exception e) {
-                    getActor().getScene().getOverlay().drawText(e.getMessage(), 0, 0).showFor(1);
+                catch (Exception ex) {
+                    getActor().getScene().getOverlay().drawText(ex.getMessage(), 0, 0).showFor(1);
                 }
             }
         }
