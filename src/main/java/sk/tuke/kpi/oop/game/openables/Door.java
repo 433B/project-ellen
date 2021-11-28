@@ -15,19 +15,15 @@ import java.util.Objects;
 
 
 public class Door extends AbstractActor implements Usable<Actor>, Openable {
-    private Animation openDoorVertical;
-    private Animation closeDoorVertical;
-    private Animation openDoorHorizontal;
-    private Animation closeDoorHorizontal;
+    private Animation openDoorAnimation;
+    private Animation closeDoorAnimation;
 
     private boolean isOpen;
     public static final Topic<Door> DOOR_OPENED = Topic.create("door opened", Door.class);
     public static final Topic<Door> DOOR_CLOSED = Topic.create("door closed", Door.class);
     private List<MapTile> listTiles;
     private MapTile.Type mapTile;
-    private Animation.PlayMode playMode;
-    private String verticalDoorAnimation = "sprites/vdoor.png";
-    private String horizontalDoorAnimation = "sprites/hdoor.png";
+    private String doorAnimation;
 
     public enum Orientation {
         VERTICAL,
@@ -37,19 +33,11 @@ public class Door extends AbstractActor implements Usable<Actor>, Openable {
     public Door() {
         this.isOpen = false;
         this.listTiles = null;
-        this.playMode = null;
+        this.doorAnimation = "sprites/vdoor.png";
 
-        openDoorVertical = new Animation(verticalDoorAnimation, 16, 32, 0.1f, Animation.PlayMode.ONCE);
-        closeDoorVertical = new Animation(verticalDoorAnimation, 16, 32, 0.1f, Animation.PlayMode.ONCE_REVERSED);
-        openDoorHorizontal = new Animation(horizontalDoorAnimation, 16, 32, 0.1f, Animation.PlayMode.ONCE);
-        closeDoorHorizontal = new Animation(horizontalDoorAnimation, 16, 32, 0.1f, Animation.PlayMode.ONCE_REVERSED);
-        if (Orientation.VERTICAL != null) {
-            setAnimation(new Animation(verticalDoorAnimation, 16, 32));
-        }
-        else if (Orientation.HORIZONTAL != null) {
-            setAnimation(new Animation(horizontalDoorAnimation, 16, 32));
-        }
-        getAnimation().stop();
+        openDoorAnimation = new Animation(doorAnimation, 16, 32, 0.1f, Animation.PlayMode.ONCE);
+        closeDoorAnimation = new Animation(doorAnimation, 16, 32, 0.1f, Animation.PlayMode.ONCE_REVERSED);
+        setAnimation(closeDoorAnimation);
     }
 
     public Door(String name, Orientation orientation) {
@@ -58,15 +46,16 @@ public class Door extends AbstractActor implements Usable<Actor>, Openable {
         this.listTiles = null;
 
         if (orientation == Orientation.VERTICAL) {
-            openDoorVertical = new Animation(verticalDoorAnimation, 16, 32, 0.1f, Animation.PlayMode.ONCE);
-            closeDoorVertical = new Animation(verticalDoorAnimation, 16, 32, 0.1f, Animation.PlayMode.ONCE_REVERSED);
-            setAnimation(new Animation(verticalDoorAnimation, 16, 32));
-            setAnimation(new Animation(verticalDoorAnimation, 16, 32));
+            doorAnimation = "sprites/vdoor.png";
+            openDoorAnimation = new Animation(doorAnimation, 16, 32, 0.1f, Animation.PlayMode.ONCE);
+            closeDoorAnimation = new Animation(doorAnimation, 16, 32, 0.1f, Animation.PlayMode.ONCE_REVERSED);
+            setAnimation(new Animation(doorAnimation, 16, 32));
             getAnimation().stop();
         } else {
-            openDoorHorizontal = new Animation(horizontalDoorAnimation, 16, 32, 0.1f, Animation.PlayMode.ONCE);
-            closeDoorHorizontal = new Animation(horizontalDoorAnimation, 16, 32, 0.1f, Animation.PlayMode.ONCE_REVERSED);
-            setAnimation(new Animation(horizontalDoorAnimation, 16, 32));
+            doorAnimation = "sprites/hdoor.png";
+            openDoorAnimation = new Animation(doorAnimation, 16, 32, 0.1f, Animation.PlayMode.ONCE);
+            closeDoorAnimation = new Animation(doorAnimation, 16, 32, 0.1f, Animation.PlayMode.ONCE_REVERSED);
+            setAnimation(new Animation(doorAnimation, 16, 32));
             getAnimation().stop();
         }
     }
@@ -84,12 +73,13 @@ public class Door extends AbstractActor implements Usable<Actor>, Openable {
     public void open() {
         if (!isOpen()) {
             isOpen = true;
-            if (Orientation.VERTICAL != null) {
-                setAnimation(openDoorVertical);
-            }
-            else if (Orientation.HORIZONTAL != null) {
-                setAnimation(openDoorHorizontal);
-            }
+            setAnimation(openDoorAnimation);
+//            if (Orientation.VERTICAL != null) {
+//                setAnimation(openDoorVertical);
+//            }
+//            else if (Orientation.HORIZONTAL != null) {
+//                setAnimation(openDoorHorizontal);
+//            }
             Objects.requireNonNull(getScene()).getMessageBus().publish(DOOR_OPENED, this);
 
             if (isOpen()) {
@@ -107,12 +97,13 @@ public class Door extends AbstractActor implements Usable<Actor>, Openable {
     public void close() {
         if (isOpen()) {
             isOpen = false;
-            if (Orientation.VERTICAL != null) {
-                setAnimation(closeDoorVertical);
-            }
-            else if (Orientation.HORIZONTAL != null) {
-                setAnimation(closeDoorHorizontal);
-            }
+            setAnimation(closeDoorAnimation);
+//            if (Orientation.VERTICAL != null) {
+//                setAnimation(closeDoorVertical);
+//            }
+//            else if (Orientation.HORIZONTAL != null) {
+//                setAnimation(closeDoorHorizontal);
+//            }
 
             Objects.requireNonNull(getScene()).getMessageBus().publish(DOOR_CLOSED, this);
 
