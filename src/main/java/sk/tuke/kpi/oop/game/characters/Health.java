@@ -30,10 +30,10 @@ public class Health {
     }
 
     public void refill(int amount) {
-        this.now = this.now + amount;
-        if (this.now > this.max) {
-            this.now = this.max;
-        }
+        if (now + amount < max)
+            this.now = this.now + amount;
+        else
+            restore();
     }
 
     public void restore() {
