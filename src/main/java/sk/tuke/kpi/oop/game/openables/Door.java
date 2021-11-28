@@ -23,6 +23,7 @@ public class Door extends AbstractActor implements Usable<Actor>, Openable {
     public static final Topic<Door> DOOR_CLOSED = Topic.create("door closed", Door.class);
     private List<MapTile> listTiles;
     private MapTile.Type mapTile;
+    private Animation.PlayMode playMode;
 
     public enum Orientation {
         VERTICAL,
@@ -32,6 +33,7 @@ public class Door extends AbstractActor implements Usable<Actor>, Openable {
     public Door() {
         this.isOpen = false;
         this.listTiles = null;
+        this.playMode = null;
 
         openDoorAnimation = new Animation("sprites/vdoor.png", 16, 32, 0.1f, Animation.PlayMode.ONCE);
         closeDoorAnimation = new Animation("sprites/vdoor.png", 16, 32, 0.1f, Animation.PlayMode.ONCE_REVERSED);
@@ -42,17 +44,14 @@ public class Door extends AbstractActor implements Usable<Actor>, Openable {
         super(name);
         this.isOpen = false;
         this.listTiles = null;
-        openDoorAnimation = new Animation("sprites/vdoor.png", 16, 32, 0.1f, Animation.PlayMode.ONCE);
-        closeDoorAnimation = new Animation("sprites/vdoor.png", 16, 32, 0.1f, Animation.PlayMode.ONCE_REVERSED);
+
+        playMode = Animation.PlayMode.ONCE_REVERSED;
 
         if (orientation == Orientation.VERTICAL) {
-            setAnimation(openDoorAnimation);
-            setAnimation(closeDoorAnimation);
+            setAnimation(new Animation("sprites/vdoor.png", 16, 32, 0.1f, playMode));
         }
         if (orientation == Orientation.HORIZONTAL) {
-            openDoorAnimation = new Animation("sprites/hdoor.png", 16, 32, 0.1f, Animation.PlayMode.ONCE);
-            closeDoorAnimation = new Animation("sprites/hdoor.png", 16, 32, 0.1f, Animation.PlayMode.ONCE_REVERSED);
-            setAnimation(new Animation("sprites/hdoor.png", 16, 32, 0.1f, Animation.PlayMode.ONCE_REVERSED));
+            setAnimation(new Animation("sprites/hdoor.png", 16, 32, 0.1f, playMode));
         }
     }
 
