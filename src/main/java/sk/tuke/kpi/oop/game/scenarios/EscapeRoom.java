@@ -17,6 +17,8 @@ import sk.tuke.kpi.oop.game.items.Energy;
 import sk.tuke.kpi.oop.game.openables.Door;
 import sk.tuke.kpi.oop.game.openables.LockedDoor;
 
+import java.util.function.Consumer;
+
 
 public class EscapeRoom implements SceneListener {
 
@@ -33,7 +35,7 @@ public class EscapeRoom implements SceneListener {
         LockedDoor lockedDoor = new LockedDoor();
         scene.addActor(lockedDoor, 300, 100);
 
-        Door door = new Door();
+        Door door = new Door("D", Door.Orientation.HORIZONTAL);
         scene.addActor(door, 150, 150);
 
         AccessCard accessCard = new AccessCard();
@@ -57,7 +59,8 @@ public class EscapeRoom implements SceneListener {
 
     @Override
     public void sceneCreated(@NotNull Scene scene) {
-
+        Consumer<Actor> new_actor = (a) -> System.out.println("new actor");
+        scene.getMessageBus().subscribe(World.ACTOR_ADDED_TOPIC, new_actor);
     }
 
     public static class Factory implements ActorFactory {
@@ -68,15 +71,15 @@ public class EscapeRoom implements SceneListener {
             if (name.equals("ellen")) {
                 return new Ripley();
             }
-//            if (name.equals("alien")) {
-//                return new Alien(150, new RandomlyMoving());
-//            }
+            if (name.equals("alien")) {
+                return new Alien(100, new RandomlyMoving());
+            }
             if (name.equals("energy")) {
                 return new Energy();
             }
-//            if (name.equals("alien mother")) {
-//                return new AlienMother(150, new RandomlyMoving());
-//            }
+            if (name.equals("alien mother")) {
+                return new AlienMother(150, new RandomlyMoving());
+            }
             if (name.equals("ammo")) {
                 return new Ammo();
             }
