@@ -75,9 +75,14 @@ public class Move<K extends Movable> implements Action<Movable> {
     }
 
     @Override
-    public void setActor(@Nullable Movable movable) {
-        this.move = movable;
+    public void setActor(@Nullable Movable actor) {
+        this.move = actor;
     }
+
+//    @Override
+//    public void setActor(@Nullable K movable) {
+//        this.move = movable;
+//    }
 
     @Override
     public boolean isDone() {
