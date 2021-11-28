@@ -26,18 +26,18 @@ public class Health {
     }
 
     public int getValue() {
-        return this.now;
+        return now;
     }
 
     public void refill(int amount) {
-        if (now + amount < max)
-            this.now = this.now + amount;
+        if (now + amount <= max)
+            this.now +=amount;
         else
             restore();
     }
 
     public void restore() {
-        this.now = this.max;
+        now = max;
     }
 
     public void drain(int amount) {
