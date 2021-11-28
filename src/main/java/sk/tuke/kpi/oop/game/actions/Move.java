@@ -7,14 +7,12 @@ import sk.tuke.kpi.oop.game.Movable;
 
 import java.util.Objects;
 
-public class Move<K extends Movable> implements Action<Movable> {
-
-    private Movable move;
+public class Move<K extends Movable> implements Action<K> {
+    private K move;
     private Direction moveDirection;
     private boolean isRuning;
     private float timeDuration;
     private int timeExpand;
-
 
     public Move(Direction direction, float duration) {
         this.isRuning = false;
@@ -70,19 +68,14 @@ public class Move<K extends Movable> implements Action<Movable> {
 
     @Nullable
     @Override
-    public Movable getActor() {
+    public K getActor() {
         return move;
     }
 
     @Override
-    public void setActor(@Nullable Movable actor) {
+    public void setActor(@Nullable K actor) {
         this.move = actor;
     }
-
-//    @Override
-//    public void setActor(@Nullable K movable) {
-//        this.move = movable;
-//    }
 
     @Override
     public boolean isDone() {
