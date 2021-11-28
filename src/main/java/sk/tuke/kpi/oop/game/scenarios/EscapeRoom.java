@@ -33,6 +33,9 @@ public class EscapeRoom implements SceneListener {
         LockedDoor lockedDoor = new LockedDoor();
         scene.addActor(lockedDoor, 300, 100);
 
+        Door door = new Door();
+        scene.addActor(door, 150, 150);
+
         AccessCard accessCard = new AccessCard();
         ripley.getBackpack().add(accessCard);
 
@@ -65,15 +68,15 @@ public class EscapeRoom implements SceneListener {
             if (name.equals("ellen")) {
                 return new Ripley();
             }
-            if (name.equals("alien")) {
-                return new Alien(150, new RandomlyMoving());
-            }
+//            if (name.equals("alien")) {
+//                return new Alien(150, new RandomlyMoving());
+//            }
             if (name.equals("energy")) {
                 return new Energy();
             }
-            if (name.equals("alien mother")) {
-                return new AlienMother(150, new RandomlyMoving());
-            }
+//            if (name.equals("alien mother")) {
+//                return new AlienMother(150, new RandomlyMoving());
+//            }
             if (name.equals("ammo")) {
                 return new Ammo();
             }
