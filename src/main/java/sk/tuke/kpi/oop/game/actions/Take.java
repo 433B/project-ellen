@@ -8,7 +8,7 @@ import sk.tuke.kpi.oop.game.items.Collectible;
 import java.util.List;
 
 public class Take<A extends Keeper> extends AbstractAction<A> {
-    List<Actor> takeList;
+    private List<Actor> takeList;
     public Take() {
 
     }
