@@ -25,6 +25,10 @@ public class Health {
         effectExh = new ArrayList<>();
     }
 
+    public int getValue() {
+        return this.now;
+    }
+
     public void refill(int amount) {
         this.now = this.now + amount;
         if (this.now > this.max) {
@@ -56,9 +60,5 @@ public class Health {
 
     public void onExhaustion(ExhaustionEffect effect) {
         effectExh.add(effect);
-    }
-
-    public int getValue() {
-        return now;
     }
 }
