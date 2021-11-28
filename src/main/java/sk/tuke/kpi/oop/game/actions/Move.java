@@ -8,7 +8,7 @@ import sk.tuke.kpi.oop.game.Movable;
 import java.util.Objects;
 
 public class Move<K extends Movable> implements Action<K> {
-    private K move;
+    private K movable;
     private Direction moveDirection;
     private boolean isRuning;
     private float timeDuration;
@@ -21,7 +21,7 @@ public class Move<K extends Movable> implements Action<K> {
         this.timeDuration = duration;
     }
 
-    private Move(Direction direction) {
+    public Move(Direction direction) {
         this.isRuning = false;
         this.timeExpand = 0;
         this.moveDirection = direction;
@@ -34,28 +34,28 @@ public class Move<K extends Movable> implements Action<K> {
         if (getActor() != null && !isDone()) {
             Objects.requireNonNull(getActor().getScene()).getMap();
             if (timeDuration > 0) {
-                move.setPosition(move.getPosX() + moveDirection.getDx() * move.getSpeed(),
-                    move.getPosY() + moveDirection.getDy() * move.getSpeed());
-                if ((getActor().getScene()).getMap().intersectsWithWall(move)) {
-                    move.setPosition(move.getPosX() - moveDirection.getDx() * move.getSpeed(),
-                        move.getPosY() - moveDirection.getDy() * move.getSpeed());
-                    move.collidedWithWall();
+                movable.setPosition(movable.getPosX() + moveDirection.getDx() * movable.getSpeed(),
+                    movable.getPosY() + moveDirection.getDy() * movable.getSpeed());
+                if ((getActor().getScene()).getMap().intersectsWithWall(movable)) {
+                    movable.setPosition(movable.getPosX() - moveDirection.getDx() * movable.getSpeed(),
+                        movable.getPosY() - moveDirection.getDy() * movable.getSpeed());
+                    movable.collidedWithWall();
                 }
             } else {
                 stop();
             }
 
             if (timeExpand == 0) {
-                move.startedMoving(moveDirection);
+                movable.startedMoving(moveDirection);
                 timeExpand++;
             }
         }
     }
 
     public void stop() {
-        if (move != null) {
+        if (movable != null) {
             isRuning = true;
-            move.stoppedMoving();
+            movable.stoppedMoving();
         }
     }
 
@@ -69,12 +69,12 @@ public class Move<K extends Movable> implements Action<K> {
     @Nullable
     @Override
     public K getActor() {
-        return move;
+        return movable;
     }
 
     @Override
     public void setActor(@Nullable K actor) {
-        this.move = actor;
+        this.movable = actor;
     }
 
     @Override
