@@ -24,8 +24,8 @@ public class Alien extends AbstractActor implements Movable, Enemy, Alive {
 
     public Alien(int health, Behaviour<? super Alien> behaviour) {
         setAnimation(new Animation("sprites/alien.png", 32, 32, 0.1f, Animation.PlayMode.LOOP));
-        this.health = new Health(health, 100);
-        alienBehaviour = behaviour;
+        this.health = new Health(100, 100);
+        this.alienBehaviour = behaviour;
         this.health.onExhaustion(() -> Objects.requireNonNull(getScene()).removeActor(this));
     }
 
