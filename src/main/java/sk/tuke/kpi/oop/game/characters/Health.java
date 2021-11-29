@@ -4,9 +4,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Health {
-    private List<ExhaustionEffect> efects;
     private int max;
     private int now;
+    private List<ExhaustionEffect> efects;
+
+    @FunctionalInterface
+    public interface ExhaustionEffect {
+        void apply();
+    }
 
     public Health(int healthNow, int healthMax) {
         now = healthNow;
@@ -25,6 +30,10 @@ public class Health {
             now += amount;
         else
             restore();
+    }
+
+    public void restore() {
+        now = max;
     }
 
     public void drain(int amount) {
@@ -46,15 +55,6 @@ public class Health {
 
     public int getValue() {
         return this.now;
-    }
-
-    public void restore() {
-        now = max;
-    }
-
-    @FunctionalInterface
-    public interface ExhaustionEffect {
-        void apply();
     }
 
     public void onExhaustion(ExhaustionEffect effect) {
