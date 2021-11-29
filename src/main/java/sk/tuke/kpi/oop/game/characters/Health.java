@@ -25,10 +25,10 @@ public class Health {
     }
 
     public void refill (int amount) {
-        if (now + amount < max) {
+        if (now + amount <= max) {
             now += amount;
         } else {
-            now = max;
+            this.now = this.max;
         }
     }
 
@@ -40,7 +40,6 @@ public class Health {
         now -= amount;
         if (now <= 0) {
             now = 0;
-            exhaust();
         }
     }
 
