@@ -4,39 +4,39 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Health {
-    private int max;
     private int now;
-    private List<ExhaustionEffect> efects;
+    private int max;
+    private List<ExhaustionEffect> effectsHealth;
 
-    @FunctionalInterface
-    public interface ExhaustionEffect {
-        void apply();
+    public Health (int currentHealth, int maxHealth) {
+        this.now = currentHealth;
+        this.max = maxHealth;
+        this.effectsHealth = new ArrayList<>();
     }
 
-    public Health(int healthNow, int healthMax) {
-        now = healthNow;
-        max = healthMax;
-        efects = new ArrayList<>();
+    public Health (int health) {
+        this.now = health;
+        this.max = health;
+        this.effectsHealth = new ArrayList<>();
     }
 
-    public Health(int healthNow) {
-        now = healthNow;
-        max = this.now;
-        efects = new ArrayList<>();
+    public int getValue () {
+        return now;
     }
 
-    public void refill(int amount) {
-        if (now + amount <= max)
+    public void refill (int amount) {
+        if (now + amount < max) {
             now += amount;
-        else
-            restore();
+        } else {
+            now = max;
+        }
     }
 
-    public void restore() {
-        now = max;
+    public void restore () {
+        this.now = this.max;
     }
 
-    public void drain(int amount) {
+    public void drain (int amount) {
         now -= amount;
         if (now <= 0) {
             now = 0;
@@ -44,20 +44,17 @@ public class Health {
         }
     }
 
-    public void exhaust() {
-        if (now != 0) {
-            now = 0;
-            if (efects != null) {
-                efects.forEach(ExhaustionEffect::apply);
-            }
-        }
-    }
-
-    public int getValue() {
-        return this.now;
+    public void exhaust () {
+            this.now = 0;
+            this.effectsHealth.forEach(ExhaustionEffect::apply);
     }
 
     public void onExhaustion(ExhaustionEffect effect) {
-        efects.add(effect);
+        this.effectsHealth.add(effect);
+    }
+
+    @FunctionalInterface
+    public interface ExhaustionEffect {
+        void apply();
     }
 }
