@@ -37,15 +37,23 @@ public class Health {
     }
 
     public void drain (int amount) {
-        now -= amount;
-        if (now <= 0) {
-            now = 0;
+        if (now !=0) {
+            if (now >amount)
+                now -= amount;
+            else
+                exhaust();
         }
+
     }
 
     public void exhaust () {
-            this.now = 0;
-            this.effectsHealth.forEach(ExhaustionEffect::apply);
+        if (now != 0) {
+            now = 0;
+
+            if (effectsHealth != null) {
+                effectsHealth.forEach(ExhaustionEffect::apply);
+            }
+        }
     }
 
     public void onExhaustion(ExhaustionEffect effect) {
