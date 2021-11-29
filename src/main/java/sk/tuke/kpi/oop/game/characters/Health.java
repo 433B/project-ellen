@@ -4,61 +4,60 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Health {
+    private List<ExhaustionEffect> efects;
     private int max;
     private int now;
-    private List<ExhaustionEffect> effectExh;
 
-    @FunctionalInterface
-    public interface ExhaustionEffect {
-        void apply();
+    public Health(int healthNow, int healthMax) {
+        now = healthNow;
+        max = healthMax;
+        efects = new ArrayList<>();
     }
 
-    public Health(int nowMaxHealth) {
-        this.now = nowMaxHealth;
-        this.max = nowMaxHealth;
-        effectExh = new ArrayList<>();
-    }
-
-    public Health(int maxHealth, int minHealth) {
-        this.max = maxHealth;
-        this.now = minHealth;
-        effectExh = new ArrayList<>();
-    }
-
-    public int getValue() {
-        return now;
+    public Health(int healthNow) {
+        now = healthNow;
+        max = this.now;
+        efects = new ArrayList<>();
     }
 
     public void refill(int amount) {
         if (now + amount <= max)
-            this.now +=amount;
+            now += amount;
         else
             restore();
+    }
+
+    public void drain(int amount) {
+        now -= amount;
+        if (now <= 0) {
+            now = 0;
+            exhaust();
+        }
+    }
+
+    public void exhaust() {
+        if (now != 0) {
+            now = 0;
+            if (efects != null) {
+                efects.forEach(ExhaustionEffect::apply);
+            }
+        }
+    }
+
+    public int getValue() {
+        return this.now;
     }
 
     public void restore() {
         now = max;
     }
 
-    public void drain(int amount) {
-        if (now != 0 && now > amount) {
-            now = now - amount;
-        } else {
-            exhaust();
-        }
-    }
-
-    void exhaust() {
-        if (now != 0) {
-            now = 0;
-
-            if (effectExh != null) {
-                effectExh.forEach(ExhaustionEffect::apply);
-            }
-        }
+    @FunctionalInterface
+    public interface ExhaustionEffect {
+        void apply();
     }
 
     public void onExhaustion(ExhaustionEffect effect) {
-        effectExh.add(effect);
+        efects.add(effect);
     }
 }
