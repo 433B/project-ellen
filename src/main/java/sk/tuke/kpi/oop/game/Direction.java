@@ -13,7 +13,7 @@ public enum Direction {
 
     private final int dx;
     private final int dy;
-    private float gradusUhol;
+    private float angle;
 
     public int getDx() {
         return dx;
@@ -29,44 +29,38 @@ public enum Direction {
     }
 
     public float getAngle() {
-        NORTH.gradusUhol = 0;
-        NORTHWEST.gradusUhol = 45;
-        WEST.gradusUhol = 90;
-        SOUTHWEST.gradusUhol = 135;
-        SOUTH.gradusUhol = 180;
-        SOUTHEAST.gradusUhol = 225;
-        EAST.gradusUhol = 270;
-        NORTHEAST.gradusUhol = 315;
-        return gradusUhol;
+        NORTH.angle = 0;
+        NORTHWEST.angle = 45;
+        WEST.angle = 90;
+        SOUTHWEST.angle = 135;
+        SOUTH.angle = 180;
+        SOUTHEAST.angle = 225;
+        EAST.angle = 270;
+        NORTHEAST.angle = 315;
+
+        return angle;
     }
 
     public static Direction fromAngle(float angle) {
-        if (angle == 0) {
-            return Direction.NORTH;
-        }
-        if (angle == 45) {
-            return Direction.NORTHWEST;
-        }
-        else if (angle == 90) {
-            return Direction.WEST;
-        }
-        else if (angle == 135) {
-            return Direction.SOUTHWEST;
-        }
-        else if (angle == 180) {
-            return Direction.SOUTH;
-        }
-        else if (angle == 225) {
-            return Direction.SOUTHEAST;
-        }
-        else if (angle == 270) {
-            return Direction.EAST;
-        }
-        else if (angle == 315) {
-            return Direction.NORTHEAST;
-        }
-        else {
-            return Direction.NONE;
+        switch ((int) angle) {
+            case 0:
+                return NORTH;
+            case 45:
+                return NORTHWEST;
+            case 90:
+                return WEST;
+            case 135:
+                return SOUTHWEST;
+            case 180:
+                return SOUTH;
+            case 225:
+                return SOUTHEAST;
+            case 270:
+                return EAST;
+            case 315:
+                return NORTHEAST;
+            default:
+                return NONE;
         }
     }
 

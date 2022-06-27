@@ -53,9 +53,9 @@ public class Door extends AbstractActor implements Usable<Actor>, Openable {
             getAnimation().stop();
         } else {
             doorAnimation = "sprites/hdoor.png";
-            openDoorAnimation = new Animation(doorAnimation, 16, 32, 0.1f, Animation.PlayMode.ONCE);
-            closeDoorAnimation = new Animation(doorAnimation, 16, 32, 0.1f, Animation.PlayMode.ONCE_REVERSED);
-            setAnimation(new Animation(doorAnimation, 16, 32));
+            openDoorAnimation = new Animation(doorAnimation, 32, 16, 0.1f, Animation.PlayMode.ONCE);
+            closeDoorAnimation = new Animation(doorAnimation, 32, 16, 0.1f, Animation.PlayMode.ONCE_REVERSED);
+            setAnimation(new Animation(doorAnimation, 32, 16));
             getAnimation().stop();
         }
     }

@@ -8,19 +8,25 @@ import sk.tuke.kpi.gamelib.framework.actions.Loop;
 import sk.tuke.kpi.gamelib.graphics.Animation;
 
 public class Cooler extends AbstractActor implements Switchable {
-    private Animation coolerAnimation;
-    private Animation coolerOffAnimetion;
+    private final Animation coolerAnimation;
+    private final Animation coolerOffAnimation;
 
-    private Reactor reactor;
+    private final Reactor reactor;
     private boolean check;
 
     public Cooler(Reactor reactor) {
         this.reactor = reactor;
         this.check = false;
 
-        coolerAnimation = new Animation("sprites/fan.png", 32, 32, 0.2f, Animation.PlayMode.LOOP_REVERSED);
-        coolerOffAnimetion = new Animation("sprites/fan.png", 32, 32, 0.0f, Animation.PlayMode.LOOP_REVERSED);
-        setAnimation(coolerOffAnimetion);
+        coolerAnimation = new Animation("sprites/fan.png",
+            32, 32,
+            0.2f, Animation.PlayMode.LOOP_REVERSED);
+
+        coolerOffAnimation = new Animation("sprites/fan.png",
+            32, 32,
+            0.0f, Animation.PlayMode.LOOP_REVERSED);
+
+        setAnimation(coolerOffAnimation);
     }
 
     @Override
@@ -31,13 +37,13 @@ public class Cooler extends AbstractActor implements Switchable {
     @Override
     public void turnOn() {
         this.check = true;
-        updateAimation();
+        updateAnimation();
     }
 
     @Override
     public void turnOff() {
         check = false;
-        updateAimation();
+        updateAnimation();
     }
 
     private void coolReactor() {
@@ -52,11 +58,11 @@ public class Cooler extends AbstractActor implements Switchable {
         new Loop<>(new Invoke<>(this::coolReactor)).scheduleFor(this);
     }
 
-    private void updateAimation() {
+    private void updateAnimation() {
         if (isOn()) {
             setAnimation(coolerAnimation);
         } else {
-            setAnimation(coolerOffAnimetion);
+            setAnimation(coolerOffAnimation);
         }
     }
 }

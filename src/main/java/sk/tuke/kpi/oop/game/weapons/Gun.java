@@ -1,7 +1,6 @@
 package sk.tuke.kpi.oop.game.weapons;
 
 public class Gun extends Firearm {
-
     public Gun(int minPoc, int maxPoc) {
         super(minPoc, maxPoc);
     }

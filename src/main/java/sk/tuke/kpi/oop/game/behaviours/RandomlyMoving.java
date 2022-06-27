@@ -14,6 +14,7 @@ public class RandomlyMoving implements Behaviour<Movable> {
 
     @Override
     public void setUp(Movable movable) {
+
         if (movable != null) {
             new Loop<>(
                 new ActionSequence<>(
@@ -28,11 +29,16 @@ public class RandomlyMoving implements Behaviour<Movable> {
         int positionY = (int) (Math.random() * (3)) - 1;
         Direction direction = null;
 
+        directionCoordinate(actor, positionX, positionY, direction);
+    }
+
+    private void directionCoordinate(Movable actor, int positionX, int positionY, Direction direction) {
         for (Direction directions : Direction.values()) {
             if (positionY == directions.getDy() && positionX == directions.getDx()) {
                 direction = directions;
             }
         }
+
         assert direction != null;
         actor.getAnimation().setRotation(direction.getAngle());
         new Move<>(direction, 2).scheduleFor(actor);

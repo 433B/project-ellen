@@ -13,9 +13,9 @@ import sk.tuke.kpi.oop.game.characters.Alive;
 import java.util.Objects;
 
 public class Bullet extends AbstractActor implements Fireable {
-    private Animation bulletAnimation;
-    private float speed;
-    private int gunDamage;
+    private final Animation bulletAnimation;
+    private final float speed;
+    private final int gunDamage;
 
     public Bullet() {
         this.speed = 4;
@@ -26,36 +26,47 @@ public class Bullet extends AbstractActor implements Fireable {
 
     @Override
     public void startedMoving(Direction direction) {
-        if (Direction.NORTH == direction) {
-            bulletAnimation.setRotation(0);
-            bulletAnimation.play();
-        } else if (Direction.NORTHWEST == direction) {
-            bulletAnimation.setRotation(45);
-            bulletAnimation.play();
-        } else if (Direction.WEST == direction) {
-            bulletAnimation.setRotation(90);
-            bulletAnimation.play();
-        } else if (Direction.SOUTHWEST == direction) {
-            bulletAnimation.setRotation(135);
-            bulletAnimation.play();
-        } else if (Direction.SOUTH == direction) {
-            bulletAnimation.setRotation(180);
-            bulletAnimation.play();
-        } else if (Direction.SOUTHEAST == direction) {
-            bulletAnimation.setRotation(225);
-            bulletAnimation.play();
-        } else if (Direction.EAST == direction) {
-            bulletAnimation.setRotation(270);
-            bulletAnimation.play();
-        } else if (Direction.NORTHEAST == direction) {
-            bulletAnimation.setRotation(315);
-            bulletAnimation.play();
+        switch (direction) {
+            case NORTH:
+                bulletAnimation.setRotation(0);
+                bulletAnimation.play();
+                break;
+            case NORTHWEST:
+                bulletAnimation.setRotation(45);
+                bulletAnimation.play();
+                break;
+            case WEST:
+                bulletAnimation.setRotation(90);
+                bulletAnimation.play();
+                break;
+            case SOUTHWEST:
+                bulletAnimation.setRotation(135);
+                bulletAnimation.play();
+                break;
+            case SOUTH:
+                bulletAnimation.setRotation(180);
+                bulletAnimation.play();
+                break;
+            case SOUTHEAST:
+                bulletAnimation.setRotation(225);
+                bulletAnimation.play();
+                break;
+            case EAST:
+                bulletAnimation.setRotation(270);
+                bulletAnimation.play();
+                break;
+            case NORTHEAST:
+                bulletAnimation.setRotation(315);
+                bulletAnimation.play();
+                break;
+            default:
+                break;
         }
     }
 
     @Override
     public void collidedWithWall() {
-        Objects.requireNonNull(getScene()).removeActor(this);
+        getScene().removeActor(this);
     }
 
     @Override
@@ -66,13 +77,14 @@ public class Bullet extends AbstractActor implements Fireable {
     @Override
     public void addedToScene(@NotNull Scene scene) {
         super.addedToScene(scene);
+
         new Loop<>(
             new Invoke<>(this::shooting)
         ).scheduleFor(this);
     }
 
     private void shooting() {
-        for (Actor actor : Objects.requireNonNull(getScene()).getActors()) {
+        for (Actor actor : getScene().getActors()) {
             if (this.intersects(actor) && (actor instanceof Alive)) {
                 ((Alive) actor).getHealth().drain(gunDamage);
                 collidedWithWall();

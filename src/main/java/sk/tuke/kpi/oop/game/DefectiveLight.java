@@ -8,7 +8,6 @@ import sk.tuke.kpi.gamelib.actions.Invoke;
 import sk.tuke.kpi.gamelib.actions.Wait;
 import sk.tuke.kpi.gamelib.framework.actions.Loop;
 
-
 public class DefectiveLight extends Light implements Repairable {
     private Disposable disposable;
     private boolean isOn;
@@ -21,9 +20,7 @@ public class DefectiveLight extends Light implements Repairable {
     private void randomNumber() {
         int i = (int) (Math.random() * Math.nextDown(20));
 
-        if (i == 10) {
-            toggle();
-        }
+        if (i == 10) toggle();
     }
 
 
@@ -32,15 +29,20 @@ public class DefectiveLight extends Light implements Repairable {
         if (!isOn) {
             isOn = true;
             disposable.dispose();
-            this.turnOn();
-            new ActionSequence<>(
-                new Wait<>(10),
-                new Invoke<>(this::getLight)
-            ).scheduleFor(this);
+
+            giveLight();
             return true;
         } else {
             return false;
         }
+    }
+
+    private void giveLight() {
+        turnOn();
+        new ActionSequence<>(
+            new Wait<>(10),
+            new Invoke<>(this::getLight)
+        ).scheduleFor(this);
     }
 
     private void getLight() {

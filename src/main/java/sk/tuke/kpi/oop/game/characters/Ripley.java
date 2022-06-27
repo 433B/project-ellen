@@ -19,16 +19,16 @@ import sk.tuke.kpi.oop.game.weapons.Gun;
 
 import java.util.Objects;
 
-public class Ripley extends AbstractActor implements Movable, Keeper, Alive, Armed{
-    private Animation playerRipl;
+public class Ripley extends AbstractActor implements Movable, Keeper, Alive, Armed {
+    private final Animation player;
 
     public static final Topic<Ripley> RIPLEY_DIED = Topic.create("ripley died", Ripley.class);
 
-    private float ripleySpeed;
+    private final float ripleySpeed;
     private int ammo;
-    private Backpack ripleyBackpack;
+    private final Backpack ripleyBackpack;
     private Disposable disposable;
-    private Health ripleyHealth;
+    private final Health ripleyHealth;
     private Firearm ripleyGun;
 
     public Ripley() {
@@ -39,51 +39,56 @@ public class Ripley extends AbstractActor implements Movable, Keeper, Alive, Arm
 
         this.ripleyGun = new Gun(100, 150);
         this.ripleyHealth = new Health(100, 100);
-        this.ripleyBackpack = new Backpack("ripley's backpack",10);
+        this.ripleyBackpack = new Backpack("ripley's backpack", 10);
 
-        playerRipl = new Animation("sprites/player.png", 32, 32, 0.1f, Animation.PlayMode.LOOP_PINGPONG);
-        setAnimation(playerRipl);
-        playerRipl.stop();
+        player = new Animation("sprites/player.png",
+            32, 32,
+            0.1f, Animation.PlayMode.LOOP_PINGPONG);
+
+        setAnimation(player);
+        player.stop();
 
         ripleyHealth.onExhaustion(() -> {
-            this.setAnimation(new Animation("sprites/player_die.png",32,32,0.1f, Animation.PlayMode.ONCE));
-            Objects.requireNonNull(getScene()).getMessageBus().publish(RIPLEY_DIED,this);
+            this.setAnimation(new Animation("sprites/player_die.png",
+                32, 32,
+                0.1f, Animation.PlayMode.ONCE));
+            getScene().getMessageBus().publish(RIPLEY_DIED, this);
         });
     }
 
     @Override
     public void startedMoving(Direction direction) {
         if (Direction.NORTH == direction) {
-            playerRipl.setRotation(0);
-            playerRipl.play();
+            player.setRotation(0);
+            player.play();
         } else if (Direction.NORTHWEST == direction) {
-            playerRipl.setRotation(45);
-            playerRipl.play();
+            player.setRotation(45);
+            player.play();
         } else if (Direction.WEST == direction) {
-            playerRipl.setRotation(90);
-            playerRipl.play();
+            player.setRotation(90);
+            player.play();
         } else if (Direction.SOUTHWEST == direction) {
-            playerRipl.setRotation(135);
-            playerRipl.play();
+            player.setRotation(135);
+            player.play();
         } else if (Direction.SOUTH == direction) {
-            playerRipl.setRotation(180);
-            playerRipl.play();
+            player.setRotation(180);
+            player.play();
         } else if (Direction.SOUTHEAST == direction) {
-            playerRipl.setRotation(225);
-            playerRipl.play();
+            player.setRotation(225);
+            player.play();
         } else if (Direction.EAST == direction) {
-            playerRipl.setRotation(270);
-            playerRipl.play();
+            player.setRotation(270);
+            player.play();
         } else if (Direction.NORTHEAST == direction) {
-            playerRipl.setRotation(315);
-            playerRipl.play();
+            player.setRotation(315);
+            player.play();
         }
     }
 
     public void showRipleyState(Scene scene) {
         int windowHeight = Objects.requireNonNull(getScene()).getGame().getWindowSetup().getHeight();
         int yTextPos = windowHeight - GameApplication.STATUS_LINE_OFFSET;
-        scene.getGame().getOverlay().drawText("Energy " +ripleyHealth.getValue(), 120, yTextPos);
+        scene.getGame().getOverlay().drawText("Energy " + ripleyHealth.getValue(), 120, yTextPos);
         scene.getGame().getOverlay().drawText("Ammo " + this.getFirearm().getAmmo(), 240, yTextPos);
     }
 
@@ -104,8 +109,7 @@ public class Ripley extends AbstractActor implements Movable, Keeper, Alive, Arm
                 )
             ).scheduleFor(this);
 
-        }
-        else {
+        } else {
             this.setAnimation(new Animation("sprites/player_die.png", 32, 32, 0.1f, Animation.PlayMode.ONCE));
             Objects.requireNonNull(getScene()).getMessageBus().publish(RIPLEY_DIED, this);
         }
@@ -117,7 +121,7 @@ public class Ripley extends AbstractActor implements Movable, Keeper, Alive, Arm
 
     @Override
     public void stoppedMoving() {
-        playerRipl.stop();
+        player.stop();
     }
 
     @Override
@@ -145,7 +149,11 @@ public class Ripley extends AbstractActor implements Movable, Keeper, Alive, Arm
         return (int) this.ripleySpeed;
     }
 
-    public int getAmmo() { return ammo; }
+    public int getAmmo() {
+        return ammo;
+    }
 
-    public void setAmmo(int a) { this.ammo = a; }
+    public void setAmmo(int a) {
+        this.ammo = a;
+    }
 }

@@ -3,6 +3,7 @@ package sk.tuke.kpi.oop.game.scenarios;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import sk.tuke.kpi.gamelib.*;
+import sk.tuke.kpi.oop.game.Locker;
 import sk.tuke.kpi.oop.game.Ventilator;
 import sk.tuke.kpi.oop.game.behaviours.RandomlyMoving;
 import sk.tuke.kpi.oop.game.characters.Alien;
@@ -21,7 +22,6 @@ import java.util.function.Consumer;
 
 
 public class EscapeRoom implements SceneListener {
-
     @Override
     public void sceneInitialized(@NotNull Scene scene) {
         Ripley ripley = scene.getFirstActorByType(Ripley.class);
@@ -47,7 +47,8 @@ public class EscapeRoom implements SceneListener {
         scene.getMessageBus().subscribe(Ripley.RIPLEY_DIED, (Ripley) -> keeper.dispose());
         scene.getMessageBus().subscribe(Ripley.RIPLEY_DIED, (Ripley) -> shooter.dispose());
 
-        scene.getMessageBus().subscribe(Ventilator.VENTILATOR_REPAIRED, (Ripley) -> ripley.stopDecreasingEnergy().dispose());
+        scene.getMessageBus().subscribe(Ventilator.VENTILATOR_REPAIRED,
+            (Ripley) -> ripley.stopDecreasingEnergy().dispose());
     }
 
     @Override
@@ -59,29 +60,34 @@ public class EscapeRoom implements SceneListener {
 
     @Override
     public void sceneCreated(@NotNull Scene scene) {
-        Consumer<Actor> new_actor = (a) -> System.out.println("new actor");
+        Consumer<Actor> new_actor = (a) -> System.out.println("New actor");
         scene.getMessageBus().subscribe(World.ACTOR_ADDED_TOPIC, new_actor);
     }
 
     public static class Factory implements ActorFactory {
-
         @Override
         public @Nullable Actor create(@Nullable String type, @Nullable String name) {
-            assert name != null;
-            if (name.equals("ellen")) {
-                return new Ripley();
-            }
-            if (name.equals("alien")) {
-                return new Alien(100, new RandomlyMoving());
-            }
-            if (name.equals("energy")) {
-                return new Energy();
-            }
-            if (name.equals("alien mother")) {
-                return new AlienMother(150, new RandomlyMoving());
-            }
-            if (name.equals("ammo")) {
-                return new Ammo();
+            if (name != null) {
+                switch (name) {
+                    case "ellen":
+                        return new Ripley();
+                    case "alien":
+                        return new Alien(100, new RandomlyMoving());
+                    case "door":
+                        return new Door();
+                    case "energy":
+                        return new Energy();
+                    case "alien mother":
+                        return new AlienMother(150, new RandomlyMoving());
+                    case "ammo":
+                        return new Ammo();
+                    case "ventilator":
+                        return new Ventilator();
+                    case "locked":
+                        return new Locker();
+                    default:
+                        break;
+                }
             }
             return null;
         }

@@ -10,21 +10,18 @@ import java.util.Objects;
 public class Move<K extends Movable> implements Action<K> {
     private K movable;
     private Direction moveDirection;
-    private boolean isRuning;
+    private boolean isRunning;
     private float timeDuration;
     private int timeExpand;
 
     public Move(Direction direction, float duration) {
-        this.isRuning = false;
+        this.isRunning = false;
         this.timeExpand = 0;
         this.moveDirection = direction;
         this.timeDuration = duration;
     }
 
     public Move(Direction direction) {
-        this.isRuning = false;
-        this.timeExpand = 0;
-        this.moveDirection = direction;
     }
 
     @Override
@@ -32,18 +29,9 @@ public class Move<K extends Movable> implements Action<K> {
         timeDuration -= deltaTime;
 
         if (getActor() != null && !isDone()) {
-            Objects.requireNonNull(getActor().getScene()).getMap();
-            if (timeDuration > 0) {
-                movable.setPosition(movable.getPosX() + moveDirection.getDx() * movable.getSpeed(),
-                    movable.getPosY() + moveDirection.getDy() * movable.getSpeed());
-                if ((getActor().getScene()).getMap().intersectsWithWall(movable)) {
-                    movable.setPosition(movable.getPosX() - moveDirection.getDx() * movable.getSpeed(),
-                        movable.getPosY() - moveDirection.getDy() * movable.getSpeed());
-                    movable.collidedWithWall();
-                }
-            } else {
-                stop();
-            }
+            getActor().getScene().getMap();
+
+            getPositionForMoving();
 
             if (timeExpand == 0) {
                 movable.startedMoving(moveDirection);
@@ -52,9 +40,25 @@ public class Move<K extends Movable> implements Action<K> {
         }
     }
 
+    private void getPositionForMoving() {
+        if (timeDuration > 0) {
+            movable.setPosition(movable.getPosX() + moveDirection.getDx() * movable.getSpeed(),
+                movable.getPosY() + moveDirection.getDy() * movable.getSpeed());
+
+            if ((getActor().getScene()).getMap().intersectsWithWall(movable)) {
+                movable.setPosition(movable.getPosX() - moveDirection.getDx() * movable.getSpeed(),
+                    movable.getPosY() - moveDirection.getDy() * movable.getSpeed());
+
+                movable.collidedWithWall();
+            }
+        } else {
+            stop();
+        }
+    }
+
     public void stop() {
         if (movable != null) {
-            isRuning = true;
+            isRunning = true;
             movable.stoppedMoving();
         }
     }
@@ -63,7 +67,7 @@ public class Move<K extends Movable> implements Action<K> {
     public void reset() {
         this.timeExpand = 0;
         this.timeDuration = 0;
-        this.isRuning = false;
+        this.isRunning = false;
     }
 
     @Nullable
@@ -79,6 +83,6 @@ public class Move<K extends Movable> implements Action<K> {
 
     @Override
     public boolean isDone() {
-        return isRuning;
+        return isRunning;
     }
 }

@@ -14,11 +14,11 @@ public class FirstSteps implements SceneListener {
     private Energy energy;
     private Ammo ammo;
 
-    private FireExtinguisher fireExtinguisher = new FireExtinguisher();
+    private final FireExtinguisher fireExtinguisher = new FireExtinguisher();
     private Ripley ripley;
-    private Hammer hammer = new Hammer();
-    private Mjolnir mjolnir = new Mjolnir();
-    private Wrench wrench = new Wrench();
+    private final Hammer hammer = new Hammer();
+    private final Mjolnir mjolnir = new Mjolnir();
+    private final Wrench wrench = new Wrench();
 
     public FirstSteps() {
     }
@@ -27,6 +27,7 @@ public class FirstSteps implements SceneListener {
     public void sceneInitialized(@NotNull Scene scene) {
         Ripley ripley = new Ripley();
         scene.addActor(ripley, 0, 0);
+
         MovableController movableController = new MovableController(ripley);
         scene.getInput().registerListener(movableController);
 
@@ -40,11 +41,6 @@ public class FirstSteps implements SceneListener {
             () -> ripley.intersects(energy),
             new Invoke<>(() -> energy.useWith(ripley))
         ).scheduleFor(ripley);
-
-//        new When<> (
-//            () -> ripley.intersects(ripley),
-//            new Invoke<>(() -> ammo.useWith(ripley))
-//        ).scheduleFor(ripley);
 
         ripley.getBackpack().add(fireExtinguisher);
         ripley.getBackpack().add(hammer);
@@ -72,5 +68,4 @@ public class FirstSteps implements SceneListener {
             ripley.showRipleyState(scene);
         }
     }
-
 }
