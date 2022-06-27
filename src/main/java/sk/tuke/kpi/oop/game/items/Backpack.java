@@ -7,9 +7,9 @@ import sk.tuke.kpi.gamelib.ActorContainer;
 import java.util.*;
 
 public class Backpack implements ActorContainer<Collectible> {
-    private int capacity;
-    private String containerName;
-    private List<Collectible> backpackItems;
+    private final int capacity;
+    private final String containerName;
+    private final List<Collectible> backpackItems;
 
     public Backpack(String name, int capacity) {
         this.containerName = name;
@@ -39,11 +39,9 @@ public class Backpack implements ActorContainer<Collectible> {
 
     @Override
     public void add(@NotNull Collectible actor) {
-
         if (backpackItems.size() < getCapacity()) {
             backpackItems.add(actor);
-        }
-        else {
+        } else {
             throw new IllegalStateException(getName() + "is full");
         }
     }
@@ -57,8 +55,7 @@ public class Backpack implements ActorContainer<Collectible> {
     public @Nullable Collectible peek() {
         if (getSize() > 0) {
             return backpackItems.get(getSize() - 1);
-        }
-        else {
+        } else {
             return null;
         }
     }
@@ -71,11 +68,6 @@ public class Backpack implements ActorContainer<Collectible> {
     @NotNull
     @Override
     public Iterator<Collectible> iterator() {
-//        for (Collectible item : backpack) {
-//            item.equals(backpack);
-//            Arrays.stream(backpack).iterator().next();
-//            Arrays.stream(backpack).iterator().hasNext();
-//        }
         return backpackItems.iterator();
     }
 }

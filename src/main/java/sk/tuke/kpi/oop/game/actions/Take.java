@@ -8,10 +8,7 @@ import sk.tuke.kpi.oop.game.items.Collectible;
 import java.util.List;
 
 public class Take<A extends Keeper> extends AbstractAction<A> {
-    public Take() {
-
-    }
-
+    public Take() {}
     @Override
     public void execute(float deltaTime) {
         if (getActor() == null) {

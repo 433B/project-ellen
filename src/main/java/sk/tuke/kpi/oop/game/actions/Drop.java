@@ -11,22 +11,23 @@ public class Drop<K extends Keeper> extends AbstractAction<K> {
     public void execute(float deltaTime) {
         try {
             Collectible weapon = getActor().getBackpack().peek();
-//            Collectible weapon = Objects.requireNonNull(getActor()).getBackpack().peek();
-            assert weapon != null;
+            dropWeapon(weapon);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        setDone(true);
+    }
+
+    private void dropWeapon(Collectible weapon) {
+        if (weapon != null) {
             getActor().getScene().addActor(
                 weapon,
                 getActor().getPosX() + weapon.getWidth() / 2,
                 getActor().getPosY() + weapon.getHeight() / 2
             );
-            /*Objects.requireNonNull(getActor().getScene()).addActor(
-                weapon,
-                getActor().getPosX() + weapon.getWidth() / 2,
-                getActor().getPosY() + weapon.getHeight() / 2
-            );*/
-            getActor().getBackpack().remove(weapon);
-        } catch (Exception e) {
-            e.printStackTrace();
         }
-        setDone(true);
+        if (weapon != null) {
+            getActor().getBackpack().remove(weapon);
+        }
     }
 }

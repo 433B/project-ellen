@@ -20,9 +20,6 @@ public class FirstSteps implements SceneListener {
     private final Mjolnir mjolnir = new Mjolnir();
     private final Wrench wrench = new Wrench();
 
-    public FirstSteps() {
-    }
-
     @Override
     public void sceneInitialized(@NotNull Scene scene) {
         Ripley ripley = new Ripley();
@@ -42,6 +39,16 @@ public class FirstSteps implements SceneListener {
             new Invoke<>(() -> energy.useWith(ripley))
         ).scheduleFor(ripley);
 
+        addingItem(scene, ripley);
+
+        scene.getGame().pushActorContainer(ripley.getBackpack());
+        ripley.getBackpack().shift();
+
+        KeeperController keeperController = new KeeperController(ripley);
+        scene.getInput().registerListener(keeperController);
+    }
+
+    private void addingItem(@NotNull Scene scene, Ripley ripley) {
         ripley.getBackpack().add(fireExtinguisher);
         ripley.getBackpack().add(hammer);
         ripley.getBackpack().add(wrench);
@@ -53,12 +60,6 @@ public class FirstSteps implements SceneListener {
         scene.addActor(hammer, 50, 65);
         scene.addActor(fireExtinguisher, 50, 70);
         scene.addActor(mjolnir, 50, 100);
-
-        scene.getGame().pushActorContainer(ripley.getBackpack());
-        ripley.getBackpack().shift();
-
-        KeeperController keeperController = new KeeperController(ripley);
-        scene.getInput().registerListener(keeperController);
     }
 
     @Override

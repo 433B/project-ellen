@@ -17,7 +17,6 @@ import sk.tuke.kpi.oop.game.items.Ammo;
 import sk.tuke.kpi.oop.game.items.Energy;
 import sk.tuke.kpi.oop.game.items.Wrench;
 import sk.tuke.kpi.oop.game.openables.Door;
-import sk.tuke.kpi.oop.game.openables.LockedDoor;
 
 import java.util.function.Consumer;
 
@@ -27,7 +26,9 @@ public class CheckBart implements SceneListener {
     @Override
     public void sceneInitialized(@NotNull Scene scene) {
         Ripley ripley = scene.getFirstActorByType(Ripley.class);
-        scene.follow(ripley);
+        if (ripley != null) {
+            scene.follow(ripley);
+        }
 
         MovableController movable = new MovableController(ripley);
         scene.getInput().registerListener(movable);
@@ -38,10 +39,15 @@ public class CheckBart implements SceneListener {
         ShooterController shooterController = new ShooterController(ripley);
         scene.getInput().registerListener(shooterController);
 
-        scene.getGame().pushActorContainer(ripley.getBackpack());
-        ripley.getBackpack().shift();
-
-        ripley.getBackpack().add(wrench);
+        if (ripley != null) {
+            scene.getGame().pushActorContainer(ripley.getBackpack());
+        }
+        if (ripley != null) {
+            ripley.getBackpack().shift();
+        }
+        if (ripley != null) {
+            ripley.getBackpack().add(wrench);
+        }
     }
 
     @Override
@@ -53,7 +59,7 @@ public class CheckBart implements SceneListener {
 
     @Override
     public void sceneCreated(@NotNull Scene scene) {
-        Consumer<Actor> new_actor = (a) -> System.out.println("new actor");
+        Consumer<Actor> new_actor = (a) -> System.out.println("Add new actor!");
         scene.getMessageBus().subscribe(World.ACTOR_ADDED_TOPIC, new_actor);
     }
 
@@ -62,38 +68,29 @@ public class CheckBart implements SceneListener {
         @Override
         public @Nullable Actor create(@Nullable String type, @Nullable String name) {
             assert name != null;
-            if (name.equals("ellen")) {
-                return new Ripley();
-            }
-            if (name.equals("alien")) {
-                return new Alien(100, new RandomlyMoving());
-            }
-            if (name.equals("door")) {
-                return new Door();
-            }
-            if (name.equals("energy")) {
-                return new Energy();
-            }
-            if (name.equals("alien mother")) {
-                return new AlienMother(150, new RandomlyMoving());
-            }
-            if (name.equals("ammo")) {
-                return new Ammo();
-            }
-            if (name.equals("back door")) {
-                return new Door("", Door.Orientation.HORIZONTAL);
-            }
-            if (name.equals("front door")) {
-                return new Door("", Door.Orientation.VERTICAL);
-            }
-            if (name.equals("ventilator")) {
-                return new Ventilator();
-            }
-            if (name.equals("locker")) {
-                return new Locker();
-            }
-            if (name.equals("access card")) {
-                return new AccessCard();
+            switch (name) {
+                case "ellen":
+                    return new Ripley();
+                case "alien":
+                    return new Alien(100, new RandomlyMoving());
+                case "door":
+                    return new Door();
+                case "energy":
+                    return new Energy();
+                case "alien mother":
+                    return new AlienMother(150, new RandomlyMoving());
+                case "ammo":
+                    return new Ammo();
+                case "back door":
+                    return new Door("", Door.Orientation.HORIZONTAL);
+                case "front door":
+                    return new Door("", Door.Orientation.VERTICAL);
+                case "ventilator":
+                    return new Ventilator();
+                case "locker":
+                    return new Locker();
+                case "access card":
+                    return new AccessCard();
             }
             return null;
         }

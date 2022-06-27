@@ -11,9 +11,7 @@ import java.util.Objects;
 
 public class Fire<A extends Armed> extends AbstractAction<A> {
 
-    public Fire() {
-
-    }
+    public Fire() { }
 
     @Override
     public void execute(float deltaTime) {

@@ -19,8 +19,8 @@ public class TrainingGameplay implements SceneListener {
 
     @Override
     public void sceneInitialized(@NotNull Scene scene) {
-        Reactor reactor = new Reactor();  // vytvorenie instancie reaktora
-        scene.addActor(reactor, 64, 64);  // pridanie reaktora do sceny na poziciu [x=64, y=64]
+        Reactor reactor = new Reactor();
+        scene.addActor(reactor, 64, 64);
         reactor.turnOn();
 
         Cooler cooler = new Cooler(reactor);
@@ -29,13 +29,5 @@ public class TrainingGameplay implements SceneListener {
             new Wait<>(4),
             new Invoke<>(cooler::turnOn)
         ).scheduleFor(cooler);
-
-//        Hammer hammer = new Hammer();
-//        scene.addActor(hammer, 80, 80);
-//        new When<>(
-//            () -> reactor.getTemperature() >= 3000
-////            new Invoke<>(() -> hammer.use())
-//        ).scheduleFor(reactor);
-//
     }
 }

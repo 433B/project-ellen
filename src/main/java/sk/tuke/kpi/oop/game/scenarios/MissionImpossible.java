@@ -15,7 +15,6 @@ import sk.tuke.kpi.oop.game.openables.LockedDoor;
 
 import java.util.Objects;
 
-
 public class MissionImpossible implements SceneListener {
 
     @Override
@@ -29,22 +28,17 @@ public class MissionImpossible implements SceneListener {
 
         KeeperController keeperController = new KeeperController(ripley);
         scene.getInput().registerListener(keeperController);
-
-//        if (ripley.getEnergy() == 0) {
         scene.getInput().registerListener(movableController).dispose();
         scene.getInput().registerListener(keeperController).dispose();
-//        }
 
+        itemBackpack(scene, ripley);
+    }
+
+    private void itemBackpack(@NotNull Scene scene, Ripley ripley) {
         scene.getGame().pushActorContainer(ripley.getBackpack());
         ripley.getBackpack().shift();
-
         ripley.getBackpack().add(new AccessCard());
         ripley.getBackpack().add(new Hammer());
-
-//        scene.getMessageBus().subscribe(Door.DOOR_OPENED, (Ripley) -> ripley.getBackpack());
-
-//        scene.getMessageBus().subscribe(Ventilator.VENTILATOR_REPAIRED, (Ripley) -> ripley.getEnergy());
-//        scene.getMessageBus().subscribe(Door.DOOR_CLOSED, );
     }
 
     @Override
@@ -56,22 +50,23 @@ public class MissionImpossible implements SceneListener {
     public static class Factory implements ActorFactory {
         @Override
         public @Nullable Actor create(@Nullable String type, @Nullable String name) {
-            switch (Objects.requireNonNull(name)) {
-                case "ellen":
-                    return new Ripley();
-                case "energy":
-                    return new Energy();
-                case "door":
-                    return new LockedDoor();
-                case "access card":
-                    return new AccessCard();
-                case "locker":
-                    return new Locker();
-                case "ventilator":
-                    return new Ventilator();
-                default:
-                    return null;
+            if (name != null) {
+                switch (name) {
+                    case "ellen":
+                        return new Ripley();
+                    case "energy":
+                        return new Energy();
+                    case "door":
+                        return new LockedDoor();
+                    case "access card":
+                        return new AccessCard();
+                    case "locker":
+                        return new Locker();
+                    case "ventilator":
+                        return new Ventilator();
+                }
             }
+            return null;
         }
     }
 }

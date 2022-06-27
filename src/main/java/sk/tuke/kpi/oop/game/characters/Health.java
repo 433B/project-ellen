@@ -27,9 +27,8 @@ public class Health {
     public void refill(int amount) {
         if (now + amount <= max) {
             now += amount;
-        } else {
-            this.now = this.max;
-        }
+        } else
+            now = max;
     }
 
     public void restore() {
@@ -38,20 +37,15 @@ public class Health {
 
     public void drain(int amount) {
         if (now != 0) {
-            if (now > amount)
-                now -= amount;
+            if (now > amount) now -= amount;
             else exhaust();
         }
-
     }
 
     public void exhaust() {
         if (now != 0) {
             now = 0;
-
-            if (effectsHealth != null) {
-                effectsHealth.forEach(ExhaustionEffect::apply);
-            }
+            effectsHealth.forEach(ExhaustionEffect::apply);
         }
     }
 

@@ -7,7 +7,7 @@ import sk.tuke.kpi.oop.game.actions.Fire;
 import sk.tuke.kpi.oop.game.characters.Armed;
 
 public class ShooterController implements KeyboardListener {
-    private Armed armed;
+    private final Armed armed;
 
     public ShooterController(Armed shooterActor) {
         this.armed = shooterActor;
@@ -19,5 +19,4 @@ public class ShooterController implements KeyboardListener {
             new Fire<>().scheduleFor(armed);
         }
     }
-
 }

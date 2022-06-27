@@ -9,7 +9,7 @@ import java.util.Objects;
 
 public class Move<K extends Movable> implements Action<K> {
     private K movable;
-    private Direction moveDirection;
+    private final Direction moveDirection;
     private boolean isRunning;
     private float timeDuration;
     private int timeExpand;
@@ -19,9 +19,6 @@ public class Move<K extends Movable> implements Action<K> {
         this.timeExpand = 0;
         this.moveDirection = direction;
         this.timeDuration = duration;
-    }
-
-    public Move(Direction direction) {
     }
 
     @Override
@@ -41,18 +38,21 @@ public class Move<K extends Movable> implements Action<K> {
     }
 
     private void getPositionForMoving() {
+        int x = movable.getPosX() + moveDirection.getDx() * movable.getSpeed();
+        int y = movable.getPosY() + moveDirection.getDy() * movable.getSpeed();
+
         if (timeDuration > 0) {
-            movable.setPosition(movable.getPosX() + moveDirection.getDx() * movable.getSpeed(),
-                movable.getPosY() + moveDirection.getDy() * movable.getSpeed());
+            movable.setPosition(x, y);
+            movingCoordinate();
+        } else stop();
+    }
 
-            if ((getActor().getScene()).getMap().intersectsWithWall(movable)) {
-                movable.setPosition(movable.getPosX() - moveDirection.getDx() * movable.getSpeed(),
-                    movable.getPosY() - moveDirection.getDy() * movable.getSpeed());
-
-                movable.collidedWithWall();
-            }
-        } else {
-            stop();
+    private void movingCoordinate() {
+        if ((getActor().getScene()).getMap().intersectsWithWall(movable)) {
+            int x = movable.getPosX() - moveDirection.getDx() * movable.getSpeed();
+            int y = movable.getPosY() - moveDirection.getDy() * movable.getSpeed();
+            movable.setPosition(x, y);
+            movable.collidedWithWall();
         }
     }
 

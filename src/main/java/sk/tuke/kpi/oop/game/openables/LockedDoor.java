@@ -8,15 +8,7 @@ public class LockedDoor extends Door {
         this.lock = true;
     }
 
-    private void lock() {
-        lock = true;
-    }
-
     public void unlock() {
         lock = false;
-    }
-
-    private boolean isLocked() {
-        return lock;
     }
 }

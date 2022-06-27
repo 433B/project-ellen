@@ -11,39 +11,38 @@ import sk.tuke.kpi.oop.game.actions.Take;
 import sk.tuke.kpi.oop.game.actions.Use;
 import sk.tuke.kpi.oop.game.items.Usable;
 
-import java.util.Objects;
-
-
 public class KeeperController implements KeyboardListener {
-    private Keeper keeper;
+    private final Keeper keeper;
 
     public KeeperController(Keeper actor) {
         this.keeper = actor;
     }
 
-
     @Override
     public void keyPressed(@NotNull Input.Key key) {
-        if (key.equals(Input.Key.ENTER)) {
-            new Take<>().scheduleFor(keeper);
+        switch (key) {
+            case ENTER:
+                new Take<>().scheduleFor(keeper);
+                break;
+            case BACKSPACE:
+                new Drop<>().scheduleFor(keeper);
+                break;
+            case S:
+                new Shift<>().scheduleFor(keeper);
+                break;
+            case U:
+                this.pressedU();
+                break;
         }
-        if (key == Input.Key.BACKSPACE) {
-            new Drop<>().scheduleFor(keeper);
-        }
-        if (key == Input.Key.S) {
-            new Shift<>().scheduleFor(keeper);
-        }
-        if (key == Input.Key.U) {
-            this.pressdU();
-        }
-        if (key == Input.Key.B && keeper.getBackpack().peek() instanceof Usable) {
+
+        if (key.equals(Input.Key.B) && keeper.getBackpack().peek() instanceof Usable) {
             Use<?> use = new Use<>((Usable<?>) keeper.getBackpack().peek());
             use.scheduleForIntersectingWith(keeper);
         }
     }
 
-    public void pressdU() {
-        for (Actor item : Objects.requireNonNull(this.keeper.getScene()).getActors()) {
+    public void pressedU() {
+        for (Actor item : this.keeper.getScene().getActors()) {
             if (item instanceof Usable && this.keeper.intersects(item)) {
                 new Use<>((Usable<?>) item).scheduleForIntersectingWith(this.keeper);
             }

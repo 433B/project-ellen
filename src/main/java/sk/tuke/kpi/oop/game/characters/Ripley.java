@@ -18,11 +18,12 @@ import sk.tuke.kpi.oop.game.weapons.Firearm;
 import sk.tuke.kpi.oop.game.weapons.Gun;
 
 import java.util.Objects;
+import java.util.SortedMap;
 
 public class Ripley extends AbstractActor implements Movable, Keeper, Alive, Armed {
     private final Animation player;
 
-    public static final Topic<Ripley> RIPLEY_DIED = Topic.create("ripley died", Ripley.class);
+    public static final Topic<Ripley> RIPLEY_DIED = Topic.create("Ripley is died! Try again", Ripley.class);
 
     private final float ripleySpeed;
     private int ammo;
@@ -33,13 +34,13 @@ public class Ripley extends AbstractActor implements Movable, Keeper, Alive, Arm
 
     public Ripley() {
         super("Ellen");
-        this.ripleySpeed = 2;
-        this.ammo = 100;
-        this.disposable = null;
+        ripleySpeed = 2;
+        ammo = 100;
+        disposable = null;
 
-        this.ripleyGun = new Gun(100, 150);
-        this.ripleyHealth = new Health(100, 100);
-        this.ripleyBackpack = new Backpack("ripley's backpack", 10);
+        ripleyGun = new Gun(100, 150);
+        ripleyHealth = new Health(100, 100);
+        ripleyBackpack = new Backpack("ripley's backpack", 10);
 
         player = new Animation("sprites/player.png",
             32, 32,
@@ -49,7 +50,7 @@ public class Ripley extends AbstractActor implements Movable, Keeper, Alive, Arm
         player.stop();
 
         ripleyHealth.onExhaustion(() -> {
-            this.setAnimation(new Animation("sprites/player_die.png",
+            setAnimation(new Animation("sprites/player_die.png",
                 32, 32,
                 0.1f, Animation.PlayMode.ONCE));
             getScene().getMessageBus().publish(RIPLEY_DIED, this);
@@ -58,61 +59,68 @@ public class Ripley extends AbstractActor implements Movable, Keeper, Alive, Arm
 
     @Override
     public void startedMoving(Direction direction) {
-        if (Direction.NORTH == direction) {
-            player.setRotation(0);
-            player.play();
-        } else if (Direction.NORTHWEST == direction) {
-            player.setRotation(45);
-            player.play();
-        } else if (Direction.WEST == direction) {
-            player.setRotation(90);
-            player.play();
-        } else if (Direction.SOUTHWEST == direction) {
-            player.setRotation(135);
-            player.play();
-        } else if (Direction.SOUTH == direction) {
-            player.setRotation(180);
-            player.play();
-        } else if (Direction.SOUTHEAST == direction) {
-            player.setRotation(225);
-            player.play();
-        } else if (Direction.EAST == direction) {
-            player.setRotation(270);
-            player.play();
-        } else if (Direction.NORTHEAST == direction) {
-            player.setRotation(315);
-            player.play();
+        switch (direction) {
+            case NORTH:
+                player.setRotation(0);
+                break;
+            case NORTHWEST:
+                player.setRotation(45);
+                break;
+            case WEST:
+                player.setRotation(90);
+                break;
+            case SOUTHWEST:
+                player.setRotation(135);
+                break;
+            case SOUTH:
+                player.setRotation(180);
+                break;
+            case SOUTHEAST:
+                player.setRotation(225);
+                break;
+            case EAST:
+                player.setRotation(270);
+                break;
+            case NORTHEAST:
+                player.setRotation(315);
+                break;
         }
+        player.play();
     }
 
     public void showRipleyState(Scene scene) {
-        int windowHeight = Objects.requireNonNull(getScene()).getGame().getWindowSetup().getHeight();
+        int windowHeight = getScene().getGame().getWindowSetup().getHeight();
         int yTextPos = windowHeight - GameApplication.STATUS_LINE_OFFSET;
+
         scene.getGame().getOverlay().drawText("Energy " + ripleyHealth.getValue(), 120, yTextPos);
-        scene.getGame().getOverlay().drawText("Ammo " + this.getFirearm().getAmmo(), 240, yTextPos);
+        scene.getGame().getOverlay().drawText("Ammo " + getFirearm().getAmmo(), 240, yTextPos);
     }
 
     public void decreaseEnergy() {
-        if (this.ripleyHealth.getValue() != 0 && ripleyHealth.getValue() >= 0) {
-
-            this.disposable = new Loop<>(
-                new ActionSequence<>(
-                    new Invoke<>(() -> {
-                        if (this.ripleyHealth.getValue() <= 0) {
-                            this.setAnimation(new Animation("sprites/player_die.png", 32, 32, 0.1f, Animation.PlayMode.ONCE));
-                            Objects.requireNonNull(getScene()).getMessageBus().publish(RIPLEY_DIED, this);
-                        } else {
-                            this.getHealth().drain(5);
-                        }
-                    }),
-                    new Wait<>(1)
-                )
-            ).scheduleFor(this);
-
+        if (ripleyHealth.getValue() != 0 && ripleyHealth.getValue() >= 0) {
+            diedHero();
         } else {
-            this.setAnimation(new Animation("sprites/player_die.png", 32, 32, 0.1f, Animation.PlayMode.ONCE));
-            Objects.requireNonNull(getScene()).getMessageBus().publish(RIPLEY_DIED, this);
+            setAnimation(new Animation("sprites/player_die.png",
+                32, 32,
+                0.1f, Animation.PlayMode.ONCE));
+            getScene().getMessageBus().publish(RIPLEY_DIED, this);
         }
+    }
+
+    private void diedHero() {
+        disposable = new Loop<>(
+            new ActionSequence<>(
+                new Invoke<>(() -> {
+                    if (ripleyHealth.getValue() <= 0) {
+                        setAnimation(new Animation("sprites/player_die.png",
+                            32, 32,
+                            0.1f, Animation.PlayMode.ONCE));
+                        getScene().getMessageBus().publish(RIPLEY_DIED, this);
+                    } else getHealth().drain(5);
+                }),
+                new Wait<>(1)
+            )
+        ).scheduleFor(this);
     }
 
     public Disposable stopDecreasingEnergy() {

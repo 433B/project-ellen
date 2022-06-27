@@ -20,7 +20,6 @@ import sk.tuke.kpi.oop.game.openables.LockedDoor;
 
 import java.util.function.Consumer;
 
-
 public class EscapeRoom implements SceneListener {
     @Override
     public void sceneInitialized(@NotNull Scene scene) {
@@ -41,6 +40,10 @@ public class EscapeRoom implements SceneListener {
         AccessCard accessCard = new AccessCard();
         ripley.getBackpack().add(accessCard);
 
+        writeMessage(scene, ripley, move, keeper, shooter);
+    }
+
+    private void writeMessage(@NotNull Scene scene, Ripley ripley, Disposable move, Disposable keeper, Disposable shooter) {
         scene.getMessageBus().subscribe(Door.DOOR_OPENED, (Ripley) -> ripley.decreaseEnergy());
 
         scene.getMessageBus().subscribe(Ripley.RIPLEY_DIED, (Ripley) -> move.dispose());
@@ -60,7 +63,7 @@ public class EscapeRoom implements SceneListener {
 
     @Override
     public void sceneCreated(@NotNull Scene scene) {
-        Consumer<Actor> new_actor = (a) -> System.out.println("New actor");
+        Consumer<Actor> new_actor = (a) -> System.out.println("Add new actor");
         scene.getMessageBus().subscribe(World.ACTOR_ADDED_TOPIC, new_actor);
     }
 

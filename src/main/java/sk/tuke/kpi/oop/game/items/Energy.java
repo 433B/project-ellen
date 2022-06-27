@@ -15,7 +15,7 @@ public class Energy extends AbstractActor implements Usable<Alive> {
     public void useWith(Alive actor) {
         try {
             actor.getHealth().refill(50);
-            Objects.requireNonNull(getScene()).removeActor(this);
+            getScene().removeActor(this);
         } catch (Exception e) {
             e.printStackTrace();
         }

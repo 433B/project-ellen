@@ -13,10 +13,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-
 public class Door extends AbstractActor implements Usable<Actor>, Openable {
-    private Animation openDoorAnimation;
-    private Animation closeDoorAnimation;
+    private final Animation openDoorAnimation;
+    private final Animation closeDoorAnimation;
 
     private boolean isOpen;
     public static final Topic<Door> DOOR_OPENED = Topic.create("door opened", Door.class);
@@ -35,8 +34,14 @@ public class Door extends AbstractActor implements Usable<Actor>, Openable {
         this.listTiles = null;
         this.doorAnimation = "sprites/vdoor.png";
 
-        openDoorAnimation = new Animation(doorAnimation, 16, 32, 0.1f, Animation.PlayMode.ONCE);
-        closeDoorAnimation = new Animation(doorAnimation, 16, 32, 0.1f, Animation.PlayMode.ONCE_REVERSED);
+        openDoorAnimation = new Animation(doorAnimation,
+            16, 32,
+            0.1f, Animation.PlayMode.ONCE);
+
+        closeDoorAnimation = new Animation(doorAnimation,
+            16, 32,
+            0.1f, Animation.PlayMode.ONCE_REVERSED);
+
         setAnimation(closeDoorAnimation);
     }
 
@@ -47,14 +52,26 @@ public class Door extends AbstractActor implements Usable<Actor>, Openable {
 
         if (orientation == Orientation.VERTICAL) {
             doorAnimation = "sprites/vdoor.png";
-            openDoorAnimation = new Animation(doorAnimation, 16, 32, 0.1f, Animation.PlayMode.ONCE);
-            closeDoorAnimation = new Animation(doorAnimation, 16, 32, 0.1f, Animation.PlayMode.ONCE_REVERSED);
+            openDoorAnimation = new Animation(doorAnimation,
+                16, 32,
+                0.1f, Animation.PlayMode.ONCE);
+
+            closeDoorAnimation = new Animation(doorAnimation,
+                16, 32,
+                0.1f, Animation.PlayMode.ONCE_REVERSED);
+
             setAnimation(new Animation(doorAnimation, 16, 32));
             getAnimation().stop();
         } else {
             doorAnimation = "sprites/hdoor.png";
-            openDoorAnimation = new Animation(doorAnimation, 32, 16, 0.1f, Animation.PlayMode.ONCE);
-            closeDoorAnimation = new Animation(doorAnimation, 32, 16, 0.1f, Animation.PlayMode.ONCE_REVERSED);
+            openDoorAnimation = new Animation(doorAnimation,
+                32, 16,
+                0.1f, Animation.PlayMode.ONCE);
+
+            closeDoorAnimation = new Animation(doorAnimation,
+                32, 16,
+                0.1f, Animation.PlayMode.ONCE_REVERSED);
+
             setAnimation(new Animation(doorAnimation, 32, 16));
             getAnimation().stop();
         }
@@ -74,13 +91,7 @@ public class Door extends AbstractActor implements Usable<Actor>, Openable {
         if (!isOpen()) {
             isOpen = true;
             setAnimation(openDoorAnimation);
-//            if (Orientation.VERTICAL != null) {
-//                setAnimation(openDoorVertical);
-//            }
-//            else if (Orientation.HORIZONTAL != null) {
-//                setAnimation(openDoorHorizontal);
-//            }
-            Objects.requireNonNull(getScene()).getMessageBus().publish(DOOR_OPENED, this);
+            getScene().getMessageBus().publish(DOOR_OPENED, this);
 
             if (isOpen()) {
                 mapTile = MapTile.Type.CLEAR;
@@ -98,20 +109,11 @@ public class Door extends AbstractActor implements Usable<Actor>, Openable {
         if (isOpen()) {
             isOpen = false;
             setAnimation(closeDoorAnimation);
-//            if (Orientation.VERTICAL != null) {
-//                setAnimation(closeDoorVertical);
-//            }
-//            else if (Orientation.HORIZONTAL != null) {
-//                setAnimation(closeDoorHorizontal);
-//            }
+            getScene().getMessageBus().publish(DOOR_CLOSED, this);
 
-            Objects.requireNonNull(getScene()).getMessageBus().publish(DOOR_CLOSED, this);
+            if (!isOpen()) mapTile = MapTile.Type.WALL;
+             else mapTile = MapTile.Type.CLEAR;
 
-            if (!isOpen() ) {
-                mapTile = MapTile.Type.WALL;
-            } else {
-                mapTile = MapTile.Type.CLEAR;
-            }
             for (MapTile typeTile : searchOwnTiles()) {
                 typeTile.setType(mapTile);
             }
@@ -138,20 +140,21 @@ public class Door extends AbstractActor implements Usable<Actor>, Openable {
         }
         List<MapTile> foundTiles = new ArrayList<>();
 
-        int i = 0;
-        while (i < getAnimation().getWidth() / Objects.requireNonNull(getScene()).getMap().getTileWidth()) {
-             int j = 0;
-             while (j < getAnimation().getHeight() / getScene().getMap().getTileHeight()) {
-                MapTile typeTile = getScene().getMap().getTile(getPosX() / getScene().getMap().getTileWidth() + i,
+        mapTiles(foundTiles);
+        listTiles = foundTiles;
+        return listTiles;
+    }
+
+    private void mapTiles(List<MapTile> foundTiles) {
+        for (int i = 0; i < getAnimation().getWidth() / getScene().getMap().getTileWidth(); i++) {
+            for (int j = 0; j < getAnimation().getHeight() / getScene().getMap().getTileHeight(); j++) {
+                MapTile typeTile = getScene().getMap().getTile(getPosX()
+                        / getScene().getMap().getTileWidth() + i,
                     getPosY() / getScene().getMap().getTileHeight() + j
                 );
                 foundTiles.add(typeTile);
-                j++;
             }
-            i++;
         }
-        listTiles = foundTiles;
-        return listTiles;
     }
 
     @Override

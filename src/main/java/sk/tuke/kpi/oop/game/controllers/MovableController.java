@@ -13,13 +13,13 @@ import java.util.Map;
 import java.util.Set;
 
 public class MovableController implements KeyboardListener {
-    private Movable movable;
+    private final Movable movable;
     private Move <Movable> move;
     private Disposable disposable;
-    private Set<Input.Key> keyboard;
+    private final Set<Input.Key> keyboard;
 
 
-    private Map<Input.Key, Direction> keyDirectionMap = Map.ofEntries(
+    private final Map<Input.Key, Direction> keyDirectionMap = Map.ofEntries(
         Map.entry(Input.Key.UP, Direction.NORTH),
         Map.entry(Input.Key.RIGHT, Direction.EAST),
         Map.entry(Input.Key.DOWN, Direction.SOUTH),
@@ -57,21 +57,24 @@ public class MovableController implements KeyboardListener {
     }
 
     private void updateAnimation() {
-        Direction uholG = null;
+        Direction angel = null;
 
         int a = 0;
-
-        for (Input.Key kluc : keyboard) {
-            if (a == 0)
-                uholG = keyDirectionMap.get(kluc);
-            if (a == 1)
-                uholG = uholG.combine(keyDirectionMap.get(kluc));
+        for (Input.Key key : keyboard) {
+            switch (a) {
+                case 0:
+                    angel = keyDirectionMap.get(key);
+                    break;
+                case 1:
+                    angel = angel.combine(keyDirectionMap.get(key));
+                    break;
+            }
             a++;
         }
         stopMoving();
 
-        if (uholG != null) {
-            move = new Move<>(uholG, Float.MAX_VALUE);
+        if (angel != null) {
+            move = new Move<>(angel, Float.MAX_VALUE);
             disposable = move.scheduleFor(movable);
         }
     }
