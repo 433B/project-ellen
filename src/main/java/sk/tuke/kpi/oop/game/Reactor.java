@@ -64,13 +64,7 @@ public class Reactor extends AbstractActor implements Switchable, Repairable {
 
     public void increaseTemperature(int add) {
         if (add > 0 && isRunning) {
-            if (damage >= 33 && damage <= 66) {
-                temperature = (int) Math.round(temperature + (add * 1.5));
-            } else if (damage > 66) {
-                temperature = Math.round(temperature + (add * 2));
-            } else {
-                temperature = temperature + add;
-            }
+            rulesForIncrease(add);
             if (temperature > 2000) {
                 this.damage = 100 * temperature / 6000;
             }
@@ -85,11 +79,26 @@ public class Reactor extends AbstractActor implements Switchable, Repairable {
         updateAnimation();
     }
 
+    private void rulesForIncrease(int add) {
+        if (damage >= 33 && damage <= 66) {
+            temperature = (int) Math.round(temperature + (add * 1.5));
+        } else if (damage > 66) {
+            temperature = Math.round(temperature + (add * 2));
+        } else {
+            temperature = temperature + add;
+        }
+    }
+
     public void decreaseTemperature(int sub) {
         if (!this.isRunning && sub < 0) {
             return;
         }
 
+        rulesForDecrease(sub);
+        updateAnimation();
+    }
+
+    private void rulesForDecrease(int sub) {
         if (sub > 0 && isRunning) {
             if (damage >= 50 && damage < 100) {
                 temperature = temperature - sub / 2;
@@ -101,27 +110,24 @@ public class Reactor extends AbstractActor implements Switchable, Repairable {
                 temperature = 0;
             }
         }
-        updateAnimation();
     }
 
     public void updateAnimation() {
         if (isRunning) {
-            if (damage == 0.0) {
-                setAnimation(normalAnimation);
-            }
-            if (damage >= 33.0) {
-                setAnimation(fastNormal);
-            }
-            if (damage >= 66.0) {
-                setAnimation(hotAnimation);
+            switch (damage) {
+                case 0:
+                    setAnimation(normalAnimation);
+                    break;
+                case 33:
+                    setAnimation(fastNormal);
+                    break;
+                case 66:
+                    setAnimation(hotAnimation);
+                    break;
             }
         } else {
-            if (damage == MAX) {
-                setAnimation(brokeAnimation);
-            }
-            if (damage < MAX) {
-                setAnimation(offAnimation);
-            }
+            if (damage == MAX) setAnimation(brokeAnimation);
+            if (damage < MAX) setAnimation(offAnimation);
         }
     }
 
@@ -129,20 +135,23 @@ public class Reactor extends AbstractActor implements Switchable, Repairable {
     public boolean repair() {
         if (getDamage() > 0 && getDamage() < MAX && isRunning) {
             int sub = damage - 50;
-
-            if (sub > 0) {
-                temperature = (int) Math.round((sub / 0.025) + 2000);
-                damage -= 50;
-            } else {
-                temperature = 2000;
-                damage = 0;
-            }
+            rulesForRepair(sub);
 
             if (damage < 0) damage = 0;
             updateAnimation();
             return true;
         }
         return false;
+    }
+
+    private void rulesForRepair(int sub) {
+        if (sub > 0) {
+            temperature = (int) Math.round((sub / 0.025) + 2000);
+            damage -= 50;
+        } else {
+            temperature = 2000;
+            damage = 0;
+        }
     }
 
     public boolean extinguish() {
