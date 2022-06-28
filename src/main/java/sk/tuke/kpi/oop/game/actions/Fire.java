@@ -25,7 +25,6 @@ public class Fire<A extends Armed> extends AbstractAction<A> {
     }
 
     private void setPosition(A actorExecute, Fireable fire) {
-        @NotNull Disposable move;
         if (fire != null) {
             fire.getAnimation().
                 setRotation(Direction.fromAngle(actorExecute.getAnimation().getRotation()).getAngle());
@@ -33,12 +32,17 @@ public class Fire<A extends Armed> extends AbstractAction<A> {
             actorExecute.getScene().
                 addActor(fire, actorExecute.getPosX() + 10, actorExecute.getPosY() + 10);
 
-            move = new Move<Fireable>(Direction.
-                fromAngle(getActor().
-                    getAnimation().
-                    getRotation()),
-                Float.MAX_VALUE).
-                scheduleFor(fire);
+            animForAngle(fire);
         }
+    }
+
+    private void animForAngle(Fireable fire) {
+        @NotNull Disposable move;
+        move = new Move<Fireable>(Direction.
+            fromAngle(getActor().
+                getAnimation().
+                getRotation()),
+            Float.MAX_VALUE).
+            scheduleFor(fire);
     }
 }
