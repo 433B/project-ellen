@@ -3,17 +3,21 @@ package sk.tuke.kpi.oop.game;
 import sk.tuke.kpi.gamelib.framework.AbstractActor;
 import sk.tuke.kpi.gamelib.graphics.Animation;
 
-public class Computer extends AbstractActor implements EnergyConsumer {
+public class Computer
+    extends AbstractActor implements EnergyConsumer {
     private final Animation computerOn;
     private final Animation computerOff;
 
     private boolean electricFlow;
 
     public Computer() {
-        computerOn = new Animation("sprites/computer.png",
+        computerOn = new Animation(
+            "sprites/computer.png",
             80, 48,
             0.4f, Animation.PlayMode.LOOP_PINGPONG);
-        computerOff = new Animation("sprites/computer.png",
+
+        computerOff = new Animation(
+            "sprites/computer.png",
             80, 48,
             0.0f, Animation.PlayMode.LOOP_PINGPONG);
 

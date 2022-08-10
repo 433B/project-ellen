@@ -7,7 +7,8 @@ import sk.tuke.kpi.oop.game.items.Collectible;
 
 import java.util.List;
 
-public class Take<A extends Keeper> extends AbstractAction<A> {
+public class Take<A extends Keeper>
+    extends AbstractAction<A> {
     public Take() {}
     @Override
     public void execute(float deltaTime) {
@@ -32,8 +33,12 @@ public class Take<A extends Keeper> extends AbstractAction<A> {
             getActor().getScene().removeActor(actor);
             return true;
         } catch (Exception ex) {
-            getActor().getScene().getOverlay().drawText(ex.getMessage(), 0, 0).showFor(1);
+            getActor().getScene()
+                .getOverlay()
+                .drawText(ex.getMessage(), 0, 0)
+                .showFor(1);
         }
+
         return false;
     }
 }

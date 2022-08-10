@@ -4,9 +4,8 @@ import sk.tuke.kpi.gamelib.framework.actions.AbstractAction;
 import sk.tuke.kpi.oop.game.Keeper;
 import sk.tuke.kpi.oop.game.items.Collectible;
 
-import java.util.Objects;
-
-public class Drop<K extends Keeper> extends AbstractAction<K> {
+public class Drop
+    <K extends Keeper> extends AbstractAction<K> {
     @Override
     public void execute(float deltaTime) {
         try {

@@ -23,9 +23,13 @@ public class FirstSteps implements SceneListener {
     @Override
     public void sceneInitialized(@NotNull Scene scene) {
         Ripley ripley = new Ripley();
-        scene.addActor(ripley, 0, 0);
 
-        MovableController movableController = new MovableController(ripley);
+        scene
+            .addActor(ripley, 0, 0);
+
+        MovableController movableController =
+            new MovableController(ripley);
+
         scene.getInput().registerListener(movableController);
 
         energy = new Energy();
@@ -41,14 +45,21 @@ public class FirstSteps implements SceneListener {
 
         addingItem(scene, ripley);
 
-        scene.getGame().pushActorContainer(ripley.getBackpack());
-        ripley.getBackpack().shift();
+        scene.getGame()
+            .pushActorContainer(ripley.getBackpack());
 
-        KeeperController keeperController = new KeeperController(ripley);
-        scene.getInput().registerListener(keeperController);
+        ripley.getBackpack()
+            .shift();
+
+        KeeperController keeperController =
+            new KeeperController(ripley);
+
+        scene.getInput()
+            .registerListener(keeperController);
     }
 
-    private void addingItem(@NotNull Scene scene, Ripley ripley) {
+    private void addingItem(@NotNull Scene scene,
+                            Ripley ripley) {
         ripley.getBackpack().add(fireExtinguisher);
         ripley.getBackpack().add(hammer);
         ripley.getBackpack().add(wrench);
@@ -56,6 +67,7 @@ public class FirstSteps implements SceneListener {
         ripley.getBackpack().add(wrench);
         ripley.getBackpack().add(fireExtinguisher);
         ripley.getBackpack().add(hammer);
+
         scene.addActor(wrench, 50, 55);
         scene.addActor(hammer, 50, 65);
         scene.addActor(fireExtinguisher, 50, 70);

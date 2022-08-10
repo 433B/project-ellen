@@ -20,23 +20,28 @@ import sk.tuke.kpi.oop.game.openables.Door;
 
 import java.util.function.Consumer;
 
-public class CheckBart implements SceneListener {
+public class CheckBart
+    implements SceneListener {
     Wrench wrench = new Wrench();
 
     @Override
     public void sceneInitialized(@NotNull Scene scene) {
         Ripley ripley = scene.getFirstActorByType(Ripley.class);
+
         if (ripley != null) {
             scene.follow(ripley);
         }
 
-        MovableController movable = new MovableController(ripley);
+        MovableController movable =
+            new MovableController(ripley);
         scene.getInput().registerListener(movable);
 
-        KeeperController keeperController = new KeeperController(ripley);
+        KeeperController keeperController =
+            new KeeperController(ripley);
         scene.getInput().registerListener(keeperController);
 
-        ShooterController shooterController = new ShooterController(ripley);
+        ShooterController shooterController =
+            new ShooterController(ripley);
         scene.getInput().registerListener(shooterController);
 
         if (ripley != null) {
@@ -46,7 +51,8 @@ public class CheckBart implements SceneListener {
             ripley.getBackpack().shift();
         }
         if (ripley != null) {
-            ripley.getBackpack().add(wrench);
+            ripley.getBackpack()
+                .add(wrench);
         }
     }
 
@@ -59,11 +65,15 @@ public class CheckBart implements SceneListener {
 
     @Override
     public void sceneCreated(@NotNull Scene scene) {
-        Consumer<Actor> new_actor = (a) -> System.out.println("Add new actor!");
-        scene.getMessageBus().subscribe(World.ACTOR_ADDED_TOPIC, new_actor);
+        Consumer<Actor> new_actor =
+            (a) -> System.out.println("Add new actor!");
+
+        scene.getMessageBus()
+            .subscribe(World.ACTOR_ADDED_TOPIC, new_actor);
     }
 
-    public static class Factory implements ActorFactory {
+    public static class Factory
+        implements ActorFactory {
 
         @Override
         public @Nullable Actor create(@Nullable String type, @Nullable String name) {

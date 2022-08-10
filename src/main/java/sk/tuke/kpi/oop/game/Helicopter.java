@@ -6,27 +6,35 @@ import sk.tuke.kpi.gamelib.framework.Player;
 import sk.tuke.kpi.gamelib.framework.actions.Loop;
 import sk.tuke.kpi.gamelib.graphics.Animation;
 
-import java.util.Objects;
 
-public class Helicopter extends AbstractActor {
+public class Helicopter
+    extends AbstractActor {
     private Player player;
 
     public Helicopter() {
-        setAnimation(new Animation("sprites/heli.png",
-            64, 64,
-            0.1f, Animation.PlayMode.LOOP_PINGPONG));
+
+        setAnimation(
+            new Animation(
+                "sprites/heli.png",
+                64, 64,
+                0.1f, Animation.PlayMode.LOOP_PINGPONG));
     }
 
     public void searchAndDestroy() {
 
         player = getScene().getFirstActorByType((Player.class));
-        new Loop<>(new Invoke<>(this::search)).scheduleFor(this);
+        new Loop<>(
+            new Invoke<>(this::search))
+            .scheduleFor(this);
     }
 
     public void search() {
         if (player != null) {
-            if (player.getPosX() == this.getPosX() && player.getPosY() == this.getPosY())
+            if (player.getPosX() == this.getPosX() &&
+                    player.getPosY() == this.getPosY()) {
+
                 player.setEnergy(player.getEnergy() - 1);
+            }
 
             helicopterDamage();
         }

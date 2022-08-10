@@ -5,7 +5,8 @@ import sk.tuke.kpi.gamelib.Scene;
 import sk.tuke.kpi.gamelib.actions.Invoke;
 import sk.tuke.kpi.gamelib.framework.actions.Loop;
 
-public class SmartCooler extends Cooler {
+public class SmartCooler
+    extends Cooler {
     private Reactor reactor;
     public SmartCooler(Reactor reactor) {
         super(reactor);
@@ -25,7 +26,9 @@ public class SmartCooler extends Cooler {
     @Override
     public void addedToScene(@NotNull Scene scene) {
         super.addedToScene(scene);
-        new Loop<>(new Invoke<>(this::intelligentCooler)).scheduleFor(this);
+        new Loop<>(
+            new Invoke<>(this::intelligentCooler))
+            .scheduleFor(this);
     }
 }
 

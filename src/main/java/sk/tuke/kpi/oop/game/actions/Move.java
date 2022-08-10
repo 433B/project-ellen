@@ -5,9 +5,9 @@ import sk.tuke.kpi.gamelib.actions.Action;
 import sk.tuke.kpi.oop.game.Direction;
 import sk.tuke.kpi.oop.game.Movable;
 
-import java.util.Objects;
 
-public class Move<K extends Movable> implements Action<K> {
+public class Move
+    <K extends Movable> implements Action<K> {
     private K movable;
     private final Direction moveDirection;
     private boolean isRunning;
@@ -21,38 +21,49 @@ public class Move<K extends Movable> implements Action<K> {
         this.timeDuration = duration;
     }
 
+
     @Override
     public void execute(float deltaTime) {
+        if (getActor() == null) {
+            return;
+        }
+
         timeDuration -= deltaTime;
 
-        if (getActor() != null && !isDone()) {
-            getActor().getScene().getMap();
-
-            getPositionForMoving();
-
-            if (timeExpand == 0) {
+        if (!isDone()) {
+            if (timeExpand == 0 ) {
                 movable.startedMoving(moveDirection);
-                timeExpand++;
+                timeExpand = timeExpand + 1;
             }
-        }
-    }
 
-    private void getPositionForMoving() {
-        int x = movable.getPosX() + moveDirection.getDx() * movable.getSpeed();
-        int y = movable.getPosY() + moveDirection.getDy() * movable.getSpeed();
+            if (timeDuration > 0) {
+                movable
+                    .setPosition(movable.getPosX()
+                        + moveDirection.getDx()
+                        * movable.getSpeed(),
 
-        if (timeDuration > 0) {
-            movable.setPosition(x, y);
-            movingCoordinate();
-        } else stop();
-    }
+                        movable.getPosY()
+                            + moveDirection.getDy()
+                            * movable.getSpeed());
 
-    private void movingCoordinate() {
-        if ((getActor().getScene()).getMap().intersectsWithWall(movable)) {
-            int x = movable.getPosX() - moveDirection.getDx() * movable.getSpeed();
-            int y = movable.getPosY() - moveDirection.getDy() * movable.getSpeed();
-            movable.setPosition(x, y);
-            movable.collidedWithWall();
+                if ((getActor()
+                    .getScene())
+                    .getMap()
+                    .intersectsWithWall(movable)) {
+
+                    movable
+                        .setPosition(movable.getPosX()
+                            - moveDirection.getDx()
+                            * movable.getSpeed(),
+
+                            movable.getPosY()
+                                - moveDirection.getDy()
+                                * movable.getSpeed());
+
+                    movable.collidedWithWall();
+                }
+            } else
+                stop();
         }
     }
 
@@ -68,6 +79,7 @@ public class Move<K extends Movable> implements Action<K> {
         this.timeExpand = 0;
         this.timeDuration = 0;
         this.isRunning = false;
+        movable.stoppedMoving();
     }
 
     @Nullable

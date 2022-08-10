@@ -18,8 +18,10 @@ public class Door extends AbstractActor implements Usable<Actor>, Openable {
     private final Animation closeDoorAnimation;
 
     private boolean isOpen;
-    public static final Topic<Door> DOOR_OPENED = Topic.create("door opened", Door.class);
-    public static final Topic<Door> DOOR_CLOSED = Topic.create("door closed", Door.class);
+    public static final Topic<Door> DOOR_OPENED =
+        Topic.create("door opened", Door.class);
+    public static final Topic<Door> DOOR_CLOSED =
+        Topic.create("door closed", Door.class);
     private List<MapTile> listTiles;
     private MapTile.Type mapTile;
     private String doorAnimation;
@@ -52,6 +54,7 @@ public class Door extends AbstractActor implements Usable<Actor>, Openable {
 
         if (orientation == Orientation.VERTICAL) {
             doorAnimation = "sprites/vdoor.png";
+
             openDoorAnimation = new Animation(doorAnimation,
                 16, 32,
                 0.1f, Animation.PlayMode.ONCE);
@@ -91,7 +94,10 @@ public class Door extends AbstractActor implements Usable<Actor>, Openable {
         if (!isOpen()) {
             isOpen = true;
             setAnimation(openDoorAnimation);
-            getScene().getMessageBus().publish(DOOR_OPENED, this);
+
+            getScene()
+                .getMessageBus()
+                .publish(DOOR_OPENED, this);
 
             if (isOpen()) {
                 mapTile = MapTile.Type.CLEAR;
@@ -109,7 +115,10 @@ public class Door extends AbstractActor implements Usable<Actor>, Openable {
         if (isOpen()) {
             isOpen = false;
             setAnimation(closeDoorAnimation);
-            getScene().getMessageBus().publish(DOOR_CLOSED, this);
+
+            getScene()
+                .getMessageBus()
+                .publish(DOOR_CLOSED, this);
 
             if (!isOpen()) mapTile = MapTile.Type.WALL;
              else mapTile = MapTile.Type.CLEAR;

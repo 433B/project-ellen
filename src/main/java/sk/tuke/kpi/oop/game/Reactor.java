@@ -9,7 +9,8 @@ import sk.tuke.kpi.oop.game.actions.PerpetualReactorHeating;
 import java.util.HashSet;
 import java.util.Set;
 
-public class Reactor extends AbstractActor implements Switchable, Repairable {
+public class Reactor
+    extends AbstractActor implements Switchable, Repairable {
     public static final int MAX = 100;
     private int temperature;
     private int damage;
@@ -26,23 +27,29 @@ public class Reactor extends AbstractActor implements Switchable, Repairable {
         devices = new HashSet<>();
 
         offAnimation = new Animation("sprites/reactor.png");
-        normalAnimation = new Animation("sprites/reactor_on.png",
+
+        normalAnimation = new Animation(
+            "sprites/reactor_on.png",
             80, 80,
             0.4f, Animation.PlayMode.LOOP_REVERSED);
 
-        fastNormal = new Animation("sprites/reactor_on.png",
+        fastNormal = new Animation(
+            "sprites/reactor_on.png",
             80, 80,
             0.1f, Animation.PlayMode.LOOP_REVERSED);
 
-        hotAnimation = new Animation("sprites/reactor_hot.png",
+        hotAnimation = new Animation(
+            "sprites/reactor_hot.png",
             80, 80,
             0.1f, Animation.PlayMode.LOOP_REVERSED);
 
-        brokeAnimation = new Animation("sprites/reactor_broken.png",
+        brokeAnimation = new Animation(
+            "sprites/reactor_broken.png",
             80, 80,
             0.1f, Animation.PlayMode.LOOP_PINGPONG);
 
-        reactor_extinguished = new Animation("sprites/reactor_extinguished.png",
+        reactor_extinguished = new Animation(
+            "sprites/reactor_extinguished.png",
             80, 80,
             0.4f, Animation.PlayMode.LOOP_REVERSED);
         setAnimation(offAnimation);
@@ -51,7 +58,8 @@ public class Reactor extends AbstractActor implements Switchable, Repairable {
     @Override
     public void addedToScene(@NotNull Scene scene) {
         super.addedToScene(scene);
-        new PerpetualReactorHeating(1).scheduleFor(this);
+        new PerpetualReactorHeating(1)
+            .scheduleFor(this);
     }
 
     public int getTemperature() {
@@ -65,14 +73,18 @@ public class Reactor extends AbstractActor implements Switchable, Repairable {
     public void increaseTemperature(int add) {
         if (add > 0 && isRunning) {
             rulesForIncrease(add);
+
             if (temperature > 2000) {
                 this.damage = 100 * temperature / 6000;
             }
+
             if (damage >= 100) {
                 damage = 100;
+
                 for (EnergyConsumer intro : devices) {
                     intro.setPowered(false);
                 }
+
                 isRunning = false;
             }
         }
@@ -81,9 +93,11 @@ public class Reactor extends AbstractActor implements Switchable, Repairable {
 
     private void rulesForIncrease(int add) {
         if (damage >= 33 && damage <= 66) {
-            temperature = (int) Math.round(temperature + (add * 1.5));
+            temperature = (int) Math
+                .round(temperature + (add * 1.5));
         } else if (damage > 66) {
-            temperature = Math.round(temperature + (add * 2));
+            temperature = Math
+                .round(temperature + (add * 2));
         } else {
             temperature = temperature + add;
         }
@@ -146,7 +160,8 @@ public class Reactor extends AbstractActor implements Switchable, Repairable {
 
     private void rulesForRepair(int sub) {
         if (sub > 0) {
-            temperature = (int) Math.round((sub / 0.025) + 2000);
+            temperature = (int) Math
+                .round((sub / 0.025) + 2000);
             damage -= 50;
         } else {
             temperature = 2000;

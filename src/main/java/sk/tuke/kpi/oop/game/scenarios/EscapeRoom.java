@@ -20,16 +20,25 @@ import sk.tuke.kpi.oop.game.openables.LockedDoor;
 
 import java.util.function.Consumer;
 
-public class EscapeRoom implements SceneListener {
+public class EscapeRoom
+    implements SceneListener {
     @Override
     public void sceneInitialized(@NotNull Scene scene) {
         Ripley ripley = scene.getFirstActorByType(Ripley.class);
         assert ripley != null;
         scene.follow(ripley);
 
-        Disposable move = scene.getInput().registerListener(new MovableController(ripley));
-        Disposable keeper = scene.getInput().registerListener(new KeeperController(ripley));
-        Disposable shooter = scene.getInput().registerListener(new ShooterController(ripley));
+        Disposable move = scene
+            .getInput()
+            .registerListener(new MovableController(ripley));
+
+        Disposable keeper = scene
+            .getInput()
+            .registerListener(new KeeperController(ripley));
+
+        Disposable shooter = scene
+            .getInput()
+            .registerListener(new ShooterController(ripley));
 
         LockedDoor lockedDoor = new LockedDoor();
         scene.addActor(lockedDoor, 300, 100);
@@ -38,19 +47,41 @@ public class EscapeRoom implements SceneListener {
         scene.addActor(door, 150, 150);
 
         AccessCard accessCard = new AccessCard();
-        ripley.getBackpack().add(accessCard);
+        ripley.getBackpack()
+            .add(accessCard);
 
         writeMessage(scene, ripley, move, keeper, shooter);
     }
 
-    private void writeMessage(@NotNull Scene scene, Ripley ripley, Disposable move, Disposable keeper, Disposable shooter) {
-        scene.getMessageBus().subscribe(Door.DOOR_OPENED, (Ripley) -> ripley.decreaseEnergy());
+    private void writeMessage(@NotNull Scene scene,
+                              Ripley ripley,
+                              Disposable move,
+                              Disposable keeper,
+                              Disposable shooter) {
 
-        scene.getMessageBus().subscribe(Ripley.RIPLEY_DIED, (Ripley) -> move.dispose());
-        scene.getMessageBus().subscribe(Ripley.RIPLEY_DIED, (Ripley) -> keeper.dispose());
-        scene.getMessageBus().subscribe(Ripley.RIPLEY_DIED, (Ripley) -> shooter.dispose());
+        scene
+            .getMessageBus()
+            .subscribe(Door.DOOR_OPENED,
+                (Ripley) -> ripley.decreaseEnergy());
 
-        scene.getMessageBus().subscribe(Ventilator.VENTILATOR_REPAIRED,
+        scene
+            .getMessageBus()
+            .subscribe(Ripley.RIPLEY_DIED,
+                (Ripley) -> move.dispose());
+
+        scene
+            .getMessageBus()
+            .subscribe(Ripley.RIPLEY_DIED,
+                (Ripley) -> keeper.dispose());
+
+        scene
+            .getMessageBus()
+            .subscribe(Ripley.RIPLEY_DIED,
+                (Ripley) -> shooter.dispose());
+
+        scene
+            .getMessageBus()
+            .subscribe(Ventilator.VENTILATOR_REPAIRED,
             (Ripley) -> ripley.stopDecreasingEnergy().dispose());
     }
 
@@ -63,8 +94,11 @@ public class EscapeRoom implements SceneListener {
 
     @Override
     public void sceneCreated(@NotNull Scene scene) {
-        Consumer<Actor> new_actor = (a) -> System.out.println("Add new actor");
-        scene.getMessageBus().subscribe(World.ACTOR_ADDED_TOPIC, new_actor);
+        Consumer<Actor> new_actor =
+            (a) -> System.out.println("Add new actor");
+
+        scene.getMessageBus()
+            .subscribe(World.ACTOR_ADDED_TOPIC, new_actor);
     }
 
     public static class Factory implements ActorFactory {

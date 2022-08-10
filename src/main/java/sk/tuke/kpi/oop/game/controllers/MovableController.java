@@ -12,14 +12,16 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
-public class MovableController implements KeyboardListener {
+public class MovableController
+    implements KeyboardListener {
     private final Movable movable;
-    private Move <Movable> move;
+    private Move<Movable> move;
     private Disposable disposable;
     private final Set<Input.Key> keyboard;
 
 
-    private final Map<Input.Key, Direction> keyDirectionMap = Map.ofEntries(
+    private final Map<Input.Key, Direction> keyDirectionMap
+        = Map.ofEntries(
         Map.entry(Input.Key.UP, Direction.NORTH),
         Map.entry(Input.Key.RIGHT, Direction.EAST),
         Map.entry(Input.Key.DOWN, Direction.SOUTH),

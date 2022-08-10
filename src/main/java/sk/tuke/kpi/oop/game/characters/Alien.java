@@ -12,7 +12,8 @@ import sk.tuke.kpi.oop.game.behaviours.Behaviour;
 
 import java.util.Objects;
 
-public class Alien extends AbstractActor implements Movable, Enemy, Alive {
+public class Alien
+    extends AbstractActor implements Movable, Enemy, Alive {
     private final Health health;
     private Behaviour<? super Alien> alienBehaviour;
 

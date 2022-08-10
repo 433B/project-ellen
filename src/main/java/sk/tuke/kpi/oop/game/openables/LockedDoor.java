@@ -1,6 +1,7 @@
 package sk.tuke.kpi.oop.game.openables;
 
-public class LockedDoor extends Door {
+public class LockedDoor
+    extends Door {
     private boolean lock;
 
     public LockedDoor() {

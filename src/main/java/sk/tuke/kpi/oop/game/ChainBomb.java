@@ -1,6 +1,7 @@
 package sk.tuke.kpi.oop.game;
 
-public class ChainBomb extends TimeBomb {
+public class ChainBomb
+    extends TimeBomb {
     private float timer;
 
     public ChainBomb() {

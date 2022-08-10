@@ -6,7 +6,8 @@ import sk.tuke.kpi.gamelib.messages.Topic;
 import java.util.Objects;
 import java.util.function.Predicate;
 
-public class Observing<A extends Actor, T> implements Behaviour<A> {
+public class Observing
+    <A extends Actor, T> implements Behaviour<A> {
     private final Topic<T> observeTopic;
     private final Predicate<T> observePared;
     private final Behaviour<A> observeDelegate;

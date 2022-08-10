@@ -8,9 +8,9 @@ import sk.tuke.kpi.oop.game.Direction;
 import sk.tuke.kpi.oop.game.Movable;
 import sk.tuke.kpi.oop.game.actions.Move;
 
-public class RandomlyMoving implements Behaviour<Movable> {
-    public RandomlyMoving() {
-    }
+public class RandomlyMoving
+    implements Behaviour<Movable> {
+    public RandomlyMoving() {}
 
     @Override
     public void setUp(Movable movable) {
@@ -32,7 +32,10 @@ public class RandomlyMoving implements Behaviour<Movable> {
         directionCoordinate(actor, positionX, positionY, direction);
     }
 
-    private void directionCoordinate(Movable actor, int positionX, int positionY, Direction direction) {
+    private void directionCoordinate(Movable actor,
+                                     int positionX,
+                                     int positionY,
+                                     Direction direction) {
         for (Direction directions : Direction.values()) {
             if (positionY == directions.getDy() && positionX == directions.getDx()) {
                 direction = directions;

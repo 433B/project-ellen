@@ -17,13 +17,13 @@ import sk.tuke.kpi.oop.game.items.Backpack;
 import sk.tuke.kpi.oop.game.weapons.Firearm;
 import sk.tuke.kpi.oop.game.weapons.Gun;
 
-import java.util.Objects;
-import java.util.SortedMap;
 
-public class Ripley extends AbstractActor implements Movable, Keeper, Alive, Armed {
+public class Ripley
+    extends AbstractActor implements Movable, Keeper, Alive, Armed {
     private final Animation player;
 
-    public static final Topic<Ripley> RIPLEY_DIED = Topic.create("Ripley is died! Try again", Ripley.class);
+    public static final Topic<Ripley> RIPLEY_DIED =
+        Topic.create("Ripley is died! Try again", Ripley.class);
 
     private final float ripleySpeed;
     private int ammo;
@@ -44,7 +44,8 @@ public class Ripley extends AbstractActor implements Movable, Keeper, Alive, Arm
 
         player = new Animation("sprites/player.png",
             32, 32,
-            0.1f, Animation.PlayMode.LOOP_PINGPONG);
+            0.1f,
+            Animation.PlayMode.LOOP_PINGPONG);
 
         setAnimation(player);
         player.stop();
@@ -89,11 +90,25 @@ public class Ripley extends AbstractActor implements Movable, Keeper, Alive, Arm
     }
 
     public void showRipleyState(Scene scene) {
-        int windowHeight = getScene().getGame().getWindowSetup().getHeight();
-        int yTextPos = windowHeight - GameApplication.STATUS_LINE_OFFSET;
+        int windowHeight = getScene()
+            .getGame()
+            .getWindowSetup()
+            .getHeight();
 
-        scene.getGame().getOverlay().drawText("Energy " + ripleyHealth.getValue(), 120, yTextPos);
-        scene.getGame().getOverlay().drawText("Ammo " + getFirearm().getAmmo(), 240, yTextPos);
+        int yTextPos =
+            windowHeight - GameApplication.STATUS_LINE_OFFSET;
+
+        scene.getGame()
+            .getOverlay()
+            .drawText("Energy " + ripleyHealth.getValue(),
+                120,
+                yTextPos);
+
+        scene.getGame()
+            .getOverlay()
+            .drawText("Ammo " + getFirearm().getAmmo(),
+                240,
+                yTextPos);
     }
 
     public void decreaseEnergy() {
@@ -107,16 +122,17 @@ public class Ripley extends AbstractActor implements Movable, Keeper, Alive, Arm
         }
     }
 
-    private void diedHero() {
+    public void diedHero() {
         disposable = new Loop<>(
             new ActionSequence<>(
                 new Invoke<>(() -> {
-                    if (ripleyHealth.getValue() <= 0) {
+                    if (ripleyHealth.getValue() == 0) {
                         setAnimation(new Animation("sprites/player_die.png",
                             32, 32,
                             0.1f, Animation.PlayMode.ONCE));
                         getScene().getMessageBus().publish(RIPLEY_DIED, this);
-                    } else getHealth().drain(5);
+                    }
+                    else getHealth().drain(5);
                 }),
                 new Wait<>(1)
             )

@@ -10,7 +10,6 @@ import sk.tuke.kpi.gamelib.graphics.Animation;
 import sk.tuke.kpi.oop.game.Direction;
 import sk.tuke.kpi.oop.game.characters.Alive;
 
-import java.util.Objects;
 
 public class Bullet extends AbstractActor implements Fireable {
     private final Animation bulletAnimation;
@@ -20,7 +19,11 @@ public class Bullet extends AbstractActor implements Fireable {
     public Bullet() {
         this.speed = 4;
         this.gunDamage = 30;
-        bulletAnimation = new Animation("sprites/bullet.png", 16, 16);
+        bulletAnimation = new Animation(
+            "sprites/bullet.png",
+            16,
+            16);
+
         setAnimation(bulletAnimation);
     }
 

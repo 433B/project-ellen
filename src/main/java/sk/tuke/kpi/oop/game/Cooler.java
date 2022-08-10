@@ -7,7 +7,8 @@ import sk.tuke.kpi.gamelib.framework.AbstractActor;
 import sk.tuke.kpi.gamelib.framework.actions.Loop;
 import sk.tuke.kpi.gamelib.graphics.Animation;
 
-public class Cooler extends AbstractActor implements Switchable {
+public class Cooler
+    extends AbstractActor implements Switchable {
     private final Animation coolerAnimation;
     private final Animation coolerOffAnimation;
 
@@ -18,11 +19,13 @@ public class Cooler extends AbstractActor implements Switchable {
         this.reactor = reactor;
         this.check = false;
 
-        coolerAnimation = new Animation("sprites/fan.png",
+        coolerAnimation = new Animation(
+            "sprites/fan.png",
             32, 32,
             0.2f, Animation.PlayMode.LOOP_REVERSED);
 
-        coolerOffAnimation = new Animation("sprites/fan.png",
+        coolerOffAnimation = new Animation(
+            "sprites/fan.png",
             32, 32,
             0.0f, Animation.PlayMode.LOOP_REVERSED);
 
@@ -55,7 +58,9 @@ public class Cooler extends AbstractActor implements Switchable {
     @Override
     public void addedToScene(@NotNull Scene scene) {
         super.addedToScene(scene);
-        new Loop<>(new Invoke<>(this::coolReactor)).scheduleFor(this);
+
+        new Loop<>(new Invoke<>(this::coolReactor))
+            .scheduleFor(this);
     }
 
     private void updateAnimation() {

@@ -2,9 +2,6 @@ package sk.tuke.kpi.oop.game.scenarios;
 
 import org.jetbrains.annotations.NotNull;
 import sk.tuke.kpi.gamelib.Scene;
-//import sk.tuke.kpi.gamelib.actions.ActionSequence;
-//import sk.tuke.kpi.gamelib.actions.Invoke;
-//import sk.tuke.kpi.gamelib.actions.Wait;
 import sk.tuke.kpi.gamelib.SceneListener;
 import sk.tuke.kpi.gamelib.actions.ActionSequence;
 import sk.tuke.kpi.gamelib.actions.Invoke;
@@ -14,8 +11,7 @@ import sk.tuke.kpi.oop.game.Reactor;
 
 public class TrainingGameplay implements SceneListener {
 
-    public TrainingGameplay() {
-    }
+    public TrainingGameplay() {}
 
     @Override
     public void sceneInitialized(@NotNull Scene scene) {

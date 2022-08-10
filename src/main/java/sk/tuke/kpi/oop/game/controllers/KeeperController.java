@@ -11,7 +11,8 @@ import sk.tuke.kpi.oop.game.actions.Take;
 import sk.tuke.kpi.oop.game.actions.Use;
 import sk.tuke.kpi.oop.game.items.Usable;
 
-public class KeeperController implements KeyboardListener {
+public class KeeperController
+    implements KeyboardListener {
     private final Keeper keeper;
 
     public KeeperController(Keeper actor) {
@@ -35,16 +36,26 @@ public class KeeperController implements KeyboardListener {
                 break;
         }
 
-        if (key.equals(Input.Key.B) && keeper.getBackpack().peek() instanceof Usable) {
-            Use<?> use = new Use<>((Usable<?>) keeper.getBackpack().peek());
-            use.scheduleForIntersectingWith(keeper);
+        if (key.equals(Input.Key.B)
+            && keeper.getBackpack().peek() instanceof Usable) {
+
+            Use<?> use =
+                new Use<>((Usable<?>) keeper
+                    .getBackpack()
+                    .peek());
+
+            use.
+                scheduleForIntersectingWith(keeper);
         }
     }
 
     public void pressedU() {
         for (Actor item : this.keeper.getScene().getActors()) {
+
             if (item instanceof Usable && this.keeper.intersects(item)) {
-                new Use<>((Usable<?>) item).scheduleForIntersectingWith(this.keeper);
+
+                new Use<>((Usable<?>) item).
+                    scheduleForIntersectingWith(this.keeper);
             }
         }
     }

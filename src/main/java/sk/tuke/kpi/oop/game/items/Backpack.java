@@ -6,7 +6,8 @@ import sk.tuke.kpi.gamelib.ActorContainer;
 
 import java.util.*;
 
-public class Backpack implements ActorContainer<Collectible> {
+public class Backpack
+    implements ActorContainer<Collectible> {
     private final int capacity;
     private final String containerName;
     private final List<Collectible> backpackItems;
